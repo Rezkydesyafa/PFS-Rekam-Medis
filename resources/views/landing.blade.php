@@ -263,7 +263,6 @@
                  <!-- Brand Section -->
                  <div class="space-y-6 animate-fade-in-up" style="animation-delay: 0.1s;">
                      <div class="flex items-center gap-2">
-                        <!-- Custom Logo Text style to match reference -->
                         <span class="font-bold text-3xl tracking-tight">SehatSentosa</span>
                         <div class="w-2 h-2 bg-white rounded-full mt-2"></div>
                     </div>
@@ -276,11 +275,9 @@
                  <div class="animate-fade-in-up" style="animation-delay: 0.2s;">
                      <h4 class="font-bold text-lg mb-6">Menu</h4>
                      <ul class="space-y-4 text-blue-50 text-sm">
-                         <li><a href="#" class="hover:text-white hover:underline transition-all">Home</a></li>
-                         <li><a href="#" class="hover:text-white hover:underline transition-all">Keuntungan</a></li>
+                         <li><a href="#" class="hover:text-white hover:underline transition-all">Beranda</a></li>
                          <li><a href="#" class="hover:text-white hover:underline transition-all">Layanan</a></li>
-                         <li><a href="#" class="hover:text-white hover:underline transition-all">Artikel</a></li>
-                         <li><a href="#" class="hover:text-white hover:underline transition-all">Tentang Kami</a></li>
+                         <li><a href="#" class="hover:text-white hover:underline transition-all">Kontak</a></li>
                      </ul>
                  </div>
 
