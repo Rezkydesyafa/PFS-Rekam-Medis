@@ -46,7 +46,7 @@
             <div class="flex justify-between items-center h-20">
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity">
-                    <div class="w-10 h-10 bg-gradient-to-br from-blue-600 to-indigo-600 text-white rounded-xl shadow-lg shadow-blue-600/20 flex items-center justify-center">
+                    <div class="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-600 text-white rounded-xl shadow-lg shadow-blue-600/20 flex items-center justify-center">
                          <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                           <path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0012 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75z" />
                         </svg>
@@ -63,7 +63,7 @@
 
                 <!-- CTA Button -->
                 <div class="hidden md:flex">
-                    <a href="#" class="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-6 py-2.5 rounded-full font-bold shadow-lg shadow-blue-500/30 transition-all hover:shadow-blue-600/40 hover:-translate-y-0.5 text-sm">
+                    <a href="#" class="bg-gradient-to-r from-blue-600 to-blue-600 hover:from-blue-700 hover:to-indigo-700 text-white px-6 py-2.5 rounded-full font-bold shadow-lg shadow-blue-500/30 transition-all hover:shadow-blue-600/40 hover:-translate-y-0.5 text-sm">
                         Masuk / Daftar
                     </a>
                 </div>
@@ -99,7 +99,7 @@
                     </div>
                     <h1 class="text-5xl lg:text-7xl font-extrabold text-slate-900 leading-[1.1] tracking-tight">
                         Sehat Lebih Mudah, <br>
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Hidup Lebih Baik.</span>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-600">Hidup Lebih Baik.</span>
                     </h1>
                     <p class="text-lg lg:text-xl text-slate-500 leading-relaxed max-w-2xl mx-auto lg:mx-0 font-medium">
                         Platform rekam medis terintegrasi yang menghubungkan pasien, dokter, dan farmasi dalam satu ekosistem digital yang aman.
@@ -147,7 +147,7 @@
                                          <div class="h-4 w-20 bg-slate-100 rounded"></div>
                                          <div class="h-8 w-32 bg-slate-800 rounded"></div>
                                      </div>
-                                     <div class="bg-gradient-to-br from-blue-600 to-indigo-600 p-6 rounded-2xl shadow-lg shadow-blue-500/20 text-white col-span-2 lg:col-span-1 space-y-2">
+                                     <div class="bg-gradient-to-br from-blue-600 to-blue-600 p-6 rounded-2xl shadow-lg shadow-blue-500/20 text-white col-span-2 lg:col-span-1 space-y-2">
                                          <div class="h-4 w-20 bg-white/20 rounded"></div>
                                          <div class="h-8 w-16 bg-white rounded"></div>
                                          <div class="pt-4 flex gap-2">
@@ -183,15 +183,15 @@
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10 relative z-20  mb-24">
         <div class="bg-white rounded-3xl shadow-xl shadow-slate-200/50 p-8 lg:p-12 border border-slate-100 flex flex-col md:flex-row justify-between items-center gap-8 divide-y md:divide-y-0 md:divide-x divide-slate-100">
              <div class="flex-1 text-center group cursor-default">
-                 <p class="text-4xl lg:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 mb-2 group-hover:scale-110 transition-transform">24/7</p>
+                 <p class="text-4xl lg:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-600 mb-2 group-hover:scale-110 transition-transform">24/7</p>
                  <p class="text-slate-500 font-medium">Layanan Siaga</p>
              </div>
              <div class="flex-1 text-center group cursor-default pt-8 md:pt-0">
-                 <p class="text-4xl lg:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 mb-2 group-hover:scale-110 transition-transform">50+</p>
+                 <p class="text-4xl lg:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-600 mb-2 group-hover:scale-110 transition-transform">50+</p>
                  <p class="text-slate-500 font-medium">Dokter Spesialis</p>
              </div>
              <div class="flex-1 text-center group cursor-default pt-8 md:pt-0">
-                 <p class="text-4xl lg:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 mb-2 group-hover:scale-110 transition-transform">100%</p>
+                 <p class="text-4xl lg:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-600 mb-2 group-hover:scale-110 transition-transform">100%</p>
                  <p class="text-slate-500 font-medium">Aman & Terpercaya</p>
              </div>
         </div>
@@ -208,7 +208,7 @@
                 <span class="inline-block px-4 py-1.5 rounded-full bg-white border border-blue-100 text-blue-600 font-bold tracking-wide uppercase text-xs shadow-sm mb-6">Kenapa Memilih Kami</span>
                 <h2 class="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-6">
                     Teknologi Kesehatan <br>
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Tanpa Batas</span>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-600">Tanpa Batas</span>
                 </h2>
                 <p class="text-lg text-slate-600 leading-relaxed font-medium max-w-2xl mx-auto">
                     Kami menggabungkan kenyamanan dan teknologi untuk memberikan pengalaman berobat yang belum pernah Anda rasakan sebelumnya.
