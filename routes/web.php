@@ -9,7 +9,7 @@ use App\Http\Controllers\RekamMedisController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('landing');
 });
 
 Route::get('/dashboard', function () {
@@ -22,30 +22,13 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-/*
-|--------------------------------------------------------------------------
-| Superadmin Routes (Administrator Sistem)
-|--------------------------------------------------------------------------
-| - Menambahkan User
-| - Edit & hapus user (opsional)
-| - Tidak mengelola data medis
-|
-*/
+
 Route::middleware(['auth', 'superadmin'])->prefix('admin')->name('admin.')->group(function () {
     // User Management (CRUD)
     Route::resource('users', UserController::class);
 });
 
-/*
-|--------------------------------------------------------------------------
-| User Routes (Petugas Rekam Medis)
-|--------------------------------------------------------------------------
-| - CRUD Pasien
-| - CRUD Dokter
-| - CRUD Obat
-| - CRUD Rekam Medis
-|
-*/
+
 Route::middleware(['auth', 'role:user'])->group(function () {
     // Pasien CRUD
     Route::resource('pasien', PasienController::class);
