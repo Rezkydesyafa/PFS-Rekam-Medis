@@ -103,9 +103,9 @@
                             </td>
                             <td class="p-4 align-middle text-right">
                                 <div class="flex justify-end gap-2">
-                                    <button class="h-8 w-8 inline-flex items-center justify-center rounded-lg text-primary hover:bg-primary/10 transition-colors" title="Edit Data">
+                                    <a href="{{ route('pasien.edit', $pasien->id_pasien) }}" class="h-8 w-8 inline-flex items-center justify-center rounded-lg text-primary hover:bg-primary/10 transition-colors" title="Edit Data">
                                         <span class="material-symbols-outlined text-[20px]">edit</span>
-                                    </button>
+                                    </a>
                                     <button class="h-8 w-8 inline-flex items-center justify-center rounded-lg text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-900/20 transition-colors" title="Hapus Data">
                                         <span class="material-symbols-outlined text-[20px]">delete</span>
                                     </button>
