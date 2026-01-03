@@ -9,27 +9,19 @@ class Pasien extends Model
 {
     use HasFactory;
 
-    protected $table = 'pasiens';
     protected $primaryKey = 'id_pasien';
 
     protected $fillable = [
-        'nama_pasien',
+        'name',
         'nik',
-        'tanggal_lahir',
+        'no_rm',
+        'tgl_lahir',
         'jenis_kelamin',
+        'gol_darah',
+        'status_nikah',
+        'no_hp',
+        'email',
         'alamat',
-        'no_telepon',
+        'status',
     ];
-
-    protected $casts = [
-        'tanggal_lahir' => 'date',
-    ];
-
-    /**
-     * Get the medical records for the patient.
-     */
-    public function rekamMedis()
-    {
-        return $this->hasMany(RekamMedis::class, 'id_pasien', 'id_pasien');
-    }
 }
