@@ -125,6 +125,9 @@ class PasienController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $pasien = Pasien::findOrFail($id);
+        $pasien->delete();
+
+        return redirect()->route('pasien.index')->with('success', 'Data pasien berhasil dihapus.');
     }
 }

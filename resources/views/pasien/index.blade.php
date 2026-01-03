@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="mx-auto max-w-7xl flex flex-col gap-6">
+    <div class="mx-auto max-w-7xl flex flex-col gap-6" x-data="{ showDeleteModal: false, deleteId: null, deleteName: '' }">
         <!-- Breadcrumb & Header -->
         <div class="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
             <a class="hover:text-primary transition-colors" href="{{ route('dashboard') }}">Beranda</a>
@@ -20,8 +20,8 @@
         
         <!-- Alert Success -->
         @if(session('success'))
-        <div class="bg-emerald-100 border border-emerald-400 text-emerald-700 px-4 py-3 rounded relative" role="alert">
-            <strong class="font-bold">Berhasil!</strong>
+        <div class="bg-emerald-100 border border-emerald-400 text-emerald-700 px-4 py-3 rounded-lg relative flex items-center gap-2" role="alert">
+            <span class="material-symbols-outlined text-emerald-600">check_circle</span>
             <span class="block sm:inline">{{ session('success') }}</span>
         </div>
         @endif
@@ -95,6 +95,10 @@
                                     <span class="inline-flex items-center rounded-full bg-emerald-100 dark:bg-emerald-900/30 px-2.5 py-0.5 text-xs font-semibold text-emerald-800 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800">
                                         Aktif
                                     </span>
+                                @elseif($pasien->status == 'pending')
+                                    <span class="inline-flex items-center rounded-full bg-amber-100 dark:bg-amber-900/30 px-2.5 py-0.5 text-xs font-semibold text-amber-800 dark:text-amber-400 border border-amber-200 dark:border-amber-800">
+                                        Pending
+                                    </span>
                                 @else
                                     <span class="inline-flex items-center rounded-full bg-slate-100 dark:bg-slate-700 px-2.5 py-0.5 text-xs font-semibold text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-600">
                                         Non-Aktif
@@ -106,7 +110,10 @@
                                     <a href="{{ route('pasien.edit', $pasien->id_pasien) }}" class="h-8 w-8 inline-flex items-center justify-center rounded-lg text-primary hover:bg-primary/10 transition-colors" title="Edit Data">
                                         <span class="material-symbols-outlined text-[20px]">edit</span>
                                     </a>
-                                    <button class="h-8 w-8 inline-flex items-center justify-center rounded-lg text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-900/20 transition-colors" title="Hapus Data">
+                                    <button 
+                                        @click="showDeleteModal = true; deleteId = {{ $pasien->id_pasien }}; deleteName = '{{ $pasien->name }}'"
+                                        class="h-8 w-8 inline-flex items-center justify-center rounded-lg text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-900/20 transition-colors" 
+                                        title="Hapus Data">
                                         <span class="material-symbols-outlined text-[20px]">delete</span>
                                     </button>
                                 </div>
@@ -136,5 +143,80 @@
                 {{ $pasiens->links() }} 
             </div>
         </div>
+
+        <!-- Delete Confirmation Modal -->
+        <div 
+            x-show="showDeleteModal" 
+            style="display: none;"
+            x-transition:enter="ease-out duration-300"
+            x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100"
+            x-transition:leave="ease-in duration-200"
+            x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0"
+            class="relative z-50"
+            aria-labelledby="modal-title" 
+            role="dialog" 
+            aria-modal="true">
+            
+            <!-- Background Backdrop -->
+            <div class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity"></div>
+
+            <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+                <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                    
+                    <!-- Modal Panel -->
+                    <div 
+                        x-show="showDeleteModal"
+                        x-transition:enter="ease-out duration-300"
+                        x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                        x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                        x-transition:leave="ease-in duration-200"
+                        x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                        x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                        @click.outside="showDeleteModal = false"
+                        class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                        
+                        <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                            <div class="sm:flex sm:items-start">
+                                <!-- Warning Icon -->
+                                <div class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                                    <span class="material-symbols-outlined text-red-600">warning</span>
+                                </div>
+                                
+                                <!-- Content -->
+                                <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                                    <h3 class="text-xl font-bold leading-6 text-slate-900" id="modal-title">Hapus Data Pasien</h3>
+                                    <div class="mt-2">
+                                        <p class="text-sm text-slate-500">
+                                            Apakah Anda yakin ingin menghapus data pasien <span class="font-bold text-slate-900" x-text="deleteName"></span>? 
+                                            Tindakan ini tidak dapat dibatalkan dan semua riwayat medis akan dihapus permanen.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Buttons -->
+                        <div class="bg-slate-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 gap-2">
+                            <form :action="'/pasien/' + deleteId" method="POST" class="inline-flex w-full sm:w-auto">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="inline-flex w-full justify-center rounded-md bg-red-600 px-5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:w-auto transition-colors">
+                                    Hapus Pasien
+                                </button>
+                            </form>
+                            <button type="button" @click="showDeleteModal = false" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-5 py-2 text-sm font-semibold text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 hover:bg-slate-50 sm:mt-0 sm:w-auto transition-colors">
+                                Batal
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <style>
+        [x-cloak] { display: none !important; }
+    </style>
 </x-app-layout>
