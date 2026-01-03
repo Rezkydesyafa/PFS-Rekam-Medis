@@ -63,8 +63,8 @@
 
                 <!-- CTA Button -->
                 <div class="hidden md:flex">
-                    <a href="#" class="bg-gradient-to-r from-blue-600 to-blue-600 hover:from-blue-700 hover:to-indigo-700 text-white px-6 py-2.5 rounded-full font-bold shadow-lg shadow-blue-500/30 transition-all hover:shadow-blue-600/40 hover:-translate-y-0.5 text-sm">
-                        Masuk / Daftar
+                    <a href="/login" class="bg-gradient-to-r from-blue-600 to-blue-600 hover:from-blue-700 hover:to-indigo-700 text-white px-6 py-2.5 rounded-full font-bold shadow-lg shadow-blue-500/30 transition-all hover:shadow-blue-600/40 hover:-translate-y-0.5 text-sm">
+                        Masuk
                     </a>
                 </div>
 
