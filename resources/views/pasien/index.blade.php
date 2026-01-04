@@ -107,6 +107,9 @@
                             </td>
                             <td class="p-4 align-middle text-right">
                                 <div class="flex justify-end gap-2">
+                                    <a href="{{ route('pasien.show', $pasien->id_pasien) }}" class="h-8 w-8 inline-flex items-center justify-center rounded-lg text-slate-500 hover:text-primary hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors" title="Lihat Detail">
+                                        <span class="material-symbols-outlined text-[20px]">visibility</span>
+                                    </a>
                                     <a href="{{ route('pasien.edit', $pasien->id_pasien) }}" class="h-8 w-8 inline-flex items-center justify-center rounded-lg text-primary hover:bg-primary/10 transition-colors" title="Edit Data">
                                         <span class="material-symbols-outlined text-[20px]">edit</span>
                                     </a>
