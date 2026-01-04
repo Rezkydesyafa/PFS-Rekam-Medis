@@ -10,9 +10,39 @@ class PasienController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $pasiens = Pasien::latest()->paginate(10);
+        $query = Pasien::query();
+
+        // Search by name, NIK, or No. RM
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('nik', 'like', "%{$search}%")
+                  ->orWhere('no_rm', 'like', "%{$search}%");
+            });
+        }
+
+        // Filter by status
+        if ($request->filled('status') && $request->status !== 'all') {
+            $query->where('status', $request->status);
+        }
+
+        // Sorting
+        $sortBy = $request->get('sort_by', 'created_at');
+        $sortOrder = $request->get('sort_order', 'desc');
+        
+        // Validate sort columns to prevent SQL injection
+        $allowedSortColumns = ['name', 'no_rm', 'tgl_lahir', 'created_at', 'status'];
+        if (!in_array($sortBy, $allowedSortColumns)) {
+            $sortBy = 'created_at';
+        }
+        
+        $query->orderBy($sortBy, $sortOrder === 'asc' ? 'asc' : 'desc');
+
+        $pasiens = $query->paginate(10)->withQueryString();
+        
         return view('pasien.index', compact('pasiens'));
     }
 
