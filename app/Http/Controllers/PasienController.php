@@ -7,9 +7,6 @@ use Illuminate\Http\Request;
 
 class PasienController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Request $request)
     {
         $query = Pasien::query();
@@ -47,7 +44,7 @@ class PasienController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Create pasien
      */
     public function create()
     {
@@ -100,7 +97,7 @@ class PasienController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Show the specified pasien.
      */
     public function show(string $id)
     {
@@ -109,7 +106,7 @@ class PasienController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified pasien.
      */
     public function edit(string $id)
     {
@@ -118,7 +115,7 @@ class PasienController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified pasien.
      */
     public function update(Request $request, string $id)
     {
