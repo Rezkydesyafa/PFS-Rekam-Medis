@@ -7,17 +7,44 @@ use Illuminate\Http\Request;
 
 class PasienController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(Request $request)
     {
-        $pasiens = Pasien::latest()->paginate(10);
+        $query = Pasien::query();
+
+        // Search by name, NIK, or No. RM
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('nik', 'like', "%{$search}%")
+                  ->orWhere('no_rm', 'like', "%{$search}%");
+            });
+        }
+
+        // Filter by status
+        if ($request->filled('status') && $request->status !== 'all') {
+            $query->where('status', $request->status);
+        }
+
+        // Sorting
+        $sortBy = $request->get('sort_by', 'created_at');
+        $sortOrder = $request->get('sort_order', 'desc');
+        
+        // Validate sort columns to prevent SQL injection
+        $allowedSortColumns = ['name', 'no_rm', 'tgl_lahir', 'created_at', 'status'];
+        if (!in_array($sortBy, $allowedSortColumns)) {
+            $sortBy = 'created_at';
+        }
+        
+        $query->orderBy($sortBy, $sortOrder === 'asc' ? 'asc' : 'desc');
+
+        $pasiens = $query->paginate(10)->withQueryString();
+        
         return view('pasien.index', compact('pasiens'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Create pasien
      */
     public function create()
     {
@@ -70,15 +97,16 @@ class PasienController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Show the specified pasien.
      */
     public function show(string $id)
     {
-        //
+        $pasien = Pasien::findOrFail($id);
+        return view('pasien.show', compact('pasien'));
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified pasien.
      */
     public function edit(string $id)
     {
@@ -87,7 +115,7 @@ class PasienController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified pasien.
      */
     public function update(Request $request, string $id)
     {

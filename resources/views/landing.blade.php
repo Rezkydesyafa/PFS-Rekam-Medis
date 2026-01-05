@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rekam Medis Kita - Solusi Kesehatan Digital</title>
+    <title>SIRM - Solusi Rekam Medis Digital</title>
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -46,12 +46,8 @@
             <div class="flex justify-between items-center h-20">
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity">
-                    <div class="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-600 text-white rounded-xl shadow-lg shadow-blue-600/20 flex items-center justify-center">
-                         <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0012 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75z" />
-                        </svg>
-                    </div>
-                    <span class="font-bold text-xl tracking-tight text-slate-900">SehatSentosa</span>
+                    <img src="{{ asset('logo.png') }}" alt="Logo SIRM" class="w-10 h-10 object-contain">
+                    <span class="font-bold text-xl tracking-tight text-slate-900"> SIRM</span>
                 </div>
 
                 <!-- Desktop Menu -->
@@ -261,13 +257,14 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
                  <!-- Brand Section -->
-                 <div class="space-y-6 animate-fade-in-up" style="animation-delay: 0.1s;">
+                 <div class="space-y-6 animate-fade-in-up" style="animation-delay: 0.2s;">
                      <div class="flex items-center gap-2">
-                        <span class="font-bold text-3xl tracking-tight">SehatSentosa</span>
-                        <div class="w-2 h-2 bg-white rounded-full mt-2"></div>
+                        <img src="{{ asset('logo.png') }}" alt="Logo SIRM" class="w-16 h-16 object-contain bg-white rounded-lg">
+                        <span class="font-bold text-3xl tracking-tight">SIRM</span>
+                        <!-- <div class="w-2 h-2 bg-white rounded-full mt-2"></div> -->
                     </div>
                     <p class="text-blue-50 leading-relaxed text-sm max-w-sm">
-                        SehatSentosa dikembangkan untuk dapat mempermudah proses layanan kesehatan pada Klinik dan Rumah Sakit.
+                        Sistem Rekam Medis dikembangkan untuk dapat mempermudah proses layanan kesehatan pada Klinik dan Rumah Sakit.
                     </p>
                  </div>
                  
@@ -314,7 +311,7 @@
             </div>
 
             <div class="border-t border-white/20 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-blue-100">
-                <p>&copy; Copyright 2025 SehatSentosa. All rights reserved.</p>
+                <p>&copy; Copyright 2025 SIRM. All rights reserved.</p>
                 <div class="flex gap-6">
                     <a href="#" class="bg-white/10 p-2 rounded-full hover:bg-white/20 transition-all">
                         <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
