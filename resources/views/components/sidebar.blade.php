@@ -20,7 +20,7 @@
             <span class="text-sm {{ request()->routeIs('pasien.*') ? 'font-bold' : 'font-medium' }}">Pasien</span>
         </a>
 
-        <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg {{ request()->routeIs('dokter.*') ? 'bg-primary/10 text-primary dark:text-blue-400' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group' }}" href="#">
+        <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg {{ request()->routeIs('dokter.*') ? 'bg-primary/10 text-primary dark:text-blue-400' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group' }}" href="{{ route('dokter.index') }}">
             <span class="material-symbols-outlined text-[24px] {{ request()->routeIs('dokter.*') ? 'fill-1' : 'group-hover:text-slate-900 dark:group-hover:text-white' }}">medical_services</span>
             <span class="text-sm {{ request()->routeIs('dokter.*') ? 'font-bold' : 'font-medium' }}">Dokter</span>
         </a>
