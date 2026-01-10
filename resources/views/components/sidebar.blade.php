@@ -38,7 +38,7 @@
             <span class="text-sm {{ request()->routeIs('rekam-medis.*') ? 'font-bold' : 'font-medium' }}">Rekam Medis</span>
         </a>
 
-        <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg {{ request()->routeIs('obat.*') ? 'bg-primary/10 text-primary dark:text-blue-400' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group' }}" href="#">
+        <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg {{ request()->routeIs('obat.*') ? 'bg-primary/10 text-primary dark:text-blue-400' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group' }}" href="{{ route('obat.index') }}">
             <span class="material-symbols-outlined text-[24px] {{ request()->routeIs('obat.*') ? 'fill-1' : 'group-hover:text-slate-900 dark:group-hover:text-white' }}">medication</span>
             <span class="text-sm {{ request()->routeIs('obat.*') ? 'font-bold' : 'font-medium' }}">Obat</span>
         </a>

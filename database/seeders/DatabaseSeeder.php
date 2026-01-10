@@ -15,27 +15,33 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Create admin user
-        User::create([
-            'name' => 'Dr. Hendra S.',
-            'username' => 'admin',
-            'email' => 'admin@medrecord.pro',
-            'password' => bcrypt('password'),
-            'role' => 'superadmin',
-        ]);
+        // 1. Create Users (Admin & Petugas)
+        // Cek dulu apakah user sudah ada untuk menghindari error duplicate entry saat seeding ulang
+        if (!User::where('username', 'admin')->exists()) {
+            User::create([
+                'name' => 'Dr. Hendra S.',
+                'username' => 'admin',
+                'email' => 'admin@medrecord.pro',
+                'password' => bcrypt('password'),
+                'role' => 'superadmin',
+            ]);
+        }
 
-        // Create Petugas Rekam Medis
-        User::create([
-            'name' => 'Sarah Wijaya',
-            'username' => 'petugas',
-            'email' => 'petugas@medrecord.pro',
-            'password' => bcrypt('password'),
-            'role' => 'petugas',
-        ]);
+        if (!User::where('username', 'petugas')->exists()) {
+            User::create([
+                'name' => 'Sarah Wijaya',
+                'username' => 'petugas',
+                'email' => 'petugas@medrecord.pro',
+                'password' => bcrypt('password'),
+                'role' => 'petugas',
+            ]);
+        }
 
-        // Seed patients data
+        // 2. Panggil Seeder Lainnya
         $this->call([
-            PasienSeeder::class,
+            PasienSeeder::class, // Data Pasien
+            DokterSeeder::class, // Data Dokter (Baru)
+            ObatSeeder::class,   // Data Obat (Baru)
         ]);
     }
 }
