@@ -17,12 +17,10 @@
             <div class="w-full max-w-[440px] mx-auto flex flex-col h-full justify-center lg:h-auto">
                 <!-- Logo -->
                 <div class="mb-10 flex items-center gap-3">
-                    <div class="w-11 h-11 bg-blue-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-blue-600/20">
-                        <span class="material-symbols-outlined text-[26px]">local_hospital</span>
-                    </div>
+                    <img src="{{ asset('logo.png') }}" alt="SIRM Logo" class="w-12 h-12 object-contain drop-shadow-md">
                     <div>
                         <span class="block font-extrabold text-2xl text-slate-900 tracking-tight leading-none">SIRM</span>
-                        <span class="text-[10px] font-bold text-slate-400 tracking-wider uppercase">Enterprise</span>
+                        <span class="text-[10px] font-bold text-slate-400 tracking-wider uppercase">Rekan Medis</span>
                     </div>
                 </div>
 
@@ -186,7 +184,7 @@
 
                     <!-- Text -->
                     <div class="max-w-md mx-auto space-y-3">
-                        <h2 class="text-3xl font-bold tracking-tight">Rumah Sakit Pintar. <br/> <span class="text-blue-200">Berbasis Data.</span></h2>
+                        <h2 class="text-3xl font-bold tracking-tight">Sistem Rekam Medis. <br/> <span class="text-blue-200">Berbasis Data.</span></h2>
                         <p class="text-blue-50 text-base font-medium leading-relaxed opacity-90">
                             Sistem terintegrasi untuk manajemen rekam medis dan pemantauan pasien yang mulus.
                         </p>
