@@ -25,11 +25,18 @@
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-10px); }
         }
+        @keyframes spin-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
         .animate-float {
             animation: float 3s ease-in-out infinite;
         }
         .animate-bounce-slow {
             animation: float 4s ease-in-out infinite reverse;
+        }
+        .animate-spin-slow {
+            animation: spin-slow 12s linear infinite;
         }
         .dashed-line {
             background-image: linear-gradient(to right, #bfdbfe 50%, rgba(255,255,255,0) 0%);
@@ -38,35 +45,34 @@
             background-repeat: repeat-x;
             height: 2px;
         }
+        html {
+            scroll-behavior: smooth;
+        }
     </style>
 </head>
 <body class="font-sans antialiased text-slate-600 bg-white">
 
     <!-- Header / Navbar -->
-    <header class="fixed w-full z-50 bg-white/90 backdrop-blur-md transition-all duration-300">
+    <header class="fixed w-full z-50 bg-white/90 backdrop-blur-md transition-all duration-300 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
                 <!-- Logo -->
-                <div class="flex items-center gap-2">
-                    <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-xl">
-                        <span class="material-symbols-outlined text-[20px]">folder_shared</span>
-                    </div>
+                <div class="flex items-center gap-3">
+                    <img src="{{ asset('logo.png') }}" class="w-10 h-10 object-contain" alt="SIRM Logo">
                     <span class="font-extrabold text-xl text-slate-900 tracking-tight">SIRM</span>
                 </div>
 
                 <!-- Desktop Menu -->
                 <nav class="hidden md:flex items-center gap-8">
-                    <a href="#" class="text-sm font-semibold text-slate-900 hover:text-blue-600 transition-colors">Beranda</a>
-                    <a href="#" class="text-sm font-medium text-slate-500 hover:text-blue-600 transition-colors">Fitur</a>
-                    <a href="#" class="text-sm font-medium text-slate-500 hover:text-blue-600 transition-colors">Tentang Kami</a>
-                    <a href="#" class="text-sm font-medium text-slate-500 hover:text-blue-600 transition-colors">Kontak</a>
+                    <a href="#hero" class="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">Beranda</a>
+                    <a href="#features" class="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">Layanan</a>
+                    <a href="#contact" class="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">Kontak</a>
                 </nav>
 
                 <!-- Auth Buttons -->
                 <div class="hidden md:flex items-center gap-4">
-                    <a href="/login" class="text-sm font-semibold text-blue-600 hover:text-blue-700">Masuk</a>
-                    <a href="/register" class="bg-blue-600 text-white px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-blue-700 transition-all shadow-lg shadow-blue-600/20">
-                        Daftar Akun
+                    <a href="/login" class="bg-blue-500 text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-blue-600 transition-all shadow-lg shadow-blue-500/20">
+                        Masuk
                     </a>
                 </div>
 
@@ -79,7 +85,7 @@
     </header>
 
     <!-- Hero Section -->
-    <section class="pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden relative bg-white">
+    <section id="hero" class="pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden relative bg-white">
         <!-- Background Decor -->
         <div class="absolute right-0 top-0 w-1/2 h-full bg-blue-50/30 rounded-bl-[10rem] -z-10 hidden lg:block"></div>
         <div class="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-blue-200 to-transparent dashed-line"></div>
@@ -89,15 +95,15 @@
                 <!-- Text Content -->
                 <div class="lg:w-1/2 space-y-8 relative z-10">
                     <h1 class="text-5xl lg:text-[4rem] font-bold text-slate-900 leading-[1.1] tracking-tight">
-                        Mitra Terpercaya Anda dalam <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600">Layanan Kesehatan Digital</span>.
+                        Solusi Cerdas <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600">Rekam Medis Digital</span> Terintegrasi.
                     </h1>
                     <p class="text-lg text-slate-500 leading-relaxed max-w-xl">
-                        <span class="font-bold text-blue-600">Meningkatkan Kualitas Layanan Kesehatan.</span> Nikmati kemudahan pengelolaan data medis yang aman dan terintegrasi. Hubungkan dokter, pasien, dan farmasi dalam satu platform cerdas.
+                        <span class="font-bold text-blue-600">Kelola Data Kesehatan Lebih Efisien.</span> Akses riwayat diagnosa, data pasien, dan resep obat secara real-time dan aman. Tingkatkan kualitas pelayanan medis Anda dengan teknologi terkini.
                     </p>
                     
                     <div class="flex flex-col sm:flex-row gap-4 pt-2">
-                        <a href="/register" class="bg-gradient-to-r from-blue-400 to-blue-600 text-white px-8 py-4 rounded-xl font-bold hover:shadow-lg hover:shadow-blue-500/30 transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2 text-lg">
-                            Buat Janji Temu
+                        <a href="/login" class="bg-blue-500 text-white px-8 py-4 rounded-xl font-bold hover:bg-blue-600 hover:shadow-lg hover:shadow-blue-500/30 transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2 text-lg">
+                            Mulai Sekarang
                             <span class="material-symbols-outlined font-bold">arrow_forward_ios</span>
                         </a>
                     </div>
@@ -119,8 +125,21 @@
                 <div class="lg:w-1/2 relative flex justify-center lg:justify-end">
                     <!-- Main Blob/Circle Background -->
                     <div class="relative w-[400px] h-[400px] lg:w-[500px] lg:h-[500px]">
-                        <div class="absolute inset-0 bg-blue-400 rounded-full opacity-100 transform translate-x-4"></div>
-                        <img src="{{ asset('hero-photos.png') }}" alt="Doctor" class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[110%] max-w-none z-10 drop-shadow-2xl">
+                        <!-- New Shapes Decorations -->
+                        <div class="absolute -top-10 -left-10 w-24 h-24 bg-yellow-100 rounded-full blur-2xl opacity-60 animate-pulse"></div>
+                        <div class="absolute top-0 right-0 animate-spin-slow">
+                             <svg width="100" height="100" viewBox="0 0 100 100" fill="none" class="text-blue-200">
+                                <circle cx="50" cy="50" r="48" stroke="currentColor" stroke-width="2" stroke-dasharray="10 10" />
+                            </svg>
+                        </div>
+                         <div class="absolute bottom-10 -left-10 animate-bounce-slow">
+                            <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+                                <path d="M30 0L36 24L60 30L36 36L30 60L24 36L0 30L24 24L30 0Z" fill="#BFDBFE" class="opacity-50"/>
+                            </svg>
+                        </div>
+
+                        <div class="absolute inset-0 bg-gradient-to-br from-blue-100 to-blue-50 rounded-full opacity-100 transform translate-x-4"></div>
+                        <img src="{{ asset('hero-photos.png') }}" alt="Doctor" class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[110%] max-w-none z-10 transition-transform duration-500 hover:scale-105">
                         
                         <!-- Floating Card: Happy Customers -->
                         <div class="absolute top-20 -right-8 lg:-right-16 bg-white p-4 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.1)] z-20 animate-bounce-slow">
@@ -157,7 +176,7 @@
                                 <span class="material-symbols-outlined text-white text-[20px]">format_quote</span>
                             </div>
                             <p class="text-xs text-slate-500 italic mt-2">
-                                "Lorem ipsum dolor sit amet, ligula ego. consectetuer adipiscing elit."
+                                "Sistem ini sangat membantu operasional klinik kami. Efisien dan mudah digunakan."
                             </p>
                         </div>
                     </div>
@@ -169,7 +188,7 @@
   
 
     <!-- Services Section -->
-    <section class="py-24 relative overflow-hidden">
+    <section id="features" class="py-24 relative overflow-hidden">
         <!-- Decoration Wave Top Left -->
         <div class="absolute top-[100px] left-0 pointer-events-none opacity-40">
             <svg width="150" height="150" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -261,7 +280,7 @@
     </section>
 
     <!-- Story / About Section -->
-    <section class="py-20 bg-white">
+    <section id="about" class="py-20 bg-white">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="bg-white rounded-[3rem] p-8 lg:p-16 border border-blue-100 shadow-2xl shadow-blue-100/50">
                 <div class="text-center mb-12">
@@ -294,7 +313,7 @@
     </section>
 
     <!-- Contact / Help Desk Section -->
-    <section class="py-24 relative overflow-hidden bg-white">
+    <section id="contact" class="py-24 relative overflow-hidden bg-white">
         <!-- Decoration: Dashed Line Path -->
         <div class="absolute inset-0 pointer-events-none">
              <svg class="w-full h-full" viewBox="0 0 1440 400" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
@@ -358,9 +377,7 @@
                 <!-- Brand -->
                 <div class="space-y-6">
                     <div class="flex items-center gap-2">
-                        <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-xl">
-                            <span class="material-symbols-outlined text-[20px]">folder_shared</span>
-                        </div>
+                        <img src="{{ asset('logo.png') }}" class="w-10 h-10 object-contain" alt="SIRM Logo">
                         <span class="font-extrabold text-xl text-slate-900 tracking-tight">SIRM</span>
                     </div>
                     <p class="text-slate-500 text-sm leading-relaxed">
@@ -374,7 +391,7 @@
                     <ul class="space-y-4">
                         <li><a href="#" class="text-slate-500 text-sm hover:text-blue-600 transition-colors">Panduan Pengguna</a></li>
                         <li><a href="#" class="text-slate-500 text-sm hover:text-blue-600 transition-colors">FAQ / Pertanyaan Umum</a></li>
-                        <li><a href="#" class="text-slate-500 text-sm hover:text-blue-600 transition-colors">Artikel Bantuan</a></li>
+                         <li><a href="#" class="text-slate-500 text-sm hover:text-blue-600 transition-colors">Artikel Bantuan</a></li>
                         <li><a href="#" class="text-slate-500 text-sm hover:text-blue-600 transition-colors">Laporkan Masalah</a></li>
                         <li><a href="#" class="text-slate-500 text-sm hover:text-blue-600 transition-colors">Kontak Support</a></li>
                     </ul>
