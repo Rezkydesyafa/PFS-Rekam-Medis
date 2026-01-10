@@ -29,7 +29,7 @@ Route::middleware(['auth', 'superadmin'])->prefix('admin')->name('admin.')->grou
 });
 
 
-Route::middleware(['auth', 'role:user'])->group(function () {
+Route::middleware(['auth', 'role:petugas'])->group(function () {
     // Pasien CRUD
     Route::resource('pasien', PasienController::class);
     

@@ -34,11 +34,11 @@ class User extends Authenticatable
     }
 
     /**
-     * Check if the user is a regular user.
+     * Check if the user is a petugas rekam medis.
      */
-    public function isUser(): bool
+    public function isPetugas(): bool
     {
-        return $this->role === 'user';
+        return $this->role === 'petugas';
     }
 
     /**

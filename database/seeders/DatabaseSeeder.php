@@ -15,22 +15,22 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Create a default user with role 'user'
-        User::create([
-            'name' => 'Test User',
-            'username' => 'testuser',
-            'email' => 'test@example.com',
-            'password' => bcrypt('password'),
-            'role' => 'user',
-        ]);
-
         // Create admin user
         User::create([
-            'name' => 'Admin',
+            'name' => 'Dr. Hendra S.',
             'username' => 'admin',
-            'email' => 'admin@example.com',
+            'email' => 'admin@medrecord.pro',
             'password' => bcrypt('password'),
             'role' => 'superadmin',
+        ]);
+
+        // Create Petugas Rekam Medis
+        User::create([
+            'name' => 'Sarah Wijaya',
+            'username' => 'petugas',
+            'email' => 'petugas@medrecord.pro',
+            'password' => bcrypt('password'),
+            'role' => 'petugas',
         ]);
 
         // Seed patients data
