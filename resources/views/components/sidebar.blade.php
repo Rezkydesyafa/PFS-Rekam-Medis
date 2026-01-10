@@ -15,6 +15,14 @@
             <span class="text-sm {{ request()->routeIs('dashboard') ? 'font-bold' : 'font-medium' }}">Dashboard</span>
         </a>
 
+        @if(auth()->user()->isSuperadmin())
+        <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg {{ request()->routeIs('admin.users.*') ? 'bg-primary/10 text-primary dark:text-blue-400' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group' }}" href="{{ route('admin.users.index') }}">
+            <span class="material-symbols-outlined text-[24px] {{ request()->routeIs('admin.users.*') ? 'fill-1' : 'group-hover:text-slate-900 dark:group-hover:text-white' }}">manage_accounts</span>
+            <span class="text-sm {{ request()->routeIs('admin.users.*') ? 'font-bold' : 'font-medium' }}">Manajemen User</span>
+        </a>
+        @endif
+
+        @if(auth()->user()->isPetugas())
         <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg {{ request()->routeIs('pasien.*') ? 'bg-primary/10 text-primary dark:text-blue-400' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group' }}" href="{{ route('pasien.index') }}">
             <span class="material-symbols-outlined text-[24px] {{ request()->routeIs('pasien.*') ? 'fill-1' : 'group-hover:text-slate-900 dark:group-hover:text-white' }}">group</span>
             <span class="text-sm {{ request()->routeIs('pasien.*') ? 'font-bold' : 'font-medium' }}">Pasien</span>
@@ -34,6 +42,7 @@
             <span class="material-symbols-outlined text-[24px] {{ request()->routeIs('obat.*') ? 'fill-1' : 'group-hover:text-slate-900 dark:group-hover:text-white' }}">medication</span>
             <span class="text-sm {{ request()->routeIs('obat.*') ? 'font-bold' : 'font-medium' }}">Obat</span>
         </a>
+        @endif
 
         <div class="my-2 border-t border-slate-100 dark:border-slate-800"></div>
 
