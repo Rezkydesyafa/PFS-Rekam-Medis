@@ -42,6 +42,7 @@ class DatabaseSeeder extends Seeder
             PasienSeeder::class, // Data Pasien
             DokterSeeder::class, // Data Dokter (Baru)
             ObatSeeder::class,   // Data Obat (Baru)
+            RekamMedisSeeder::class, // Data Rekam Medis (Baru)
         ]);
     }
 }
