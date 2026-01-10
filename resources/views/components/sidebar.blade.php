@@ -95,7 +95,7 @@
             <div x-show="!sidebarExpanded" class="absolute left-full ml-3 px-2 py-1 bg-slate-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50">Rekam Medis</div>
         </a>
 
-        <a href="#" class="flex items-center gap-3 px-3.5 py-3 rounded-2xl transition-all duration-200 group relative text-slate-500 hover:bg-slate-50 hover:text-slate-900"
+        <a href="{{ route('obat.index') }}" class="flex items-center gap-3 px-3.5 py-3 rounded-2xl transition-all duration-200 group relative text-slate-500 hover:bg-slate-50 hover:text-slate-900"
            :class="sidebarExpanded ? 'justify-start' : 'justify-center'">
             <span class="material-symbols-outlined text-[22px] text-slate-400 group-hover:text-slate-600">medication</span>
             <span x-show="sidebarExpanded" class="text-sm font-bold whitespace-nowrap text-slate-600 group-hover:text-slate-900">Obat & Apotek</span>
