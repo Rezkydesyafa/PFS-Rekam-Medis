@@ -8,164 +8,187 @@
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
     </style>
 
-    <div class="min-h-screen w-full flex bg-white selection:bg-blue-100 selection:text-blue-900 overflow-hidden">
+    <!-- Main Container: Full Screen, 50:50 Split, No Scroll -->
+    <div class="h-screen w-screen flex bg-white overflow-hidden selection:bg-blue-100 selection:text-blue-900">
         
-        <!-- LEFT COLUMN: LOGIN FORM -->
-        <!-- Clean, no card, rigorous spacing -->
-        <div class="w-full lg:w-1/2 flex flex-col justify-center p-8 sm:p-12 lg:p-20 xl:p-24 bg-white relative z-10">
+        <!-- LEFT COLUMN: LOGIN FORM (50% Width) -->
+        <div class="w-full lg:w-1/2 flex flex-col justify-center px-8 sm:px-12 lg:px-20 xl:px-24 h-full relative z-10 bg-white">
             
-            <div class="w-full max-w-[420px] mx-auto flex flex-col h-full justify-between lg:h-auto">
-                <!-- Top: Logo -->
-                <div class="mb-10 lg:mb-16">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-blue-600/20">
-                            <span class="material-symbols-outlined text-[24px]">local_hospital</span>
-                        </div>
-                        <span class="font-extrabold text-2xl text-slate-900 tracking-tight">SIRM</span>
+            <div class="w-full max-w-[440px] mx-auto flex flex-col h-full justify-center lg:h-auto">
+                <!-- Logo -->
+                <div class="mb-10 flex items-center gap-3">
+                    <div class="w-11 h-11 bg-blue-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-blue-600/20">
+                        <span class="material-symbols-outlined text-[26px]">local_hospital</span>
+                    </div>
+                    <div>
+                        <span class="block font-extrabold text-2xl text-slate-900 tracking-tight leading-none">SIRM</span>
+                        <span class="text-[10px] font-bold text-slate-400 tracking-wider uppercase">Enterprise</span>
                     </div>
                 </div>
 
-                <!-- Middle: Form -->
-                <div>
-                    <div class="mb-10">
-                        <h1 class="text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight mb-3">Welcome Back</h1>
-                        <p class="text-slate-500 font-medium text-base">Enter your access credentials to proceed.</p>
-                    </div>
-
-                    <x-auth-session-status class="mb-4" :status="session('status')" />
-
-                    <form method="POST" action="{{ route('login') }}" class="space-y-6">
-                        @csrf
-
-                        <!-- Email -->
-                        <div class="space-y-2">
-                            <label for="email" class="text-sm font-bold text-slate-700 ml-1">Email Address</label>
-                            <div class="relative group">
-                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                    <span class="material-symbols-outlined text-slate-400 group-focus-within:text-blue-600 transition-colors text-[20px]">mail</span>
-                                </div>
-                                <input id="email" 
-                                       type="email" 
-                                       name="email" 
-                                       value="{{ old('email') }}" 
-                                       required 
-                                       autofocus 
-                                       autocomplete="username"
-                                       class="w-full pl-11 pr-4 py-4 bg-white border border-slate-200 rounded-xl text-slate-900 text-sm font-semibold focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all placeholder:text-slate-400 placeholder:font-normal shadow-sm group-hover:border-slate-300"
-                                       placeholder="doctor@hospital.com">
-                            </div>
-                            <x-input-error :messages="$errors->get('email')" class="mt-1" />
-                        </div>
-
-                        <!-- Password -->
-                        <div class="space-y-2" x-data="{ show: false }">
-                            <div class="flex items-center justify-between ml-1">
-                                <label for="password" class="text-sm font-bold text-slate-700">Password</label>
-                                @if (Route::has('password.request'))
-                                    <a class="text-sm font-bold text-blue-600 hover:text-blue-700 hover:underline" href="{{ route('password.request') }}">
-                                        Forgot Password?
-                                    </a>
-                                @endif
-                            </div>
-                            <div class="relative group">
-                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                    <span class="material-symbols-outlined text-slate-400 group-focus-within:text-blue-600 transition-colors text-[20px]">lock_open</span>
-                                </div>
-                                <input id="password" 
-                                       :type="show ? 'text' : 'password'"
-                                       name="password"
-                                       required 
-                                       autocomplete="current-password"
-                                       class="w-full pl-11 pr-12 py-4 bg-white border border-slate-200 rounded-xl text-slate-900 text-sm font-semibold focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all placeholder:text-slate-400 placeholder:font-normal shadow-sm group-hover:border-slate-300"
-                                       placeholder="••••••••">
-                                <button type="button" @click="show = !show" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors p-1">
-                                    <span class="material-symbols-outlined text-[20px]" x-text="show ? 'visibility_off' : 'visibility'">visibility</span>
-                                </button>
-                            </div>
-                            <x-input-error :messages="$errors->get('password')" class="mt-1" />
-                        </div>
-
-                        <!-- Remember Me -->
-                        <div class="block">
-                            <label for="remember_me" class="inline-flex items-center cursor-pointer group">
-                                <input id="remember_me" type="checkbox" class="rounded-[4px] border-slate-300 text-blue-600 shadow-sm focus:ring-blue-500 w-4 h-4 cursor-pointer" name="remember">
-                                <span class="ml-2 text-sm text-slate-600 font-semibold group-hover:text-slate-800 transition-colors select-none">Keep me logged in</span>
-                            </label>
-                        </div>
-
-                        <!-- Submit Button -->
-                        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white h-14 rounded-xl font-bold text-[15px] shadow-xl shadow-blue-600/20 hover:shadow-blue-600/30 transition-all transform hover:-translate-y-0.5 active:scale-[0.98] flex items-center justify-center gap-2">
-                            <span>Sign In to Dashboard</span>
-                            <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
-                        </button>
-                    </form>
+                <!-- Header -->
+                <div class="mb-8">
+                    <h1 class="text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight mb-3">Selamat Datang</h1>
+                    <p class="text-slate-500 font-medium text-base leading-relaxed">
+                        Silakan masuk ke akun terverifikasi Anda untuk mengakses sistem rekam medis.
+                    </p>
                 </div>
 
-                <!-- Bottom: Copyright -->
-                <div class="mt-10 lg:mt-16 text-center lg:text-left">
-                    <p class="text-slate-400 text-xs font-semibold">
-                        &copy; {{ date('Y') }} SIRM Healthcare. Secure Encrypted Connection.
+                <x-auth-session-status class="mb-6" :status="session('status')" />
+
+                <form method="POST" action="{{ route('login') }}" class="space-y-5">
+                    @csrf
+
+                    <!-- Email -->
+                    <div>
+                        <label for="email" class="text-xs font-bold text-slate-700 ml-1 mb-1.5 block uppercase tracking-wide">Alamat Email</label>
+                        <div class="relative group">
+                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                <span class="material-symbols-outlined text-slate-400 group-focus-within:text-blue-600 transition-colors text-[20px]">mail</span>
+                            </div>
+                            <input id="email" 
+                                   type="email" 
+                                   name="email" 
+                                   value="{{ old('email') }}" 
+                                   required 
+                                   autofocus 
+                                   autocomplete="username"
+                                   class="w-full pl-11 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-sm font-semibold focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all placeholder:text-slate-400 shadow-sm"
+                                   placeholder="dokter@rumahsakit.com">
+                        </div>
+                        <x-input-error :messages="$errors->get('email')" class="mt-1" />
+                    </div>
+
+                    <!-- Password -->
+                    <div x-data="{ show: false }">
+                        <div class="flex items-center justify-between ml-1 mb-1.5">
+                            <label for="password" class="text-xs font-bold text-slate-700 uppercase tracking-wide">Kata Sandi</label>
+                            @if (Route::has('password.request'))
+                                <a class="text-xs font-bold text-blue-600 hover:text-blue-700 hover:underline" href="{{ route('password.request') }}">
+                                    Lupa Kata Sandi?
+                                </a>
+                            @endif
+                        </div>
+                        <div class="relative group">
+                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                <span class="material-symbols-outlined text-slate-400 group-focus-within:text-blue-600 transition-colors text-[20px]">lock</span>
+                            </div>
+                            <input id="password" 
+                                   :type="show ? 'text' : 'password'"
+                                   name="password"
+                                   required 
+                                   autocomplete="current-password"
+                                   class="w-full pl-11 pr-11 py-3.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-sm font-semibold focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all placeholder:text-slate-400 shadow-sm"
+                                   placeholder="••••••••">
+                            <button type="button" @click="show = !show" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors">
+                                <span class="material-symbols-outlined text-[20px]" x-text="show ? 'visibility_off' : 'visibility'">visibility</span>
+                            </button>
+                        </div>
+                        <x-input-error :messages="$errors->get('password')" class="mt-1" />
+                    </div>
+
+                    <!-- Remember Me -->
+                    <div class="flex items-center py-1">
+                        <label for="remember_me" class="inline-flex items-center cursor-pointer group select-none">
+                            <input id="remember_me" type="checkbox" class="rounded-[4px] border-slate-300 text-blue-600 shadow-sm focus:ring-blue-500 w-4 h-4 cursor-pointer" name="remember">
+                            <span class="ml-2.5 text-xs text-slate-600 font-bold group-hover:text-slate-900 transition-colors">Ingat perangkat ini</span>
+                        </label>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white h-14 rounded-xl font-bold text-sm shadow-xl shadow-blue-600/20 hover:shadow-blue-600/30 transition-all transform active:scale-[0.98] flex items-center justify-center gap-2 mt-2">
+                        <span>Masuk Dashboard</span>
+                        <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+                    </button>
+                </form>
+
+                <!-- Footer -->
+                <div class="mt-10 pt-6 border-t border-slate-100 text-center lg:text-left">
+                    <p class="text-slate-400 text-[11px] font-semibold leading-relaxed">
+                        &copy; {{ date('Y') }} SIRM Enterprise. <br class="lg:hidden"/> Protokol Keamanan Terverifikasi.
                     </p>
                 </div>
             </div>
         </div>
 
-        <!-- RIGHT COLUMN: VISUAL FEATURE -->
-        <!-- Floating Card Design -->
-        <div class="hidden lg:flex lg:w-1/2 h-screen p-6 sticky top-0 bg-white items-center justify-center">
-            <div class="w-full h-full bg-[#1b5df2] rounded-[2.5rem] relative overflow-hidden flex flex-col shadow-2xl shadow-blue-200/50">
+        <!-- RIGHT COLUMN: VISUAL FEATURE (50% Width) -->
+        <div class="hidden lg:flex lg:w-1/2 h-full p-6 relative">
+            <div class="w-full h-full bg-[#1b5df2] rounded-[2.5rem] relative overflow-hidden flex flex-col items-center justify-center text-center text-white shadow-2xl shadow-blue-200/50 border-[6px] border-white ring-1 ring-slate-100">
                 
-                <!-- Background: Abstract & Medical Context -->
+                <!-- Background Ambient -->
                 <div class="absolute inset-0 z-0">
-                    <div class="absolute -top-[100px] -right-[100px] w-[500px] h-[500px] bg-blue-500 rounded-full blur-[120px] opacity-50"></div>
-                    <div class="absolute bottom-[-50px] left-[-50px] w-[400px] h-[400px] bg-indigo-600 rounded-full blur-[100px] opacity-40"></div>
-                    <!-- Subtle Grid Lines -->
-                    <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTEgMEwwIDBMMCA2MEwxIDYwIiBmaWxsPSJub25lIiBzdHJva2U9InJnYmEoMjU1LDI1NSwyNTUsMC4wNSkiIHN0cm9rZS13aWR0aD0iMSIvPjwvc3ZnPg==')] opacity-30"></div>
+                     <div class="absolute top-[-20%] right-[-20%] w-[600px] h-[600px] bg-blue-500 rounded-full blur-[100px] opacity-50"></div>
+                     <div class="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] bg-indigo-600 rounded-full blur-[100px] opacity-40"></div>
+                     <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTEgMEwwIDBMMCA2MEwxIDYwIiBmaWxsPSJub25lIiBzdHJva2U9InJnYmEoMjU1LDI1NSwyNTUsMC4wNSkiIHN0cm9rZS13aWR0aD0iMSIvPjwvc3ZnPg==')] opacity-20"></div>
                 </div>
 
-                <!-- Feature Content -->
-                <div class="relative z-10 flex-1 flex flex-col items-center justify-center p-12 text-center text-white">
+                <!-- Content Container -->
+                <div class="relative z-10 w-full px-12 flex flex-col items-center justify-center h-full">
                     
-                    <!-- Floating Dashboard UI -->
-                    <div class="w-full max-w-[500px] relative mb-14 group">
-                        <!-- Glow Effect -->
-                        <div class="absolute -inset-1 bg-gradient-to-r from-blue-300 to-indigo-300 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
+                    <!-- DYNAMIC DASHBOARD MOCKUP -->
+                    <div class="w-full max-w-[500px] relative mb-12 group">
                         
-                        <!-- Main Card -->
-                        <div class="relative bg-white rounded-2xl p-2 shadow-2xl transform transition-all duration-500 ease-in-out group-hover:scale-[1.02] group-hover:-translate-y-2">
-                            <div class="bg-slate-50 rounded-xl overflow-hidden border border-slate-100 relative h-[320px]">
-                                <!-- UI Image -->
-                                <img src="{{ asset('hero-photos.png') }}" class="w-full h-full object-cover object-top" alt="SIRM Dashboard">
-                                
-                                <!-- Floating Stats Widget -->
-                                <div class="absolute bottom-5 left-5 right-5 bg-white/90 backdrop-blur-md p-4 rounded-xl shadow-lg border border-white/50 flex items-center justify-between">
-                                    <div class="flex items-center gap-3">
-                                        <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600">
-                                            <span class="material-symbols-outlined">vital_signs</span>
-                                        </div>
-                                        <div class="text-left">
-                                            <p class="text-[10px] text-slate-500 font-bold uppercase tracking-wider">System Status</p>
-                                            <p class="text-sm font-extrabold text-slate-800">99.9% Uptime</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex -space-x-2">
-                                        <div class="w-8 h-8 rounded-full border-2 border-white bg-slate-200" style="background-image: url('https://i.pravatar.cc/100?img=11'); background-size: cover;"></div>
-                                        <div class="w-8 h-8 rounded-full border-2 border-white bg-slate-200" style="background-image: url('https://i.pravatar.cc/100?img=12'); background-size: cover;"></div>
-                                         <div class="w-8 h-8 rounded-full border-2 border-white bg-slate-100 flex items-center justify-center text-[10px] font-bold text-slate-600">+5</div>
-                                    </div>
-                                </div>
-                            </div>
+                        <!-- Floating Glass Card -->
+                        <div class="bg-white/10 backdrop-blur-sm border border-white/20 p-2 rounded-2xl shadow-2xl transform transition-transform duration-700 hover:scale-[1.02] hover:-translate-y-1">
+                             <!-- Inner App Window -->
+                             <div class="bg-slate-50 rounded-xl overflow-hidden shadow-inner">
+                                 <!-- Fake Browser Header -->
+                                 <div class="h-8 bg-white border-b border-slate-200 flex items-center px-3 gap-1.5">
+                                     <div class="w-2.5 h-2.5 rounded-full bg-slate-300"></div>
+                                     <div class="w-2.5 h-2.5 rounded-full bg-slate-300"></div>
+                                 </div>
+
+                                 <!-- App Body -->
+                                 <div class="p-5 flex flex-col gap-4">
+                                     <!-- Stats Row -->
+                                     <div class="flex gap-4">
+                                         <div class="bg-white p-3 rounded-xl border border-slate-100 shadow-sm flex-1 text-left">
+                                             <div class="w-8 h-8 bg-blue-50 rounded-lg flex items-center justify-center text-blue-600 mb-2">
+                                                 <span class="material-symbols-outlined text-sm">monitor_heart</span>
+                                             </div>
+                                             <div class="text-[10px] uppercase font-bold text-slate-400">Total Kunjungan</div>
+                                             <div class="text-lg font-extrabold text-slate-800">8,245</div>
+                                         </div>
+                                         <div class="bg-white p-3 rounded-xl border border-slate-100 shadow-sm flex-1 text-left">
+                                             <div class="w-8 h-8 bg-green-50 rounded-lg flex items-center justify-center text-green-600 mb-2">
+                                                 <span class="material-symbols-outlined text-sm">medication</span>
+                                             </div>
+                                             <div class="text-[10px] uppercase font-bold text-slate-400">Resep Obat</div>
+                                             <div class="text-lg font-extrabold text-slate-800">1,402</div>
+                                         </div>
+                                     </div>
+                                     
+                                     <!-- Chart Row -->
+                                     <div class="bg-white rounded-xl border border-slate-100 shadow-sm p-4 h-32 flex items-end justify-between gap-2 relative overflow-hidden">
+                                         <div class="absolute top-3 left-3 text-[10px] font-bold text-slate-400 uppercase">Tren Mingguan</div>
+                                         <!-- Pillars -->
+                                         <div class="w-full bg-blue-100/60 rounded-t-sm h-[40%] hover:bg-blue-400 transition-colors"></div>
+                                         <div class="w-full bg-blue-100/60 rounded-t-sm h-[60%] hover:bg-blue-400 transition-colors"></div>
+                                         <div class="w-full bg-blue-200    rounded-t-sm h-[80%] hover:bg-blue-500 transition-colors shadow-lg shadow-blue-200"></div>
+                                         <div class="w-full bg-blue-100/60 rounded-t-sm h-[50%] hover:bg-blue-400 transition-colors"></div>
+                                         <div class="w-full bg-blue-100/60 rounded-t-sm h-[70%] hover:bg-blue-400 transition-colors"></div>
+                                     </div>
+                                 </div>
+                             </div>
+                        </div>
+
+                        <!-- Floating Verified Badge -->
+                         <div class="absolute -right-5 bottom-8 bg-white py-2 px-3 rounded-lg shadow-[0_8px_30px_rgb(0,0,0,0.12)] flex items-center gap-2 animate-bounce-slow border border-slate-100">
+                             <div class="w-5 h-5 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center">
+                                 <span class="material-symbols-outlined text-[14px]">shield</span>
+                             </div>
+                             <div class="text-left">
+                                 <p class="text-[8px] text-slate-400 font-bold uppercase tracking-wider">Keamanan</p>
+                                 <p class="text-[10px] font-bold text-slate-800">Terverifikasi</p>
+                             </div>
                         </div>
                     </div>
 
-                    <!-- Marketing Text -->
-                    <div class="max-w-md mx-auto space-y-4">
-                        <h2 class="text-[2rem] font-bold leading-tight tracking-tight">
-                            Smart Healthcare, <br/> 
-                            <span class="text-blue-200">Simplified.</span>
-                        </h2>
-                        <p class="text-blue-100 text-lg font-medium leading-relaxed opacity-90">
-                            Experience the next generation of medical record keeping. Fast, secure, and intuitive.
+                    <!-- Text -->
+                    <div class="max-w-md mx-auto space-y-3">
+                        <h2 class="text-3xl font-bold tracking-tight">Rumah Sakit Pintar. <br/> <span class="text-blue-200">Berbasis Data.</span></h2>
+                        <p class="text-blue-50 text-base font-medium leading-relaxed opacity-90">
+                            Sistem terintegrasi untuk manajemen rekam medis dan pemantauan pasien yang mulus.
                         </p>
                     </div>
 
