@@ -89,23 +89,22 @@
                 <!-- Text Content -->
                 <div class="lg:w-1/2 space-y-8 relative z-10">
                     <h1 class="text-5xl lg:text-[4rem] font-bold text-slate-900 leading-[1.1] tracking-tight">
-                        Your <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600">trusted partner</span><br>
-                        in digital healthcare.
+                        Mitra Terpercaya Anda dalam <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600">Layanan Kesehatan Digital</span>.
                     </h1>
                     <p class="text-lg text-slate-500 leading-relaxed max-w-xl">
-                        <span class="font-bold text-blue-600">Empowering Your Health at Every Step.</span> Experience personalized medical care from the comfort of your home. Connect with <span class="text-blue-600 font-semibold">certified doctors</span>, or manage prescriptions, and schedule appointments with ease.
+                        <span class="font-bold text-blue-600">Meningkatkan Kualitas Layanan Kesehatan.</span> Nikmati kemudahan pengelolaan data medis yang aman dan terintegrasi. Hubungkan dokter, pasien, dan farmasi dalam satu platform cerdas.
                     </p>
                     
                     <div class="flex flex-col sm:flex-row gap-4 pt-2">
                         <a href="/register" class="bg-gradient-to-r from-blue-400 to-blue-600 text-white px-8 py-4 rounded-xl font-bold hover:shadow-lg hover:shadow-blue-500/30 transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2 text-lg">
-                            Book an appointment
+                            Buat Janji Temu
                             <span class="material-symbols-outlined font-bold">arrow_forward_ios</span>
                         </a>
                     </div>
 
                     <!-- Trusted By -->
                     <div class="pt-8 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
-                        <p class="text-sm text-slate-400 mb-4 font-medium">Trusted by millions across the globe:</p>
+                        <p class="text-sm text-slate-400 mb-4 font-medium">Dipercaya oleh fasilitas kesehatan terkemuka:</p>
                         <div class="flex items-center gap-8">
                             <span class="material-symbols-outlined text-[32px]">cruelty_free</span> <!-- Placeholder for Amazon -->
                             <span class="material-symbols-outlined text-[32px]">nutrition</span> <!-- Placeholder for Apple -->
@@ -294,24 +293,133 @@
         </div>
     </section>
 
+    <!-- Contact / Help Desk Section -->
+    <section class="py-24 relative overflow-hidden bg-white">
+        <!-- Decoration: Dashed Line Path -->
+        <div class="absolute inset-0 pointer-events-none">
+             <svg class="w-full h-full" viewBox="0 0 1440 400" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+                <path d="M-100 350 C 200 350, 400 100, 720 100 C 1040 100, 1240 350, 1540 350" stroke="#BFDBFE" stroke-width="2" stroke-dasharray="12 12" fill="none"/>
+            </svg>
+        </div>
+
+        <!-- Decoration: Wavy Lines (Left) -->
+        <div class="absolute top-20 left-10 opacity-60 hidden lg:block">
+            <svg width="100" height="50" viewBox="0 0 100 50" fill="none">
+                 <path d="M0 10 Q 25 30 50 10 T 100 10" stroke="#3B82F6" stroke-width="2" fill="none"/>
+                 <path d="M0 25 Q 25 45 50 25 T 100 25" stroke="#3B82F6" stroke-width="2" fill="none"/>
+                 <path d="M0 40 Q 25 60 50 40 T 100 40" stroke="#3B82F6" stroke-width="2" fill="none"/>
+            </svg>
+        </div>
+
+        <!-- Decoration: Dot Grid (Right) -->
+        <div class="absolute top-20 right-10 opacity-30 hidden lg:block text-blue-400">
+             <svg width="100" height="100" viewBox="0 0 100 100" fill="currentColor">
+                <pattern id="dots" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+                    <circle cx="2" cy="2" r="2" />
+                </pattern>
+                <rect width="100" height="100" fill="url(#dots)" />
+            </svg>
+        </div>
+
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <h2 class="text-3xl lg:text-5xl font-bold text-slate-900 mb-4">
+                Hubungi <span class="text-blue-500">Help Desk</span> Kami
+            </h2>
+            <p class="text-slate-500 mb-12">
+                Punya pertanyaan? Butuh bantuan? Tim support kami siap membantu setiap langkah Anda.
+            </p>
+
+            <form class="flex flex-col md:flex-row gap-4 justify-center">
+                <!-- Name Input -->
+                <div class="relative w-full md:w-64 group">
+                    <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-blue-500 group-focus-within:text-blue-600 transition-colors">person</span>
+                    <input type="text" placeholder="Nama Lengkap" class="w-full pl-12 pr-4 py-4 rounded-xl border border-blue-100 bg-white focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all placeholder:text-slate-400 text-sm font-medium shadow-lg shadow-blue-100/20">
+                </div>
+
+                <!-- Email Input -->
+                <div class="relative w-full md:w-80 group">
+                    <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-blue-500 group-focus-within:text-blue-600 transition-colors">mail</span>
+                    <input type="email" placeholder="Alamat Email" class="w-full pl-12 pr-4 py-4 rounded-xl border border-blue-100 bg-white focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all placeholder:text-slate-400 text-sm font-medium shadow-lg shadow-blue-100/20">
+                </div>
+
+                <!-- Button -->
+                <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-8 py-4 rounded-xl font-bold transition-all shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 flex items-center justify-center gap-2 text-sm whitespace-nowrap">
+                    Hubungi Kami
+                    <span class="material-symbols-outlined text-[18px]">arrow_circle_right</span>
+                </button>
+            </form>
+        </div>
+    </section>
+
     <!-- Footer -->
-    <footer class="bg-slate-900 text-white pt-20 pb-10">
+    <footer class="bg-blue-50/30 pt-20 pb-10 border-t border-blue-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                 <h2 class="text-3xl font-bold mb-4">Butuh Bantuan?</h2>
-                 <p class="text-slate-400">Tim support kami siap membantu Anda 24/7.</p>
-                 <div class="flex justify-center gap-4 mt-8">
-                     <a href="#" class="inline-block bg-blue-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-blue-700">Hubungi Support</a>
-                     <a href="#" class="inline-block bg-slate-800 text-white px-8 py-3 rounded-full font-semibold hover:bg-slate-700 border border-slate-700">Dokumentasi API</a>
-                 </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-20 mb-16">
+                <!-- Brand -->
+                <div class="space-y-6">
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-xl">
+                            <span class="material-symbols-outlined text-[20px]">folder_shared</span>
+                        </div>
+                        <span class="font-extrabold text-xl text-slate-900 tracking-tight">SIRM</span>
+                    </div>
+                    <p class="text-slate-500 text-sm leading-relaxed">
+                        Nikmati layanan kesehatan yang terpersonalisasi, aman, dan efisien langsung dari perangkat Anda.
+                    </p>
+                </div>
+
+                <!-- Support -->
+                <div>
+                    <h3 class="font-bold text-blue-600 mb-6">Bantuan</h3>
+                    <ul class="space-y-4">
+                        <li><a href="#" class="text-slate-500 text-sm hover:text-blue-600 transition-colors">Panduan Pengguna</a></li>
+                        <li><a href="#" class="text-slate-500 text-sm hover:text-blue-600 transition-colors">FAQ / Pertanyaan Umum</a></li>
+                        <li><a href="#" class="text-slate-500 text-sm hover:text-blue-600 transition-colors">Artikel Bantuan</a></li>
+                        <li><a href="#" class="text-slate-500 text-sm hover:text-blue-600 transition-colors">Laporkan Masalah</a></li>
+                        <li><a href="#" class="text-slate-500 text-sm hover:text-blue-600 transition-colors">Kontak Support</a></li>
+                    </ul>
+                </div>
+
+                <!-- Services -->
+                <div>
+                    <h3 class="font-bold text-blue-600 mb-6">Layanan</h3>
+                    <ul class="space-y-4">
+                        <li><a href="#" class="text-slate-500 text-sm hover:text-blue-600 transition-colors">Booking Jadwal Dokter</a></li>
+                        <li><a href="#" class="text-slate-500 text-sm hover:text-blue-600 transition-colors">Konsultasi Online</a></li>
+                        <li><a href="#" class="text-slate-500 text-sm hover:text-blue-600 transition-colors">E-Resep Obat</a></li>
+                        <li><a href="#" class="text-slate-500 text-sm hover:text-blue-600 transition-colors">Cek Stok Obat</a></li>
+                        <li><a href="#" class="text-slate-500 text-sm hover:text-blue-600 transition-colors">Riwayat Medis</a></li>
+                    </ul>
+                </div>
+
+                <!-- Legal -->
+                <div>
+                    <h3 class="font-bold text-blue-600 mb-6">Legalitas</h3>
+                    <ul class="space-y-4">
+                        <li><a href="#" class="text-slate-500 text-sm hover:text-blue-600 transition-colors">Syarat & Ketentuan</a></li>
+                        <li><a href="#" class="text-slate-500 text-sm hover:text-blue-600 transition-colors">Kebijakan Privasi</a></li>
+                        <li><a href="#" class="text-slate-500 text-sm hover:text-blue-600 transition-colors">Kebijakan Cookie</a></li>
+                        <li><a href="#" class="text-slate-500 text-sm hover:text-blue-600 transition-colors">Pusat Kepercayaan</a></li>
+                    </ul>
+                </div>
             </div>
             
-            <div class="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-400">
-                <p>&copy; 2026 SIRM. Hak Cipta Dilindungi.</p>
-                <div class="flex gap-6">
-                    <a href="#" class="hover:text-white">Kebijakan Privasi</a>
-                    <a href="#" class="hover:text-white">Syarat & Ketentuan</a>
+            <div class="border-t border-blue-100 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="flex gap-4">
+                    <a href="#" class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 hover:bg-blue-600 hover:text-white transition-all">
+                        <i class="fa-brands fa-facebook-f text-sm font-bold">f</i> <!-- Using simple text as fallback if fontawesome absent, or assume material-design logic -->
+                    </a>
+                    <a href="#" class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 hover:bg-blue-600 hover:text-white transition-all">
+                         <span class="font-bold text-sm">in</span>
+                    </a>
+                    <a href="#" class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 hover:bg-blue-600 hover:text-white transition-all">
+                        <span class="font-bold text-sm">Ig</span>
+                    </a>
+                     <a href="#" class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 hover:bg-blue-600 hover:text-white transition-all">
+                        <span class="material-symbols-outlined text-[16px]">play_arrow</span>
+                    </a>
                 </div>
+                <p class="text-slate-400 text-sm">&copy; 2026 SIRM. Seluruh Hak Cipta Dilindungi.</p>
             </div>
         </div>
     </footer>
