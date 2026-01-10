@@ -25,14 +25,15 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans antialiased bg-gray-100 dark:bg-gray-900 overflow-hidden">
+    <body class="font-sans antialiased bg-slate-50 overflow-hidden" x-data="{ sidebarExpanded: true }">
         <div class="flex h-screen w-full">
             <!-- Sidebar -->
             <x-sidebar />
 
             <!-- Main Content -->
-            <main class="flex-1 flex flex-col h-full overflow-hidden ml-0 lg:ml-64 transition-all duration-300">
-                <!-- Top Header for Mobile (Optional, can be added later) -->
+            <main class="flex-1 flex flex-col h-full overflow-hidden transition-all duration-300 ease-in-out"
+                  :class="sidebarExpanded ? 'lg:ml-72' : 'lg:ml-[5.5rem]'">
+                <!-- Top Header for Mobile (Optional) -->
                 
                 <div class="flex-1 overflow-y-auto p-4 md:p-8">
                     {{ $slot }}
