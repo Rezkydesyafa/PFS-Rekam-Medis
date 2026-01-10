@@ -1,4 +1,4 @@
-<aside class="fixed left-0 top-0 z-40 h-screen bg-white border-r border-slate-100 flex flex-col transition-all duration-300 ease-in-out shadow-[4px_0_24px_rgba(0,0,0,0.02)]"
+<aside class="fixed left-0 top-0 z-40 h-screen bg-white border-r border-slate-100 flex flex-col transition-all duration-300 ease-in-out shadow-[4px_0_24px_rgba(0,0,0,0.02)] rounded-r-3xl"
        :class="sidebarExpanded ? 'w-72' : 'w-[5.5rem]'">
 
     <!-- Header & Toggle -->
@@ -34,7 +34,7 @@
         
         <!-- Dashboard -->
         <a href="{{ route('dashboard') }}" 
-           class="flex items-center gap-3 px-3.5 py-3 rounded-xl transition-all duration-200 group relative {{ request()->routeIs('dashboard') ? 'bg-blue-50 text-blue-600' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900' }}"
+           class="flex items-center gap-3 px-3.5 py-3 rounded-2xl transition-all duration-200 group relative {{ request()->routeIs('dashboard') ? 'bg-blue-50 text-blue-600' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900' }}"
            :class="sidebarExpanded ? 'justify-start' : 'justify-center'">
             
             <span class="material-symbols-outlined text-[22px] transition-colors {{ request()->routeIs('dashboard') ? 'text-blue-600' : 'text-slate-400 group-hover:text-slate-600' }}">dashboard</span>
@@ -58,7 +58,7 @@
         </div>
 
         <a href="{{ route('admin.users.index') }}" 
-           class="flex items-center gap-3 px-3.5 py-3 rounded-xl transition-all duration-200 group relative {{ request()->routeIs('admin.users.*') ? 'bg-blue-50 text-blue-600' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900' }}"
+           class="flex items-center gap-3 px-3.5 py-3 rounded-2xl transition-all duration-200 group relative {{ request()->routeIs('admin.users.*') ? 'bg-blue-50 text-blue-600' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900' }}"
            :class="sidebarExpanded ? 'justify-start' : 'justify-center'">
             <span class="material-symbols-outlined text-[22px] transition-colors {{ request()->routeIs('admin.users.*') ? 'text-blue-600' : 'text-slate-400 group-hover:text-slate-600' }}">manage_accounts</span>
             <span x-show="sidebarExpanded" class="text-sm font-bold whitespace-nowrap {{ request()->routeIs('admin.users.*') ? 'text-blue-700' : 'text-slate-600 group-hover:text-slate-900' }}">Manajemen User</span>
@@ -73,7 +73,7 @@
         </div>
 
         <a href="{{ route('pasien.index') }}" 
-           class="flex items-center gap-3 px-3.5 py-3 rounded-xl transition-all duration-200 group relative {{ request()->routeIs('pasien.*') ? 'bg-blue-50 text-blue-600' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900' }}"
+           class="flex items-center gap-3 px-3.5 py-3 rounded-2xl transition-all duration-200 group relative {{ request()->routeIs('pasien.*') ? 'bg-blue-50 text-blue-600' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900' }}"
            :class="sidebarExpanded ? 'justify-start' : 'justify-center'">
             <span class="material-symbols-outlined text-[22px] transition-colors {{ request()->routeIs('pasien.*') ? 'text-blue-600' : 'text-slate-400 group-hover:text-slate-600' }}">group</span>
             <span x-show="sidebarExpanded" class="text-sm font-bold whitespace-nowrap {{ request()->routeIs('pasien.*') ? 'text-blue-700' : 'text-slate-600 group-hover:text-slate-900' }}">Data Pasien</span>
@@ -81,21 +81,21 @@
         </a>
 
         <a href="{{ route('dokter.index') }}" 
-           class="flex items-center gap-3 px-3.5 py-3 rounded-xl transition-all duration-200 group relative {{ request()->routeIs('dokter.*') ? 'bg-blue-50 text-blue-600' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900' }}"
+           class="flex items-center gap-3 px-3.5 py-3 rounded-2xl transition-all duration-200 group relative {{ request()->routeIs('dokter.*') ? 'bg-blue-50 text-blue-600' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900' }}"
            :class="sidebarExpanded ? 'justify-start' : 'justify-center'">
             <span class="material-symbols-outlined text-[22px] transition-colors {{ request()->routeIs('dokter.*') ? 'text-blue-600' : 'text-slate-400 group-hover:text-slate-600' }}">medical_services</span>
             <span x-show="sidebarExpanded" class="text-sm font-bold whitespace-nowrap {{ request()->routeIs('dokter.*') ? 'text-blue-700' : 'text-slate-600 group-hover:text-slate-900' }}">Data Dokter</span>
             <div x-show="!sidebarExpanded" class="absolute left-full ml-3 px-2 py-1 bg-slate-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50">Dokter</div>
         </a>
 
-        <a href="#" class="flex items-center gap-3 px-3.5 py-3 rounded-xl transition-all duration-200 group relative text-slate-500 hover:bg-slate-50 hover:text-slate-900"
+        <a href="#" class="flex items-center gap-3 px-3.5 py-3 rounded-2xl transition-all duration-200 group relative text-slate-500 hover:bg-slate-50 hover:text-slate-900"
            :class="sidebarExpanded ? 'justify-start' : 'justify-center'">
             <span class="material-symbols-outlined text-[22px] text-slate-400 group-hover:text-slate-600">folder_shared</span>
             <span x-show="sidebarExpanded" class="text-sm font-bold whitespace-nowrap text-slate-600 group-hover:text-slate-900">Rekam Medis</span>
             <div x-show="!sidebarExpanded" class="absolute left-full ml-3 px-2 py-1 bg-slate-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50">Rekam Medis</div>
         </a>
 
-        <a href="#" class="flex items-center gap-3 px-3.5 py-3 rounded-xl transition-all duration-200 group relative text-slate-500 hover:bg-slate-50 hover:text-slate-900"
+        <a href="#" class="flex items-center gap-3 px-3.5 py-3 rounded-2xl transition-all duration-200 group relative text-slate-500 hover:bg-slate-50 hover:text-slate-900"
            :class="sidebarExpanded ? 'justify-start' : 'justify-center'">
             <span class="material-symbols-outlined text-[22px] text-slate-400 group-hover:text-slate-600">medication</span>
             <span x-show="sidebarExpanded" class="text-sm font-bold whitespace-nowrap text-slate-600 group-hover:text-slate-900">Obat & Apotek</span>
@@ -106,7 +106,7 @@
         <div class="my-4 border-t border-slate-50"></div>
 
         <a href="{{ route('profile.edit') }}" 
-           class="flex items-center gap-3 px-3.5 py-3 rounded-xl transition-all duration-200 group relative {{ request()->routeIs('profile.*') ? 'bg-blue-50 text-blue-600' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900' }}"
+           class="flex items-center gap-3 px-3.5 py-3 rounded-2xl transition-all duration-200 group relative {{ request()->routeIs('profile.*') ? 'bg-blue-50 text-blue-600' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900' }}"
            :class="sidebarExpanded ? 'justify-start' : 'justify-center'">
             <span class="material-symbols-outlined text-[22px] transition-colors {{ request()->routeIs('profile.*') ? 'text-blue-600' : 'text-slate-400 group-hover:text-slate-600' }}">settings</span>
             <span x-show="sidebarExpanded" class="text-sm font-bold whitespace-nowrap {{ request()->routeIs('profile.*') ? 'text-blue-700' : 'text-slate-600 group-hover:text-slate-900' }}">Pengaturan</span>
@@ -117,7 +117,7 @@
 
     <!-- Footer Profile -->
     <div class="p-4 border-t border-slate-50">
-        <div class="flex items-center gap-3 p-3 rounded-xl bg-slate-50 border border-slate-100 transition-all duration-300 relative group"
+        <div class="flex items-center gap-3 p-3 rounded-2xl bg-slate-50 border border-slate-100 transition-all duration-300 relative group"
              :class="sidebarExpanded ? 'justify-start' : 'justify-center p-2'">
             
             <div class="h-9 w-9 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-400 shadow-sm shrink-0">
