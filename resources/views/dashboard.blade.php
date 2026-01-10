@@ -18,9 +18,9 @@
         </div>
 
         <div class="flex items-center gap-3 shrink-0">
-             <div class="bg-white border border-slate-200 text-slate-700 px-4 py-2 rounded-lg text-sm font-semibold shadow-sm flex items-center gap-2">
+             <div class="bg-white border border-slate-200 text-slate-700 px-4 py-2 rounded-lg text-sm font-semibold shadow-sm flex items-center gap-2 cursor-pointer hover:border-blue-400 transition-colors relative">
                 <span class="material-symbols-outlined text-[18px] text-slate-500">calendar_today</span>
-                <span>{{ date('d M Y') }}</span>
+                <input type="text" id="dashboardCalendar" value="{{ $selectedDate->format('d M Y') }}" class="border-none p-0 text-sm font-semibold text-slate-700 focus:ring-0 w-24 cursor-pointer bg-transparent" readonly>
             </div>
              <button class="bg-blue-600 text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700 transition-colors shadow-sm shadow-blue-600/20 flex items-center gap-2">
                 <span class="material-symbols-outlined text-[18px]">download</span>
@@ -37,7 +37,7 @@
             <div class="flex justify-between items-start mb-4">
                 <div>
                      <p class="text-slate-500 text-[11px] font-bold uppercase tracking-wider">Total Pasien</p>
-                     <h3 class="text-2xl font-extrabold text-slate-900 mt-1">12,450</h3>
+                     <h3 class="text-2xl font-extrabold text-slate-900 mt-1">{{ number_format($total_pasien) }}</h3>
                 </div>
                 <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center border border-blue-100">
                     <span class="material-symbols-outlined">group</span>
@@ -56,7 +56,7 @@
             <div class="flex justify-between items-start mb-4">
                 <div>
                      <p class="text-slate-500 text-[11px] font-bold uppercase tracking-wider">Kunjungan Hari Ini</p>
-                     <h3 class="text-2xl font-extrabold text-slate-900 mt-1">142</h3>
+                     <h3 class="text-2xl font-extrabold text-slate-900 mt-1">{{ number_format($kunjungan_hari_ini) }}</h3>
                 </div>
                  <div class="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-lg flex items-center justify-center border border-indigo-100">
                     <span class="material-symbols-outlined">stethoscope</span>
@@ -74,7 +74,7 @@
             <div class="flex justify-between items-start mb-4">
                 <div>
                      <p class="text-slate-500 text-[11px] font-bold uppercase tracking-wider">Data Rekam Medis</p>
-                     <h3 class="text-2xl font-extrabold text-slate-900 mt-1">8,924</h3>
+                     <h3 class="text-2xl font-extrabold text-slate-900 mt-1">{{ number_format($total_rm) }}</h3>
                 </div>
                  <div class="w-10 h-10 bg-purple-50 text-purple-600 rounded-lg flex items-center justify-center border border-purple-100">
                     <span class="material-symbols-outlined">folder_shared</span>
@@ -92,7 +92,7 @@
              <div class="flex justify-between items-start mb-4">
                 <div>
                      <p class="text-slate-500 text-[11px] font-bold uppercase tracking-wider">RM Tercetak</p>
-                     <h3 class="text-2xl font-extrabold text-slate-900 mt-1">1,205</h3>
+                     <h3 class="text-2xl font-extrabold text-slate-900 mt-1">{{ number_format($rm_tercetak) }}</h3>
                 </div>
                  <div class="w-10 h-10 bg-orange-50 text-orange-600 rounded-lg flex items-center justify-center border border-orange-100">
                     <span class="material-symbols-outlined">print</span>
@@ -112,22 +112,22 @@
                 <span class="material-symbols-outlined text-blue-600">bolt</span> Quick Access
             </h3>
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
-                <button class="flex flex-col items-center justify-center p-4 rounded-lg bg-slate-50 border border-slate-100 hover:bg-blue-50 hover:border-blue-100 hover:text-blue-600 transition-all group">
+                <a href="{{ route('pasien.create') }}" class="flex flex-col items-center justify-center p-4 rounded-lg bg-slate-50 border border-slate-100 hover:bg-blue-50 hover:border-blue-100 hover:text-blue-600 transition-all group">
                     <span class="material-symbols-outlined text-[28px] text-slate-400 mb-2 group-hover:text-blue-600 group-hover:scale-110 transition-all">person_add</span>
                     <span class="text-xs font-bold text-slate-600 group-hover:text-blue-600">Tambah Pasien</span>
-                </button>
-                 <button class="flex flex-col items-center justify-center p-4 rounded-lg bg-slate-50 border border-slate-100 hover:bg-blue-50 hover:border-blue-100 hover:text-blue-600 transition-all group">
+                </a>
+                 <a href="{{ route('rekam-medis.create') }}" class="flex flex-col items-center justify-center p-4 rounded-lg bg-slate-50 border border-slate-100 hover:bg-blue-50 hover:border-blue-100 hover:text-blue-600 transition-all group">
                     <span class="material-symbols-outlined text-[28px] text-slate-400 mb-2 group-hover:text-blue-600 group-hover:scale-110 transition-all">post_add</span>
                     <span class="text-xs font-bold text-slate-600 group-hover:text-blue-600">Rekam Medis</span>
-                </button>
-                 <button class="flex flex-col items-center justify-center p-4 rounded-lg bg-slate-50 border border-slate-100 hover:bg-blue-50 hover:border-blue-100 hover:text-blue-600 transition-all group">
+                </a>
+                 <a href="{{ route('dokter.index') }}" class="flex flex-col items-center justify-center p-4 rounded-lg bg-slate-50 border border-slate-100 hover:bg-blue-50 hover:border-blue-100 hover:text-blue-600 transition-all group">
                     <span class="material-symbols-outlined text-[28px] text-slate-400 mb-2 group-hover:text-blue-600 group-hover:scale-110 transition-all">calendar_month</span>
                     <span class="text-xs font-bold text-slate-600 group-hover:text-blue-600">Jadwal Dokter</span>
-                </button>
-                 <button class="flex flex-col items-center justify-center p-4 rounded-lg bg-slate-50 border border-slate-100 hover:bg-blue-50 hover:border-blue-100 hover:text-blue-600 transition-all group">
+                </a>
+                 <a href="{{ route('rekam-medis.index') }}" class="flex flex-col items-center justify-center p-4 rounded-lg bg-slate-50 border border-slate-100 hover:bg-blue-50 hover:border-blue-100 hover:text-blue-600 transition-all group">
                     <span class="material-symbols-outlined text-[28px] text-slate-400 mb-2 group-hover:text-blue-600 group-hover:scale-110 transition-all">print</span>
                     <span class="text-xs font-bold text-slate-600 group-hover:text-blue-600">Cetak RM</span>
-                </button>
+                </a>
             </div>
         </div>
 
@@ -163,29 +163,22 @@
 
                  <!-- Age Distribution (Donut) -->
                  <div class="flex items-center gap-6">
-                     <div class="relative w-24 h-24 shrink-0">
-                         <svg viewBox="0 0 36 36" class="w-full h-full transform -rotate-90">
-                            <!-- Background -->
-                            <path class="text-slate-100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="4.5" />
-                            
-                            <!-- Segment 1: >55 (Emerald) 30% -->
-                            <path class="text-emerald-400" stroke-dasharray="30, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="4.5" />
-                            
-                            <!-- Segment 2: 36-55 (Indigo) 45% - Starts after 30% -->
-                            <path class="text-indigo-500" stroke-dasharray="45, 100" stroke-dashoffset="-30" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="4.5" />
-                            
-                            <!-- Segment 3: 18-35 (Blue) 25% - Starts after 75% -->
-                            <path class="text-blue-600" stroke-dasharray="25, 100" stroke-dashoffset="-75" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="4.5" />
-                         </svg>
-                         <div class="absolute inset-0 flex items-center justify-center flex-col">
-                             <span class="text-xs font-bold text-slate-900">Usia</span>
-                             <span class="text-[10px] text-slate-500">Rata2</span>
-                         </div>
-                     </div>
+                     <!-- Donut placeholder, actual chart rendered via JS below -->
+                     <div id="ageDonutChart" class="w-28 h-28"></div>
+                     
                      <div class="text-xs font-medium text-slate-500 space-y-1.5">
-                         <p class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-blue-600"></span> 18-35 Th</p>
-                         <p class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-indigo-500"></span> 36-55 Th</p>
-                         <p class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-emerald-400"></span> >55 Th</p>
+                         <p class="flex items-center gap-2">
+                             <span class="w-2 h-2 rounded-full bg-blue-600"></span> 
+                             18-35 Th <span class="font-bold text-slate-800 ml-auto">{{ $age_stats['18_35'] }}%</span>
+                         </p>
+                         <p class="flex items-center gap-2">
+                             <span class="w-2 h-2 rounded-full bg-indigo-500"></span> 
+                             36-55 Th <span class="font-bold text-slate-800 ml-auto">{{ $age_stats['36_55'] }}%</span>
+                         </p>
+                         <p class="flex items-center gap-2">
+                             <span class="w-2 h-2 rounded-full bg-emerald-400"></span> 
+                             >55 Th <span class="font-bold text-slate-800 ml-auto">{{ $age_stats['gt_55'] }}%</span>
+                         </p>
                      </div>
                  </div>
              </div>
@@ -219,58 +212,26 @@
             <div class="flex-1 overflow-y-auto max-h-[350px]">
                 <table class="w-full text-left">
                     <tbody class="text-sm">
-                        <!-- Item 1 -->
-                        <tr class="hover:bg-slate-50 transition-colors border-b border-slate-50 last:border-0">
+                        @forelse($latest_patients as $pasien)
+                        <tr class="hover:bg-slate-50 transition-colors border-b border-slate-50 last:border-0 group">
                             <td class="p-4 pr-2">
-                                <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xs font-bold uppercase">AS</div>
+                                <div class="w-8 h-8 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center text-xs font-bold uppercase ring-2 ring-white">
+                                    {{ substr($pasien->name, 0, 2) }}
+                                </div>
                             </td>
                             <td class="py-4">
-                                <p class="font-bold text-slate-900 text-xs text-ellipsis overflow-hidden whitespace-nowrap max-w-[120px]">Andi Saputra</p>
-                                <p class="text-[10px] text-slate-400">#RM-00124</p>
+                                <p class="font-bold text-slate-900 text-xs text-ellipsis overflow-hidden whitespace-nowrap max-w-[120px] group-hover:text-blue-600 transition-colors">{{ $pasien->name }}</p>
+                                <p class="text-[10px] text-slate-400">{{ $pasien->no_rm }}</p>
                             </td>
                             <td class="p-4 text-right">
-                                <span class="bg-green-50 text-green-600 text-[10px] font-bold px-2 py-1 rounded border border-green-100">Selesai</span>
+                                <span class="bg-slate-100 text-slate-500 text-[10px] font-bold px-2 py-1 rounded border border-slate-200 uppercase">{{ $pasien->status ?? 'Active' }}</span>
                             </td>
                         </tr>
-                        <!-- Item 2 -->
-                         <tr class="hover:bg-slate-50 transition-colors border-b border-slate-50 last:border-0">
-                            <td class="p-4 pr-2">
-                                <div class="w-8 h-8 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center text-xs font-bold uppercase">MK</div>
-                            </td>
-                            <td class="py-4">
-                                <p class="font-bold text-slate-900 text-xs text-ellipsis overflow-hidden whitespace-nowrap max-w-[120px]">Maya Kartika</p>
-                                <p class="text-[10px] text-slate-400">#RM-00125</p>
-                            </td>
-                            <td class="p-4 text-right">
-                                <span class="bg-blue-50 text-blue-600 text-[10px] font-bold px-2 py-1 rounded border border-blue-100">Periksa</span>
-                            </td>
+                        @empty
+                        <tr>
+                            <td colspan="3" class="p-6 text-center text-slate-500 text-xs">Belum ada pasien terbaru.</td>
                         </tr>
-                        <!-- Item 3 -->
-                         <tr class="hover:bg-slate-50 transition-colors border-b border-slate-50 last:border-0">
-                            <td class="p-4 pr-2">
-                                <div class="w-8 h-8 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center text-xs font-bold uppercase">BP</div>
-                            </td>
-                            <td class="py-4">
-                                <p class="font-bold text-slate-900 text-xs text-ellipsis overflow-hidden whitespace-nowrap max-w-[120px]">Bambang P.</p>
-                                <p class="text-[10px] text-slate-400">#RM-00126</p>
-                            </td>
-                            <td class="p-4 text-right">
-                                <span class="bg-slate-100 text-slate-500 text-[10px] font-bold px-2 py-1 rounded border border-slate-200">Menunggu</span>
-                            </td>
-                        </tr>
-                         <!-- Item 4 -->
-                         <tr class="hover:bg-slate-50 transition-colors border-b border-slate-50 last:border-0">
-                            <td class="p-4 pr-2">
-                                <div class="w-8 h-8 rounded-full bg-pink-100 text-pink-600 flex items-center justify-center text-xs font-bold uppercase">SR</div>
-                            </td>
-                            <td class="py-4">
-                                <p class="font-bold text-slate-900 text-xs text-ellipsis overflow-hidden whitespace-nowrap max-w-[120px]">Siti Rahayu</p>
-                                <p class="text-[10px] text-slate-400">#RM-00127</p>
-                            </td>
-                            <td class="p-4 text-right">
-                                <span class="bg-slate-100 text-slate-500 text-[10px] font-bold px-2 py-1 rounded border border-slate-200">Menunggu</span>
-                            </td>
-                        </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>
@@ -278,12 +239,32 @@
     </div>
 
 
+    <!-- Plugins -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script>
+
+        flatpickr("#dashboardCalendar", {
+            dateFormat: "d M Y",
+            defaultDate: "{{ $selectedDate->format('d M Y') }}",
+            disableMobile: "true",
+            onChange: function(selectedDates, dateStr, instance) {
+                // Konversi format ke Y-m-d untuk dikirim ke server/URL
+                let dateObj = selectedDates[0];
+                let year = dateObj.getFullYear();
+                let month = String(dateObj.getMonth() + 1).padStart(2, '0');
+                let day = String(dateObj.getDate()).padStart(2, '0');
+                let isoDate = `${year}-${month}-${day}`;
+                
+                window.location.href = "{{ route('dashboard') }}?date=" + isoDate;
+            }
+        });
+        // Visit Chart
         var options = {
             series: [{
                 name: 'Kunjungan',
-                data: [42, 55, 48, 36, 45, 32, 28]
+                data:  @json($chart_data)
             }],
             chart: {
                 type: 'area',
@@ -318,7 +299,7 @@
                 padding: { left: 10 }
             },
             xaxis: {
-                categories: ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'],
+                categories: @json($categories),
                 axisBorder: { show: false },
                 axisTicks: { show: false },
                 labels: { style: { colors: '#94a3b8', fontSize: '11px', fontFamily: 'Plus Jakarta Sans', fontWeight: 600} }
@@ -335,5 +316,53 @@
 
         var chart = new ApexCharts(document.querySelector("#visitChart"), options);
         chart.render();
+
+        // Age Donut Chart
+        var ageOptions = {
+            series: @json($age_stats['counts']),
+            labels: ['18-35 Th', '36-55 Th', '>55 Th'],
+            chart: {
+                type: 'donut',
+                height: 120,
+                fontFamily: 'Plus Jakarta Sans, sans-serif',
+            },
+            plotOptions: {
+                pie: {
+                    donut: {
+                        size: '70%',
+                        labels: {
+                            show: true,
+                            name: { show: true, fontSize: '10px', color: '#64748b', offsetY: -2 },
+                            value: { show: true, fontSize: '12px', fontWeight: 800, color: '#1e293b', offsetY: 2 },
+                            total: {
+                                show: true,
+                                label: 'Usia',
+                                color: '#64748b',
+                                fontSize: '9px',
+                                formatter: function (w) {
+                                    return "Avg";
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            dataLabels: { enabled: false },
+            legend: { show: false },
+            stroke: { show: false },
+            colors: ['#2563eb', '#6366f1', '#34d399'], // blue-600, indigo-500, emerald-400
+            tooltip: {
+                enabled: true,
+                theme: 'light',
+                y: {
+                    formatter: function(val) {
+                        return val + " Pasien"
+                    }
+                }
+            }
+        };
+
+        var ageChart = new ApexCharts(document.querySelector("#ageDonutChart"), ageOptions);
+        ageChart.render();
     </script>
 </x-app-layout>

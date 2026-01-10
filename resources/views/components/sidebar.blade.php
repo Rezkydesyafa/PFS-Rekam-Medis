@@ -2,30 +2,25 @@
        :class="sidebarExpanded ? 'w-72' : 'w-[5.5rem]'">
 
     <!-- Header & Toggle -->
-    <div class="h-24 flex items-center relative transition-all duration-300"
-         :class="sidebarExpanded ? 'px-8 justify-start' : 'justify-center px-0'">
+    <div class="h-24 flex items-center w-full transition-all duration-300" 
+         :class="sidebarExpanded ? 'px-6 justify-between' : 'justify-center px-0'">
         
-        <!-- Logo -->
-        <div class="flex items-center gap-3">
+        <!-- Logo Text (Only visible when expanded) -->
+        <div class="flex items-center gap-3 overflow-hidden" x-show="sidebarExpanded">
              <div class="relative shrink-0 flex items-center justify-center">
-                 <img src="{{ asset('logo.png') }}" alt="Logo" class="w-10 h-10 object-contain drop-shadow-sm transition-all duration-300" :class="sidebarExpanded ? 'scale-100' : 'scale-110'">
+                 <img src="{{ asset('logo.png') }}" alt="Logo" class="w-8 h-8 object-contain">
              </div>
-             
-             <div x-show="sidebarExpanded"
-                  x-transition:enter="transition-opacity ease-out duration-300 delay-100"
-                  x-transition:enter-start="opacity-0"
-                  x-transition:enter-end="opacity-100"
-                  class="flex flex-col overflow-hidden whitespace-nowrap">
+             <div class="flex flex-col whitespace-nowrap">
                  <h1 class="text-slate-900 text-lg font-extrabold tracking-tight leading-none">SIRM</h1>
                  <p class="text-slate-400 text-[10px] font-bold uppercase tracking-wider mt-0.5">Enterprise</p>
              </div>
         </div>
 
-        <!-- Collapse Toggle Button -->
+        <!-- Menu Toggle Button -->
         <button @click="sidebarExpanded = !sidebarExpanded" 
-                class="absolute -right-4 top-1/2 -translate-y-1/2 w-8 h-8 bg-white border border-slate-100 rounded-full flex items-center justify-center text-slate-400 hover:text-blue-600 hover:bg-blue-50 hover:border-blue-200 shadow-[0_4px_12px_rgba(0,0,0,0.05)] transition-all duration-300 transform hover:scale-110 z-50 group">
-            <span class="material-symbols-outlined text-[18px] transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)]" 
-                  :class="sidebarExpanded ? 'rotate-0' : 'rotate-180'">chevron_left</span>
+                class="w-10 h-10 bg-white hover:bg-slate-50 border border-transparent hover:border-slate-100 rounded-xl flex items-center justify-center text-slate-500 hover:text-blue-600 transition-all duration-300"
+                :class="sidebarExpanded ? '' : 'w-12 h-12 bg-transparent border-0 hover:bg-blue-50/50'">
+            <span class="material-symbols-outlined text-[24px]">menu</span>
         </button>
     </div>
 
