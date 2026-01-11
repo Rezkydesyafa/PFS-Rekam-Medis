@@ -59,6 +59,14 @@ class DokterController extends Controller
             'tarif' => 'required|numeric|min:0',
             'no_sip' => 'required|string|max:50|unique:dokters,no_sip',
             'no_telepon' => 'required|string|max:20',
+        ], [
+            'nama_dokter.required' => 'Nama Dokter wajib diisi.',
+            'spesialisasi.required' => 'Spesialisasi wajib dipilih.',
+            'tarif.required' => 'Tarif jasa medis wajib diisi.',
+            'tarif.min' => 'Tarif tidak boleh kurang dari 0.',
+            'no_sip.required' => 'Nomor SIP wajib diisi.',
+            'no_sip.unique' => 'Nomor SIP sudah terdaftar.',
+            'no_telepon.required' => 'Nomor Telepon wajib diisi.',
         ]);
         
         Dokter::create([
@@ -103,6 +111,14 @@ class DokterController extends Controller
             'tarif' => 'required|numeric|min:0',
             'no_sip' => 'required|string|max:50|unique:dokters,no_sip,' . $dokter->id_dokter . ',id_dokter',
             'no_telepon' => 'required|string|max:20',
+        ], [
+            'nama_dokter.required' => 'Nama Dokter wajib diisi.',
+            'spesialisasi.required' => 'Spesialisasi wajib dipilih.',
+            'tarif.required' => 'Tarif jasa medis wajib diisi.',
+            'tarif.min' => 'Tarif tidak boleh kurang dari 0.',
+            'no_sip.required' => 'Nomor SIP wajib diisi.',
+            'no_sip.unique' => 'Nomor SIP sudah terdaftar.',
+            'no_telepon.required' => 'Nomor Telepon wajib diisi.',
         ]);
         
         $dokter->update([

@@ -32,7 +32,10 @@
                             <input class="w-full rounded-lg border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:border-primary focus:ring-primary shadow-sm placeholder:text-slate-400 @error('name') border-red-500 @enderror" 
                                    id="name" name="name" type="text" placeholder="Masukkan nama lengkap" value="{{ old('name') }}" required/>
                             @error('name')
-                                <p class="text-sm text-red-500">{{ $message }}</p>
+                                <p class="text-sm text-red-500 flex items-center gap-1 mt-1">
+                                    <span class="material-symbols-outlined text-[16px]">error</span>
+                                    {{ $message }}
+                                </p>
                             @enderror
                         </div>
                         <div class="flex flex-col gap-2">
@@ -40,7 +43,10 @@
                             <input class="w-full rounded-lg border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:border-primary focus:ring-primary shadow-sm placeholder:text-slate-400 @error('nik') border-red-500 @enderror" 
                                    id="nik" name="nik" type="number" placeholder="16 digit NIK" value="{{ old('nik') }}" required/>
                             @error('nik')
-                                <p class="text-sm text-red-500">{{ $message }}</p>
+                                <p class="text-sm text-red-500 flex items-center gap-1 mt-1">
+                                    <span class="material-symbols-outlined text-[16px]">error</span>
+                                    {{ $message }}
+                                </p>
                             @enderror
                         </div>
                         <div class="flex flex-col gap-2">
@@ -54,7 +60,10 @@
                             <input class="w-full rounded-lg border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:border-primary focus:ring-primary shadow-sm @error('tgl_lahir') border-red-500 @enderror" 
                                    id="birthDate" name="tgl_lahir" type="date" value="{{ old('tgl_lahir') }}" required/>
                             @error('tgl_lahir')
-                                <p class="text-sm text-red-500">{{ $message }}</p>
+                                <p class="text-sm text-red-500 flex items-center gap-1 mt-1">
+                                    <span class="material-symbols-outlined text-[16px]">error</span>
+                                    {{ $message }}
+                                </p>
                             @enderror
                         </div>
                         <div class="flex flex-col gap-2">
@@ -66,7 +75,10 @@
                                 <option value="P" {{ old('jenis_kelamin') == 'P' ? 'selected' : '' }}>Perempuan</option>
                             </select>
                             @error('jenis_kelamin')
-                                <p class="text-sm text-red-500">{{ $message }}</p>
+                                <p class="text-sm text-red-500 flex items-center gap-1 mt-1">
+                                    <span class="material-symbols-outlined text-[16px]">error</span>
+                                    {{ $message }}
+                                </p>
                             @enderror
                         </div>
                         <div class="flex flex-col gap-2">
@@ -107,7 +119,10 @@
                             <input class="w-full rounded-lg border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:border-primary focus:ring-primary shadow-sm placeholder:text-slate-400 @error('no_hp') border-red-500 @enderror" 
                                    id="phone" name="no_hp" type="tel" placeholder="08xxxxxxxxxx" value="{{ old('no_hp') }}" required/>
                             @error('no_hp')
-                                <p class="text-sm text-red-500">{{ $message }}</p>
+                                <p class="text-sm text-red-500 flex items-center gap-1 mt-1">
+                                    <span class="material-symbols-outlined text-[16px]">error</span>
+                                    {{ $message }}
+                                </p>
                             @enderror
                         </div>
                         <div class="flex flex-col gap-2">
@@ -115,7 +130,10 @@
                             <input class="w-full rounded-lg border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:border-primary focus:ring-primary shadow-sm placeholder:text-slate-400 @error('email') border-red-500 @enderror" 
                                    id="email" name="email" type="email" placeholder="email@contoh.com" value="{{ old('email') }}"/>
                             @error('email')
-                                <p class="text-sm text-red-500">{{ $message }}</p>
+                                <p class="text-sm text-red-500 flex items-center gap-1 mt-1">
+                                    <span class="material-symbols-outlined text-[16px]">error</span>
+                                    {{ $message }}
+                                </p>
                             @enderror
                         </div>
                         <div class="col-span-1 md:col-span-2 flex flex-col gap-2">
@@ -123,7 +141,10 @@
                             <textarea class="w-full rounded-lg border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:border-primary focus:ring-primary shadow-sm placeholder:text-slate-400 @error('alamat') border-red-500 @enderror" 
                                       id="address" name="alamat" rows="3" placeholder="Nama jalan, nomor rumah, RT/RW, kelurahan, kecamatan..." required>{{ old('alamat') }}</textarea>
                             @error('alamat')
-                                <p class="text-sm text-red-500">{{ $message }}</p>
+                                <p class="text-sm text-red-500 flex items-center gap-1 mt-1">
+                                    <span class="material-symbols-outlined text-[16px]">error</span>
+                                    {{ $message }}
+                                </p>
                             @enderror
                         </div>
                     </div>

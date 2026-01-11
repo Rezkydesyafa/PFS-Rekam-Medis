@@ -30,18 +30,31 @@
         @endif
 
         {{-- Pastikan component x-filter-bar Anda sudah ada --}}
-        <form method="GET" action="{{ route('tagihan.index') }}" class="flex flex-col md:flex-row gap-4">
-            <div class="flex-1 relative">
+        <div class="flex flex-col md:flex-row gap-4">
+            <form method="GET" action="{{ route('tagihan.index') }}" class="flex-1 relative">
+                @if(request('status'))
+                    <input type="hidden" name="status" value="{{ request('status') }}">
+                @endif
                 <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
                 <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari Nama Pasien..." 
                        class="w-full pl-10 h-10 rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-sm focus:ring-primary focus:border-primary">
+            </form>
+
+            <div class="flex items-center p-1 bg-slate-100 dark:bg-slate-800 rounded-lg h-10">
+                <a href="{{ route('tagihan.index', ['status' => '', 'search' => request('search')]) }}" 
+                   class="px-4 py-1.5 text-sm font-medium rounded-md transition-all {{ request('status') == '' ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200' }}">
+                   Semua
+                </a>
+                <a href="{{ route('tagihan.index', ['status' => 'Lunas', 'search' => request('search')]) }}" 
+                   class="px-4 py-1.5 text-sm font-medium rounded-md transition-all {{ request('status') == 'Lunas' ? 'bg-white dark:bg-slate-700 text-emerald-600 dark:text-emerald-400 shadow-sm' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200' }}">
+                   Lunas
+                </a>
+                <a href="{{ route('tagihan.index', ['status' => 'Belum Lunas', 'search' => request('search')]) }}" 
+                   class="px-4 py-1.5 text-sm font-medium rounded-md transition-all {{ request('status') == 'Belum Lunas' ? 'bg-white dark:bg-slate-700 text-amber-600 dark:text-amber-400 shadow-sm' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200' }}">
+                   Belum Lunas
+                </a>
             </div>
-            <select name="status" onchange="this.form.submit()" class="w-full md:w-40 h-10 rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-sm focus:ring-primary focus:border-primary cursor-pointer">
-                <option value="">Semua Status</option>
-                <option value="Lunas" {{ request('status') == 'Lunas' ? 'selected' : '' }}>Lunas</option>
-                <option value="Belum Lunas" {{ request('status') == 'Belum Lunas' ? 'selected' : '' }}>Belum Lunas</option>
-            </select>
-        </form>
+        </div>
 
         <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-background-dark shadow-sm overflow-hidden flex flex-col">
             <div class="overflow-x-auto">

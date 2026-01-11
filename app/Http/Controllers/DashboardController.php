@@ -38,8 +38,10 @@ class DashboardController extends Controller
             // C. Total Rekam Medis (Akumulasi)
             $total_rm = RekamMedis::whereDate('created_at', '<=', $selectedDate)->count();
             
-            // D. Rekam Medis Tercetak (Asumsi sama dengan total RM atau logika lain)
-            $rm_tercetak = $total_rm; 
+            // D. Rekam Medis Tercetak (Real-time Count from DB)
+            $rm_tercetak = RekamMedis::where('status_cetak', 'Sudah Dicetak')
+                                     ->whereDate('created_at', '<=', $selectedDate)
+                                     ->count(); 
         } 
 
         // 3. LOGIKA TAMBAHAN (Queue & Activity)
