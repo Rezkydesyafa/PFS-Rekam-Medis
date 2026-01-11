@@ -47,7 +47,7 @@ Route::middleware(['auth'])->group(function () {
     });
     
     // 2. DATA DOKTER (Biasanya Admin / Petugas RM)
-    Route::middleware('role:petugas_rekam_medis,petugas,admin,superadmin')->group(function () {
+    Route::middleware('role:admin,superadmin')->group(function () {
         Route::resource('dokter', DokterController::class);
     });
     
@@ -58,14 +58,14 @@ Route::middleware(['auth'])->group(function () {
     });
     
     // 4. DOKTER & PETUGAS RM (Akses: Rekam Medis)
-    Route::middleware('role:dokter,petugas_rekam_medis,petugas,kasir,superadmin,apoteker')->group(function () {
+    Route::middleware('role:dokter,petugas_rekam_medis,petugas,kasir,superadmin,apoteker,unit_pendaftaran')->group(function () {
         Route::get('rekam-medis/{id}/print', [RekamMedisController::class, 'print'])->name('rekam-medis.print');
         Route::resource('rekam-medis', RekamMedisController::class);
     });
 
     // 5. KASIR (Akses: Tagihan)
     // Petugas RM & Admin mungkin perlu akses juga
-    Route::middleware('role:kasir,petugas_rekam_medis,petugas,superadmin')->group(function () {
+    Route::middleware('role:kasir,superadmin')->group(function () {
         // Print Struk Tagihan
         Route::get('tagihan/{id}/print', [TagihanController::class, 'print'])->name('tagihan.print');
         // Update Status Bayar (Lunas/Belum)

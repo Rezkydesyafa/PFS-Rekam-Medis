@@ -60,9 +60,9 @@
             
             // Define access lists
             $accessPasien = ['superadmin', 'petugas', 'petugas_rekam_medis', 'unit_pendaftaran', 'dokter', 'kasir', 'apoteker'];
-            $accessDokter = ['superadmin', 'admin', 'petugas', 'petugas_rekam_medis'];
-            $accessRekamMedis = ['superadmin', 'petugas', 'petugas_rekam_medis', 'dokter', 'kasir', 'apoteker'];
-            $accessTagihan = ['superadmin', 'petugas', 'petugas_rekam_medis', 'kasir'];
+            $accessDokter = ['superadmin', 'admin'];
+            $accessRekamMedis = ['superadmin', 'petugas', 'petugas_rekam_medis', 'dokter', 'kasir', 'apoteker', 'unit_pendaftaran'];
+            $accessTagihan = ['superadmin', 'kasir'];
             $accessObat = ['superadmin', 'petugas', 'petugas_rekam_medis', 'dokter', 'apoteker'];
         @endphp
 

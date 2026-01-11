@@ -154,6 +154,27 @@
                         <span class="material-symbols-outlined text-[28px] text-slate-400 mb-2 group-hover:text-blue-600 group-hover:scale-110 transition-all">group</span>
                         <span class="text-xs font-bold text-slate-600 group-hover:text-blue-600">Data Pasien</span>
                     </a>
+                @elseif(auth()->user()->isUnitPendaftaran())
+                    {{-- Quick Access Khusus Staff Pendaftaran --}}
+                    <a href="{{ route('pasien.create') }}" class="flex flex-col items-center justify-center p-4 rounded-lg bg-slate-50 border border-slate-100 hover:bg-blue-50 hover:border-blue-100 hover:text-blue-600 transition-all group">
+                        <span class="material-symbols-outlined text-[28px] text-slate-400 mb-2 group-hover:text-blue-600 group-hover:scale-110 transition-all">person_add</span>
+                        <span class="text-xs font-bold text-slate-600 group-hover:text-blue-600">Tambah Pasien</span>
+                    </a>
+
+                    <a href="{{ route('pasien.index') }}" class="flex flex-col items-center justify-center p-4 rounded-lg bg-slate-50 border border-slate-100 hover:bg-blue-50 hover:border-blue-100 hover:text-blue-600 transition-all group">
+                        <span class="material-symbols-outlined text-[28px] text-slate-400 mb-2 group-hover:text-blue-600 group-hover:scale-110 transition-all">group</span>
+                        <span class="text-xs font-bold text-slate-600 group-hover:text-blue-600">Data Pasien</span>
+                    </a>
+
+                    <a href="{{ route('rekam-medis.index') }}" class="flex flex-col items-center justify-center p-4 rounded-lg bg-slate-50 border border-slate-100 hover:bg-blue-50 hover:border-blue-100 hover:text-blue-600 transition-all group">
+                        <span class="material-symbols-outlined text-[28px] text-slate-400 mb-2 group-hover:text-blue-600 group-hover:scale-110 transition-all">folder_shared</span>
+                        <span class="text-xs font-bold text-slate-600 group-hover:text-blue-600">Lihat RM</span>
+                    </a>
+
+                    <a href="{{ route('dokter.index') }}" class="flex flex-col items-center justify-center p-4 rounded-lg bg-slate-50 border border-slate-100 hover:bg-blue-50 hover:border-blue-100 hover:text-blue-600 transition-all group">
+                        <span class="material-symbols-outlined text-[28px] text-slate-400 mb-2 group-hover:text-blue-600 group-hover:scale-110 transition-all">calendar_month</span>
+                        <span class="text-xs font-bold text-slate-600 group-hover:text-blue-600">Jadwal Dokter</span>
+                    </a>
                 @else
                     {{-- Quick Access User Lain (Dokter, Petugas, Kasir) --}}
                     @if(auth()->user()->role !== 'kasir')
