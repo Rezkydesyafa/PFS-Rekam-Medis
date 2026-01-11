@@ -23,19 +23,7 @@
             </div>
         </div>
 
-        @if ($errors->any())
-        <div class="mb-4 p-4 rounded-lg bg-red-50 border border-red-200 text-red-700">
-            <div class="flex items-center gap-2 font-bold mb-2">
-                <span class="material-symbols-outlined">warning</span>
-                <span>Terjadi Kesalahan!</span>
-            </div>
-            <ul class="list-disc list-inside text-sm">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-        @endif
+
 
         <form action="{{ route('rekam-medis.store') }}" method="POST">
             @csrf
@@ -52,23 +40,35 @@
                         <div class="mb-4">
                             <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Tanggal Periksa</label>
                             <input type="date" name="tgl_kunjungan" value="{{ old('tgl_kunjungan', date('Y-m-d')) }}" 
-                                   class="w-full rounded-lg border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white text-sm focus:ring-primary focus:border-primary">
+                                   class="w-full rounded-lg border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white text-sm focus:ring-primary focus:border-primary @error('tgl_kunjungan') border-red-500 @enderror">
+                            @error('tgl_kunjungan')
+                                <p class="text-sm text-red-500 flex items-center gap-1 mt-1">
+                                    <span class="material-symbols-outlined text-[16px]">error</span>
+                                    {{ $message }}
+                                </p>
+                            @enderror
                         </div>
 
                         <div class="mb-4">
                             <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Dokter Pemeriksa</label>
-                            <select name="dokter_id" class="w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-sm focus:ring-primary focus:border-primary" required>
+                            <select name="dokter_id" class="w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-sm focus:ring-primary focus:border-primary @error('dokter_id') border-red-500 @enderror" required>
                                 <option value="">Pilih Dokter...</option>
                                 @foreach($dokters as $dokter)
                                     <option value="{{ $dokter->id_dokter }}" {{ old('dokter_id') == $dokter->id_dokter ? 'selected' : '' }}>{{ $dokter->nama_dokter }} ({{ $dokter->spesialisasi }})</option>
                                 @endforeach
                             </select>
+                            @error('dokter_id')
+                                <p class="text-sm text-red-500 flex items-center gap-1 mt-1">
+                                    <span class="material-symbols-outlined text-[16px]">error</span>
+                                    {{ $message }}
+                                </p>
+                            @enderror
                         </div>
 
                         <div class="mb-4">
                             <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Pasien</label>
                             <select name="pasien_id" x-model="selectedPasien" @change="fetchPatientDetails()" 
-                                    class="w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-sm focus:ring-primary focus:border-primary" required>
+                                    class="w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-sm focus:ring-primary focus:border-primary @error('pasien_id') border-red-500 @enderror" required>
                                 <option value="">Cari Nama / No. RM...</option>
                                 @foreach($pasiens as $pasien)
                                     <option value="{{ $pasien->id_pasien }}" {{ old('pasien_id') == $pasien->id_pasien ? 'selected' : '' }}
@@ -79,6 +79,12 @@
                                     </option>
                                 @endforeach
                             </select>
+                            @error('pasien_id')
+                                <p class="text-sm text-red-500 flex items-center gap-1 mt-1">
+                                    <span class="material-symbols-outlined text-[16px]">error</span>
+                                    {{ $message }}
+                                </p>
+                            @enderror
                         </div>
 
                         <div class="bg-slate-100 dark:bg-slate-900/50 p-3 rounded-lg border border-slate-200 dark:border-slate-700 text-xs space-y-2 text-slate-600 dark:text-slate-400" 
@@ -133,12 +139,24 @@
                         <div class="space-y-4">
                             <div>
                                 <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">Keluhan Utama (Anamnesa) <span class="text-red-500">*</span></label>
-                                <textarea name="keluhan" rows="2" class="w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-sm focus:ring-primary focus:border-primary" placeholder="Jelaskan keluhan yang dirasakan pasien..." required></textarea>
+                                <textarea name="keluhan" rows="2" class="w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-sm focus:ring-primary focus:border-primary @error('keluhan') border-red-500 @enderror" placeholder="Jelaskan keluhan yang dirasakan pasien..." required>{{ old('keluhan') }}</textarea>
+                                @error('keluhan')
+                                    <p class="text-sm text-red-500 flex items-center gap-1 mt-1">
+                                        <span class="material-symbols-outlined text-[16px]">error</span>
+                                        {{ $message }}
+                                    </p>
+                                @enderror
                             </div>
 
                             <div>
                                 <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">Diagnosa Dokter <span class="text-red-500">*</span></label>
-                                <textarea name="diagnosa" rows="2" class="w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-sm focus:ring-primary focus:border-primary" placeholder="Kesimpulan medis / ICD-10..." required></textarea>
+                                <textarea name="diagnosa" rows="2" class="w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-sm focus:ring-primary focus:border-primary @error('diagnosa') border-red-500 @enderror" placeholder="Kesimpulan medis / ICD-10..." required>{{ old('diagnosa') }}</textarea>
+                                @error('diagnosa')
+                                    <p class="text-sm text-red-500 flex items-center gap-1 mt-1">
+                                        <span class="material-symbols-outlined text-[16px]">error</span>
+                                        {{ $message }}
+                                    </p>
+                                @enderror
                             </div>
                             
                             <div>

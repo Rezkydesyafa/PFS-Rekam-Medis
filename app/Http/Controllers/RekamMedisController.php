@@ -22,6 +22,11 @@ class RekamMedisController extends Controller
     {
         $rekamMedis = RekamMedis::with(['pasien', 'dokter', 'tindakans', 'obats'])->findOrFail($id);
         
+        // Update status cetak jika belum dicetak
+        if ($rekamMedis->status_cetak !== 'Sudah Dicetak') {
+            $rekamMedis->update(['status_cetak' => 'Sudah Dicetak']);
+        }
+
         $pdf = Pdf::loadView('rekam_medis.pdf', compact('rekamMedis'));
         
         $fileName = 'Rekam-Medis-' . str_replace('/', '-', $rekamMedis->pasien->no_rm) . '-' . $rekamMedis->id_rekam_medis . '.pdf';
@@ -104,13 +109,19 @@ class RekamMedisController extends Controller
             'tgl_kunjungan' => 'required|date',
             'keluhan' => 'required|string',
             'diagnosa' => 'required|string',
-            // Validasi Resep Obat - lebih permisif untuk dynamic rows
             'resep' => 'nullable|array',
             'resep.*.obat_id' => 'nullable|exists:obats,id_obat',
             'resep.*.jumlah' => 'nullable|integer|min:1',
-            // Validasi Tindakan
             'actions' => 'nullable|array',
             'actions.*' => 'nullable|exists:tindakan_medis,id_tindakan',
+        ], [
+            'pasien_id.required' => 'Pasien wajib dipilih.',
+            'dokter_id.required' => 'Dokter pemeriksa wajib dipilih.',
+            'tgl_kunjungan.required' => 'Tanggal kunjungan wajib diisi.',
+            'keluhan.required' => 'Keluhan utama wajib diisi.',
+            'diagnosa.required' => 'Diagnosa dokter wajib diisi.',
+            'resep.*.obat_id.exists' => 'Obat yang dipilih tidak valid.',
+            'resep.*.jumlah.min' => 'Jumlah obat minimal 1.',
         ]);
 
         try {
@@ -135,9 +146,14 @@ class RekamMedisController extends Controller
                 if ($request->has('resep')) {
                     foreach ($request->resep as $item) {
                         if (!empty($item['obat_id'])) {
-                            // Ambil data obat
+                                // Ambil data obat
                             $obatDB = Obat::find($item['obat_id']);
                             if ($obatDB) {
+                                // Cek Stok Cukup
+                                if ($obatDB->stok < $item['jumlah']) {
+                                    throw new \Exception("Stok obat '{$obatDB->nama_obat}' tidak mencukupi. Sisa stok: {$obatDB->stok}, Diminta: {$item['jumlah']}");
+                                }
+
                                 // Simpan pivot
                                 $rm->obats()->attach($item['obat_id'], [
                                     'jumlah' => $item['jumlah'],
@@ -231,12 +247,22 @@ class RekamMedisController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'dokter_id' => 'required',
+            'dokter_id' => 'required|exists:dokters,id_dokter',
             'tgl_kunjungan' => 'required|date',
-            'keluhan' => 'required',
-            'diagnosa' => 'required',
+            'keluhan' => 'required|string',
+            'diagnosa' => 'required|string',
             'actions' => 'nullable|array',
             'actions.*' => 'nullable|exists:tindakan_medis,id_tindakan',
+            'resep' => 'nullable|array',
+            'resep.*.obat_id' => 'nullable|exists:obats,id_obat',
+            'resep.*.jumlah' => 'nullable|integer|min:1',
+        ], [
+            'dokter_id.required' => 'Dokter pemeriksa wajib dipilih.',
+            'tgl_kunjungan.required' => 'Tanggal kunjungan wajib diisi.',
+            'keluhan.required' => 'Keluhan utama wajib diisi.',
+            'diagnosa.required' => 'Diagnosa dokter wajib diisi.',
+            'resep.*.obat_id.exists' => 'Obat yang dipilih tidak valid.',
+            'resep.*.jumlah.min' => 'Jumlah obat minimal 1.',
         ]);
 
         try {
@@ -272,6 +298,11 @@ class RekamMedisController extends Controller
                         if (!empty($item['obat_id'])) {
                             $obatDB = Obat::find($item['obat_id']);
                             
+                            // Cek Stok Cukup
+                            if ($obatDB->stok < $item['jumlah']) {
+                                throw new \Exception("Stok obat '{$obatDB->nama_obat}' tidak mencukupi untuk update. Sisa stok: {$obatDB->stok}, Diminta: {$item['jumlah']}");
+                            }
+
                             $rm->obats()->attach($item['obat_id'], [
                                 'jumlah' => $item['jumlah'],
                                 'aturan_pakai' => $item['aturan_pakai'] ?? '-'

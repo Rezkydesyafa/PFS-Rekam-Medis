@@ -58,6 +58,13 @@ class TagihanController extends Controller
             'biaya_tindakan' => 'required|numeric|min:0',
             'status' => 'required|in:Lunas,Belum Lunas',
             'metode_pembayaran' => 'nullable|string',
+        ], [
+            'rekam_medis_id.required' => 'Rekam Medis wajib dipilih.',
+            'rekam_medis_id.exists' => 'Data Rekam Medis tidak valid.',
+            'biaya_dokter.required' => 'Biaya Dokter wajib diisi.',
+            'biaya_obat.required' => 'Biaya Obat wajib diisi.',
+            'biaya_tindakan.required' => 'Biaya Tindakan wajib diisi.',
+            'status.required' => 'Status pembayaran wajib dipilih.',
         ]);
 
         $total_biaya = $request->biaya_dokter + $request->biaya_obat + $request->biaya_tindakan;

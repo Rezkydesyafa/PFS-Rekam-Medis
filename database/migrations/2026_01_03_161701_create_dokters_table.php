@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id('id_dokter');
             $table->string('nama_dokter');
             $table->string('spesialisasi');
+            $table->decimal('tarif', 12, 2)->default(0); // Added from 2026_01_11_042715
             $table->string('no_sip')->unique();
             $table->string('no_telepon', 20);
             $table->timestamps();

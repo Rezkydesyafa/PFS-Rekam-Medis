@@ -15,15 +15,7 @@
 
         <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-background-dark shadow-sm overflow-hidden p-6 md:p-8">
             
-            @if ($errors->any())
-                <div class="mb-6 p-4 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 text-sm">
-                    <ul class="list-disc list-inside">
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
+
 
             <form action="{{ route('dokter.store') }}" method="POST" class="flex flex-col gap-6">
                 @csrf
@@ -37,13 +29,19 @@
                         
                         <div class="col-span-1 md:col-span-2 flex flex-col gap-2">
                             <label class="text-sm font-medium text-slate-700 dark:text-slate-300" for="nama_dokter">Nama Lengkap</label>
-                            <input class="w-full rounded-lg border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:border-primary focus:ring-primary shadow-sm placeholder:text-slate-400" 
+                            <input class="w-full rounded-lg border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:border-primary focus:ring-primary shadow-sm placeholder:text-slate-400 @error('nama_dokter') border-red-500 @enderror" 
                                    id="nama_dokter" name="nama_dokter" type="text" placeholder="Masukkan nama dokter beserta gelar" value="{{ old('nama_dokter') }}" required/>
+                            @error('nama_dokter')
+                                <p class="text-sm text-red-500 flex items-center gap-1 mt-1">
+                                    <span class="material-symbols-outlined text-[16px]">error</span>
+                                    {{ $message }}
+                                </p>
+                            @enderror
                         </div>
 
                         <div class="flex flex-col gap-2">
                             <label class="text-sm font-medium text-slate-700 dark:text-slate-300" for="spesialisasi">Spesialisasi</label>
-                            <select class="w-full rounded-lg border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:border-primary focus:ring-primary shadow-sm" 
+                            <select class="w-full rounded-lg border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:border-primary focus:ring-primary shadow-sm @error('spesialisasi') border-red-500 @enderror" 
                                     id="spesialisasi" name="spesialisasi" required>
                                 <option value="" disabled selected>Pilih Spesialisasi</option>
                                 <option value="Umum" {{ old('spesialisasi') == 'Umum' ? 'selected' : '' }}>Umum</option>
@@ -51,6 +49,12 @@
                                 <option value="Anak" {{ old('spesialisasi') == 'Anak' ? 'selected' : '' }}>Anak</option>
                                 <option value="Jantung" {{ old('spesialisasi') == 'Jantung' ? 'selected' : '' }}>Jantung</option>
                             </select>
+                            @error('spesialisasi')
+                                <p class="text-sm text-red-500 flex items-center gap-1 mt-1">
+                                    <span class="material-symbols-outlined text-[16px]">error</span>
+                                    {{ $message }}
+                                </p>
+                            @enderror
                         </div>
 
                         <div>
@@ -63,21 +67,30 @@
             type="number" 
             name="tarif" 
             value="{{ old('tarif') }}"
-            class="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white focus:ring-primary focus:border-primary placeholder-slate-400" 
+            class="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white focus:ring-primary focus:border-primary placeholder-slate-400 @error('tarif') border-red-500 @enderror" 
             placeholder="150000" 
             min="0"
             required
         />
     </div>
     @error('tarif')
-        <p class="text-red-400 text-xs mt-1">{{ $message }}</p>
+        <p class="text-sm text-red-500 flex items-center gap-1 mt-1">
+            <span class="material-symbols-outlined text-[16px]">error</span>
+            {{ $message }}
+        </p>
     @enderror
 </div>
 
                         <div class="flex flex-col gap-2">
                             <label class="text-sm font-medium text-slate-700 dark:text-slate-300" for="no_sip">Nomor SIP</label>
-                            <input class="w-full rounded-lg border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:border-primary focus:ring-primary shadow-sm placeholder:text-slate-400" 
+                            <input class="w-full rounded-lg border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:border-primary focus:ring-primary shadow-sm placeholder:text-slate-400 @error('no_sip') border-red-500 @enderror" 
                                    id="no_sip" name="no_sip" type="text" placeholder="Contoh: 123/SIP/2025" value="{{ old('no_sip') }}" required/>
+                            @error('no_sip')
+                                <p class="text-sm text-red-500 flex items-center gap-1 mt-1">
+                                    <span class="material-symbols-outlined text-[16px]">error</span>
+                                    {{ $message }}
+                                </p>
+                            @enderror
                         </div>
 
                     </div>
@@ -93,8 +106,14 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="col-span-1 md:col-span-2 flex flex-col gap-2">
                             <label class="text-sm font-medium text-slate-700 dark:text-slate-300" for="no_telepon">Nomor Telepon</label>
-                            <input class="w-full rounded-lg border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:border-primary focus:ring-primary shadow-sm placeholder:text-slate-400" 
+                            <input class="w-full rounded-lg border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:border-primary focus:ring-primary shadow-sm placeholder:text-slate-400 @error('no_telepon') border-red-500 @enderror" 
                                    id="no_telepon" name="no_telepon" type="tel" placeholder="08xxxxxxxxxx" value="{{ old('no_telepon') }}" required/>
+                            @error('no_telepon')
+                                <p class="text-sm text-red-500 flex items-center gap-1 mt-1">
+                                    <span class="material-symbols-outlined text-[16px]">error</span>
+                                    {{ $message }}
+                                </p>
+                            @enderror
                         </div>
                     </div>
                 </div>

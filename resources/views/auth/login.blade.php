@@ -16,13 +16,13 @@
             
             <div class="w-full max-w-[440px] mx-auto flex flex-col h-full justify-center lg:h-auto">
                 <!-- Logo -->
-                <div class="mb-10 flex items-center gap-3">
+                <a href="{{ url('/') }}" class="mb-10 flex items-center gap-3 hover:opacity-80 transition-opacity">
                     <img src="{{ asset('logo.png') }}" alt="SIRM Logo" class="w-12 h-12 object-contain drop-shadow-md">
                     <div>
                         <span class="block font-extrabold text-2xl text-slate-900 tracking-tight leading-none">SIRM</span>
                         <span class="text-[10px] font-bold text-slate-400 tracking-wider uppercase">Rekan Medis</span>
                     </div>
-                </div>
+                </a>
 
                 <!-- Header -->
                 <div class="mb-8">

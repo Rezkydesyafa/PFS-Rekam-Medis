@@ -12,10 +12,12 @@
                 <h1 class="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">Riwayat Pemeriksaan</h1>
                 <p class="text-slate-500 dark:text-slate-400">Data rekam medis pasien dan status pembayaran.</p>
             </div>
+            @if(!in_array(auth()->user()->role, ['kasir', 'apoteker', 'unit_pendaftaran']))
             <a href="{{ route('rekam-medis.create') }}" class="inline-flex h-10 items-center justify-center gap-2 whitespace-nowrap rounded-lg bg-primary px-4 py-2 text-sm font-bold text-white shadow hover:bg-primary/90 transition-colors">
                 <span class="material-symbols-outlined text-lg">add_circle</span>
                 Input Pemeriksaan Baru
             </a>
+            @endif
         </div>
 
         @if(session('success'))
@@ -84,13 +86,15 @@
                                         <span class="material-symbols-outlined text-[20px]">visibility</span>
                                     </a>
                                     
-                                    <a href="{{ route('rekam-medis.edit', $rm->id_rm) }}" class="h-8 w-8 inline-flex ... text-amber-500 ...">
-    <span class="material-symbols-outlined text-[20px]">edit</span>
-</a>
+                                    @if(!in_array(auth()->user()->role, ['kasir', 'apoteker', 'unit_pendaftaran']))
+                                        <a href="{{ route('rekam-medis.edit', $rm->id_rm) }}" class="h-8 w-8 inline-flex items-center justify-center rounded-lg text-amber-500 hover:bg-amber-50 dark:hover:bg-amber-900/20 transition-colors" title="Edit">
+                                            <span class="material-symbols-outlined text-[20px]">edit</span>
+                                        </a>
 
-                                    <button @click="showDeleteModal = true; deleteId = {{ $rm->id_rm }}" class="h-8 w-8 inline-flex items-center justify-center rounded-lg text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-900/20 transition-colors" title="Hapus">
-                                        <span class="material-symbols-outlined text-[20px]">delete</span>
-                                    </button>
+                                        <button @click="showDeleteModal = true; deleteId = {{ $rm->id_rm }}" class="h-8 w-8 inline-flex items-center justify-center rounded-lg text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-900/20 transition-colors" title="Hapus">
+                                            <span class="material-symbols-outlined text-[20px]">delete</span>
+                                        </button>
+                                    @endif
                                 </div>
                             </td>
                         </tr>

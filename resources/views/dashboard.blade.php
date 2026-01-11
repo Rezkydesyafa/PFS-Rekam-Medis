@@ -22,10 +22,10 @@
                 <span class="material-symbols-outlined text-[18px] text-slate-500">calendar_today</span>
                 <input type="text" id="dashboardCalendar" value="{{ $selectedDate->format('d M Y') }}" class="border-none p-0 text-sm font-semibold text-slate-700 focus:ring-0 w-24 cursor-pointer bg-transparent" readonly>
             </div>
-             <button class="bg-blue-600 text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700 transition-colors shadow-sm shadow-blue-600/20 flex items-center gap-2">
+             <a href="{{ route('dashboard.export-pdf', ['date' => request('date')]) }}" class="bg-blue-600 text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700 transition-colors shadow-sm shadow-blue-600/20 flex items-center gap-2">
                 <span class="material-symbols-outlined text-[18px]">download</span>
                 <span>Export Laporan</span>
-            </button>
+            </a>
         </div>
     </div>
 
@@ -112,22 +112,102 @@
                 <span class="material-symbols-outlined text-blue-600">bolt</span> Quick Access
             </h3>
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
-                <a href="{{ route('pasien.create') }}" class="flex flex-col items-center justify-center p-4 rounded-lg bg-slate-50 border border-slate-100 hover:bg-blue-50 hover:border-blue-100 hover:text-blue-600 transition-all group">
-                    <span class="material-symbols-outlined text-[28px] text-slate-400 mb-2 group-hover:text-blue-600 group-hover:scale-110 transition-all">person_add</span>
-                    <span class="text-xs font-bold text-slate-600 group-hover:text-blue-600">Tambah Pasien</span>
-                </a>
-                 <a href="{{ route('rekam-medis.create') }}" class="flex flex-col items-center justify-center p-4 rounded-lg bg-slate-50 border border-slate-100 hover:bg-blue-50 hover:border-blue-100 hover:text-blue-600 transition-all group">
-                    <span class="material-symbols-outlined text-[28px] text-slate-400 mb-2 group-hover:text-blue-600 group-hover:scale-110 transition-all">post_add</span>
-                    <span class="text-xs font-bold text-slate-600 group-hover:text-blue-600">Rekam Medis</span>
-                </a>
-                 <a href="{{ route('dokter.index') }}" class="flex flex-col items-center justify-center p-4 rounded-lg bg-slate-50 border border-slate-100 hover:bg-blue-50 hover:border-blue-100 hover:text-blue-600 transition-all group">
-                    <span class="material-symbols-outlined text-[28px] text-slate-400 mb-2 group-hover:text-blue-600 group-hover:scale-110 transition-all">calendar_month</span>
-                    <span class="text-xs font-bold text-slate-600 group-hover:text-blue-600">Jadwal Dokter</span>
-                </a>
-                 <a href="{{ route('rekam-medis.index') }}" class="flex flex-col items-center justify-center p-4 rounded-lg bg-slate-50 border border-slate-100 hover:bg-blue-50 hover:border-blue-100 hover:text-blue-600 transition-all group">
-                    <span class="material-symbols-outlined text-[28px] text-slate-400 mb-2 group-hover:text-blue-600 group-hover:scale-110 transition-all">print</span>
-                    <span class="text-xs font-bold text-slate-600 group-hover:text-blue-600">Cetak RM</span>
-                </a>
+                @if(auth()->user()->isAdmin())
+                    {{-- Quick Access Khusus Admin --}}
+                    <a href="{{ route('admin.users.create') }}" class="flex flex-col items-center justify-center p-4 rounded-lg bg-slate-50 border border-slate-100 hover:bg-blue-50 hover:border-blue-100 hover:text-blue-600 transition-all group">
+                        <span class="material-symbols-outlined text-[28px] text-slate-400 mb-2 group-hover:text-blue-600 group-hover:scale-110 transition-all">person_add</span>
+                        <span class="text-xs font-bold text-slate-600 group-hover:text-blue-600">Tambah User</span>
+                    </a>
+                    
+                    <a href="{{ route('dokter.create') }}" class="flex flex-col items-center justify-center p-4 rounded-lg bg-slate-50 border border-slate-100 hover:bg-blue-50 hover:border-blue-100 hover:text-blue-600 transition-all group">
+                        <span class="material-symbols-outlined text-[28px] text-slate-400 mb-2 group-hover:text-blue-600 group-hover:scale-110 transition-all">stethoscope</span>
+                        <span class="text-xs font-bold text-slate-600 group-hover:text-blue-600">Tambah Dokter</span>
+                    </a>
+
+                    <a href="{{ route('admin.users.index') }}" class="flex flex-col items-center justify-center p-4 rounded-lg bg-slate-50 border border-slate-100 hover:bg-blue-50 hover:border-blue-100 hover:text-blue-600 transition-all group">
+                        <span class="material-symbols-outlined text-[28px] text-slate-400 mb-2 group-hover:text-blue-600 group-hover:scale-110 transition-all">manage_accounts</span>
+                        <span class="text-xs font-bold text-slate-600 group-hover:text-blue-600">Kelola User</span>
+                    </a>
+
+                    <a href="{{ route('dokter.index') }}" class="flex flex-col items-center justify-center p-4 rounded-lg bg-slate-50 border border-slate-100 hover:bg-blue-50 hover:border-blue-100 hover:text-blue-600 transition-all group">
+                        <span class="material-symbols-outlined text-[28px] text-slate-400 mb-2 group-hover:text-blue-600 group-hover:scale-110 transition-all">medical_services</span>
+                        <span class="text-xs font-bold text-slate-600 group-hover:text-blue-600">Data Dokter</span>
+                    </a>
+                @elseif(auth()->user()->isApoteker())
+                     {{-- Quick Access Khusus Apoteker --}}
+                     <a href="{{ route('obat.index') }}" class="flex flex-col items-center justify-center p-4 rounded-lg bg-slate-50 border border-slate-100 hover:bg-blue-50 hover:border-blue-100 hover:text-blue-600 transition-all group">
+                        <span class="material-symbols-outlined text-[28px] text-slate-400 mb-2 group-hover:text-blue-600 group-hover:scale-110 transition-all">medication</span>
+                        <span class="text-xs font-bold text-slate-600 group-hover:text-blue-600">Stok Obat</span>
+                    </a>
+
+                    <a href="{{ route('obat.create') }}" class="flex flex-col items-center justify-center p-4 rounded-lg bg-slate-50 border border-slate-100 hover:bg-blue-50 hover:border-blue-100 hover:text-blue-600 transition-all group">
+                        <span class="material-symbols-outlined text-[28px] text-slate-400 mb-2 group-hover:text-blue-600 group-hover:scale-110 transition-all">add_circle</span>
+                        <span class="text-xs font-bold text-slate-600 group-hover:text-blue-600">Tambah Obat</span>
+                    </a>
+
+                    <a href="{{ route('rekam-medis.index') }}" class="flex flex-col items-center justify-center p-4 rounded-lg bg-slate-50 border border-slate-100 hover:bg-blue-50 hover:border-blue-100 hover:text-blue-600 transition-all group">
+                        <span class="material-symbols-outlined text-[28px] text-slate-400 mb-2 group-hover:text-blue-600 group-hover:scale-110 transition-all">folder_shared</span>
+                        <span class="text-xs font-bold text-slate-600 group-hover:text-blue-600">Rekam Medis</span>
+                    </a>
+
+                    <a href="{{ route('pasien.index') }}" class="flex flex-col items-center justify-center p-4 rounded-lg bg-slate-50 border border-slate-100 hover:bg-blue-50 hover:border-blue-100 hover:text-blue-600 transition-all group">
+                        <span class="material-symbols-outlined text-[28px] text-slate-400 mb-2 group-hover:text-blue-600 group-hover:scale-110 transition-all">group</span>
+                        <span class="text-xs font-bold text-slate-600 group-hover:text-blue-600">Data Pasien</span>
+                    </a>
+                @elseif(auth()->user()->isUnitPendaftaran())
+                    {{-- Quick Access Khusus Staff Pendaftaran --}}
+                    <a href="{{ route('pasien.create') }}" class="flex flex-col items-center justify-center p-4 rounded-lg bg-slate-50 border border-slate-100 hover:bg-blue-50 hover:border-blue-100 hover:text-blue-600 transition-all group">
+                        <span class="material-symbols-outlined text-[28px] text-slate-400 mb-2 group-hover:text-blue-600 group-hover:scale-110 transition-all">person_add</span>
+                        <span class="text-xs font-bold text-slate-600 group-hover:text-blue-600">Tambah Pasien</span>
+                    </a>
+
+                    <a href="{{ route('pasien.index') }}" class="flex flex-col items-center justify-center p-4 rounded-lg bg-slate-50 border border-slate-100 hover:bg-blue-50 hover:border-blue-100 hover:text-blue-600 transition-all group">
+                        <span class="material-symbols-outlined text-[28px] text-slate-400 mb-2 group-hover:text-blue-600 group-hover:scale-110 transition-all">group</span>
+                        <span class="text-xs font-bold text-slate-600 group-hover:text-blue-600">Data Pasien</span>
+                    </a>
+
+                    <a href="{{ route('rekam-medis.index') }}" class="flex flex-col items-center justify-center p-4 rounded-lg bg-slate-50 border border-slate-100 hover:bg-blue-50 hover:border-blue-100 hover:text-blue-600 transition-all group">
+                        <span class="material-symbols-outlined text-[28px] text-slate-400 mb-2 group-hover:text-blue-600 group-hover:scale-110 transition-all">folder_shared</span>
+                        <span class="text-xs font-bold text-slate-600 group-hover:text-blue-600">Lihat RM</span>
+                    </a>
+
+                    <a href="{{ route('dokter.index') }}" class="flex flex-col items-center justify-center p-4 rounded-lg bg-slate-50 border border-slate-100 hover:bg-blue-50 hover:border-blue-100 hover:text-blue-600 transition-all group">
+                        <span class="material-symbols-outlined text-[28px] text-slate-400 mb-2 group-hover:text-blue-600 group-hover:scale-110 transition-all">calendar_month</span>
+                        <span class="text-xs font-bold text-slate-600 group-hover:text-blue-600">Jadwal Dokter</span>
+                    </a>
+                @else
+                    {{-- Quick Access User Lain (Dokter, Petugas, Kasir) --}}
+                    @if(auth()->user()->role !== 'kasir')
+                    <a href="{{ route('pasien.create') }}" class="flex flex-col items-center justify-center p-4 rounded-lg bg-slate-50 border border-slate-100 hover:bg-blue-50 hover:border-blue-100 hover:text-blue-600 transition-all group">
+                        <span class="material-symbols-outlined text-[28px] text-slate-400 mb-2 group-hover:text-blue-600 group-hover:scale-110 transition-all">person_add</span>
+                        <span class="text-xs font-bold text-slate-600 group-hover:text-blue-600">Tambah Pasien</span>
+                    </a>
+                    @endif
+                    
+                    @if(auth()->user()->role !== 'kasir')
+                    <a href="{{ route('rekam-medis.index') }}" class="flex flex-col items-center justify-center p-4 rounded-lg bg-slate-50 border border-slate-100 hover:bg-blue-50 hover:border-blue-100 hover:text-blue-600 transition-all group">
+                        <span class="material-symbols-outlined text-[28px] text-slate-400 mb-2 group-hover:text-blue-600 group-hover:scale-110 transition-all">print</span>
+                        <span class="text-xs font-bold text-slate-600 group-hover:text-blue-600">Cetak RM</span>
+                    </a>
+                    @endif
+
+                    @if(auth()->user()->role === 'kasir')
+                    <a href="{{ route('tagihan.index') }}" class="flex flex-col items-center justify-center p-4 rounded-lg bg-slate-50 border border-slate-100 hover:bg-blue-50 hover:border-blue-100 hover:text-blue-600 transition-all group">
+                        <span class="material-symbols-outlined text-[28px] text-slate-400 mb-2 group-hover:text-blue-600 group-hover:scale-110 transition-all">receipt_long</span>
+                        <span class="text-xs font-bold text-slate-600 group-hover:text-blue-600">Cetak Tagihan</span>
+                    </a>
+                    @else
+                    <a href="{{ route('dokter.index') }}" class="flex flex-col items-center justify-center p-4 rounded-lg bg-slate-50 border border-slate-100 hover:bg-blue-50 hover:border-blue-100 hover:text-blue-600 transition-all group">
+                        <span class="material-symbols-outlined text-[28px] text-slate-400 mb-2 group-hover:text-blue-600 group-hover:scale-110 transition-all">calendar_month</span>
+                        <span class="text-xs font-bold text-slate-600 group-hover:text-blue-600">Jadwal Dokter</span>
+                    </a>
+                    @endif
+
+                    <a href="{{ route('rekam-medis.index') }}" class="flex flex-col items-center justify-center p-4 rounded-lg bg-slate-50 border border-slate-100 hover:bg-blue-50 hover:border-blue-100 hover:text-blue-600 transition-all group">
+                        <span class="material-symbols-outlined text-[28px] text-slate-400 mb-2 group-hover:text-blue-600 group-hover:scale-110 transition-all">print</span>
+                        <span class="text-xs font-bold text-slate-600 group-hover:text-blue-600">Cetak RM</span>
+                    </a>
+                @endif
             </div>
         </div>
 

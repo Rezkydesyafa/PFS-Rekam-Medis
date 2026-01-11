@@ -59,6 +59,17 @@ class PasienController extends Controller
             'no_hp' => 'required|string|max:20',
             'alamat' => 'required|string',
             'email' => 'nullable|email',
+        ], [
+            'name.required' => 'Nama Pasien wajib diisi.',
+            'nik.required' => 'NIK wajib diisi.',
+            'nik.size' => 'NIK harus 16 digit.',
+            'nik.unique' => 'NIK sudah terdaftar dalam sistem.',
+            'tgl_lahir.required' => 'Tanggal Lahir wajib diisi.',
+            'jenis_kelamin.required' => 'Jenis Kelamin wajib dipilih.',
+            'jenis_kelamin.in' => 'Pilihan Jenis Kelamin tidak valid.',
+            'no_hp.required' => 'Nomor HP wajib diisi.',
+            'alamat.required' => 'Alamat wajib diisi.',
+            'email.email' => 'Format email tidak valid (contoh: user@mail.com).',
         ]);
 
         // Generate No RM Otomatis (Format: RM-YYYY-XXXX)

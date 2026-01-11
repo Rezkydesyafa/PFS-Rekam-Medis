@@ -16,7 +16,7 @@ class ObatController extends Controller
         
         // Search by nama obat atau kode obat
         if ($request->filled('search')) {
-            $search = $request->search;
+            $search = trim($request->search);
             $query->where(function ($q) use ($search) {
                 $q->where('nama_obat', 'like', "%{$search}%")
                   ->orWhere('kode_obat', 'like', "%{$search}%");

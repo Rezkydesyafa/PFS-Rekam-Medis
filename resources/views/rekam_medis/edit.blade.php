@@ -30,18 +30,30 @@
                         <div class="mb-4">
                             <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Tanggal</label>
                             <input type="date" name="tgl_kunjungan" value="{{ old('tgl_kunjungan', $rm->tgl_kunjungan) }}" 
-                                   class="w-full rounded-lg border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 text-sm">
+                                   class="w-full rounded-lg border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 text-sm @error('tgl_kunjungan') border-red-500 @enderror">
+                            @error('tgl_kunjungan')
+                                <p class="text-sm text-red-500 flex items-center gap-1 mt-1">
+                                    <span class="material-symbols-outlined text-[16px]">error</span>
+                                    {{ $message }}
+                                </p>
+                            @enderror
                         </div>
 
                         <div class="mb-4">
                             <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Dokter</label>
-                            <select name="dokter_id" class="w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-sm">
+                            <select name="dokter_id" class="w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-sm @error('dokter_id') border-red-500 @enderror">
                                 @foreach($dokters as $dokter)
                                     <option value="{{ $dokter->id_dokter }}" {{ $rm->dokter_id == $dokter->id_dokter ? 'selected' : '' }}>
                                         {{ $dokter->nama_dokter }}
                                     </option>
                                 @endforeach
                             </select>
+                            @error('dokter_id')
+                                <p class="text-sm text-red-500 flex items-center gap-1 mt-1">
+                                    <span class="material-symbols-outlined text-[16px]">error</span>
+                                    {{ $message }}
+                                </p>
+                            @enderror
                         </div>
 
                         <div class="mb-4">
@@ -86,11 +98,23 @@
                         <div class="space-y-4">
                             <div>
                                 <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">Keluhan Utama</label>
-                                <textarea name="keluhan" rows="2" class="w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-sm">{{ old('keluhan', $rm->keluhan) }}</textarea>
+                                <textarea name="keluhan" rows="2" class="w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-sm @error('keluhan') border-red-500 @enderror">{{ old('keluhan', $rm->keluhan) }}</textarea>
+                                @error('keluhan')
+                                    <p class="text-sm text-red-500 flex items-center gap-1 mt-1">
+                                        <span class="material-symbols-outlined text-[16px]">error</span>
+                                        {{ $message }}
+                                    </p>
+                                @enderror
                             </div>
                             <div>
                                 <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">Diagnosa</label>
-                                <textarea name="diagnosa" rows="2" class="w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-sm">{{ old('diagnosa', $rm->diagnosa) }}</textarea>
+                                <textarea name="diagnosa" rows="2" class="w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-sm @error('diagnosa') border-red-500 @enderror">{{ old('diagnosa', $rm->diagnosa) }}</textarea>
+                                @error('diagnosa')
+                                    <p class="text-sm text-red-500 flex items-center gap-1 mt-1">
+                                        <span class="material-symbols-outlined text-[16px]">error</span>
+                                        {{ $message }}
+                                    </p>
+                                @enderror
                             </div>
                             <div>
                                 <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">Catatan Tambahan</label>

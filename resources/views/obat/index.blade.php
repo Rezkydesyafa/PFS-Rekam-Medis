@@ -12,10 +12,12 @@
                 <h1 class="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">Daftar Obat</h1>
                 <p class="text-slate-500 dark:text-slate-400">Kelola stok obat, harga, dan tanggal kadaluarsa.</p>
             </div>
+            @if(!in_array(auth()->user()->role, ['dokter', 'petugas_rekam_medis', 'petugas']))
             <a href="{{ route('obat.create') }}" class="inline-flex h-10 items-center justify-center gap-2 whitespace-nowrap rounded-lg bg-primary px-4 py-2 text-sm font-bold text-white shadow hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50">
                 <span class="material-symbols-outlined text-lg">add</span>
                 Tambah Obat Baru
             </a>
+            @endif
         </div>
         
         @if(session('success'))
@@ -35,7 +37,7 @@
                             name="search" 
                             value="{{ request('search') }}"
                             class="w-full h-10 pl-10 pr-4 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-primary/20 focus:border-primary text-sm text-slate-900 dark:text-white placeholder:text-slate-400" 
-                            placeholder="Nama Obat, Kode..." 
+                            placeholder="Cari Nama Obat / Kode Obat..." 
                             type="text"
                         />
                     </div>
@@ -199,6 +201,7 @@
                                     <a href="{{ route('obat.show', $obat->id_obat) }}" class="h-8 w-8 inline-flex items-center justify-center rounded-lg text-slate-500 hover:text-primary hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors" title="Lihat Detail">
                                         <span class="material-symbols-outlined text-[20px]">visibility</span>
                                     </a>
+                                    @if(!in_array(auth()->user()->role, ['dokter', 'petugas_rekam_medis', 'petugas']))
                                     <a href="{{ route('obat.edit', $obat->id_obat) }}" class="h-8 w-8 inline-flex items-center justify-center rounded-lg text-primary hover:bg-primary/10 transition-colors" title="Edit Data">
                                         <span class="material-symbols-outlined text-[20px]">edit</span>
                                     </a>
@@ -208,6 +211,7 @@
                                         title="Hapus Data">
                                         <span class="material-symbols-outlined text-[20px]">delete</span>
                                     </button>
+                                    @endif
                                 </div>
                             </td>
                         </tr>
