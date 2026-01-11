@@ -3,9 +3,15 @@
         
         <div class="flex justify-between items-center mb-6">
             <h1 class="text-2xl font-bold text-slate-900 dark:text-white">Detail Rekam Medis</h1>
-            <a href="{{ route('rekam-medis.index') }}" class="text-slate-500 hover:text-primary text-sm flex items-center gap-1">
-                <span class="material-symbols-outlined text-sm">arrow_back</span> Kembali
-            </a>
+            <div class="flex items-center gap-3">
+                <a href="{{ route('rekam-medis.print', $rm->id_rm) }}" target="_blank" class="inline-flex h-9 items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-bold text-white shadow-sm hover:bg-primary/90 transition-colors">
+                    <span class="material-symbols-outlined text-[18px]">print</span>
+                    Cetak PDF
+                </a>
+                <a href="{{ route('rekam-medis.index') }}" class="text-slate-500 hover:text-primary text-sm flex items-center gap-1">
+                    <span class="material-symbols-outlined text-sm">arrow_back</span> Kembali
+                </a>
+            </div>
         </div>
 
         <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6 mb-6">
@@ -55,6 +61,36 @@
             </div>
         </div>
 
+        <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden mb-6">
+            <div class="px-6 py-4 border-b border-slate-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/50 flex justify-between items-center">
+                <h3 class="font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                    <span class="material-symbols-outlined text-blue-500">medical_services</span> Tindakan Medis
+                </h3>
+            </div>
+            <table class="w-full text-sm text-left">
+                <thead class="text-slate-500 bg-slate-50 dark:bg-slate-900 dark:text-slate-400">
+                    <tr>
+                        <th class="px-6 py-3">Nama Tindakan</th>
+                        <th class="px-6 py-3 text-right">Biaya</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 dark:divide-slate-700">
+                    @forelse($rm->tindakans as $tindakan)
+                    <tr class="dark:text-slate-300">
+                        <td class="px-6 py-3 font-medium">{{ $tindakan->nama_tindakan }}</td>
+                        <td class="px-6 py-3 text-right font-mono">
+                            Rp {{ number_format($tindakan->pivot->harga, 0, ',', '.') }}
+                        </td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="2" class="px-6 py-4 text-center text-slate-500">Tidak ada tindakan medis.</td>
+                    </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+
         <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
             <div class="px-6 py-4 border-b border-slate-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/50 flex justify-between items-center">
                 <h3 class="font-bold text-slate-900 dark:text-white flex items-center gap-2">
@@ -90,9 +126,9 @@
         </div>
 
         <div class="mt-6 flex justify-end gap-3">
-            <button onclick="window.print()" class="px-4 py-2 bg-slate-800 text-white rounded-lg hover:bg-slate-700 flex items-center gap-2">
+            <a href="{{ route('rekam-medis.print', $rm->id_rm) }}" target="_blank" class="px-4 py-2 bg-slate-800 text-white rounded-lg hover:bg-slate-700 flex items-center gap-2" title="Cetak PDF">
                 <span class="material-symbols-outlined text-sm">print</span> Cetak
-            </button>
+            </a>
         </div>
 
     </div>

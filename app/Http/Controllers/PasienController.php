@@ -27,16 +27,11 @@ class PasienController extends Controller
         }
 
         // Sorting
-        $sortBy = $request->get('sort_by', 'created_at');
-        $sortOrder = $request->get('sort_order', 'desc');
-        
-        // Validate sort columns to prevent SQL injection
-        $allowedSortColumns = ['name', 'no_rm', 'tgl_lahir', 'created_at', 'status'];
-        if (!in_array($sortBy, $allowedSortColumns)) {
-            $sortBy = 'created_at';
+        if ($request->sort == 'oldest') {
+            $query->oldest();
+        } else {
+            $query->latest();
         }
-        
-        $query->orderBy($sortBy, $sortOrder === 'asc' ? 'asc' : 'desc');
 
         $pasiens = $query->paginate(10)->withQueryString();
         

@@ -53,8 +53,8 @@ class RekamMedisSeeder extends Seeder
             ]);
 
             // 3. Simpan Obat (Detail) & Hitung Biaya Obat
-            // Kita acak, 1 pasien bisa dapat 1 sampai 3 jenis obat
-            $randomObats = $obats->random(rand(1, 3)); 
+            // Kita acak, 1 pasien bisa dapat 0 sampai 3 jenis obat
+            $randomObats = $obats->random(rand(0, 3)); 
             $totalBiayaObat = 0;
 
             foreach ($randomObats as $obat) {
@@ -74,15 +74,32 @@ class RekamMedisSeeder extends Seeder
                 $totalBiayaObat += ($obat->harga * $jumlah);
             }
 
-            // 4. Simpan Tagihan (Billing)
+            // 4. Simpan Tindakan Medis (Baru)
+            $tindakans = \App\Models\TindakanMedis::all();
+            $randomTindakans = $tindakans->random(rand(1, 2)); // 1-2 tindakan per kunjungan
+            $totalBiayaTindakan = 0;
+
+            foreach ($randomTindakans as $tindakan) {
+                DB::table('rekam_medis_tindakan')->insert([
+                    'rekam_medis_id' => $rm->id_rm,
+                    'tindakan_medis_id' => $tindakan->id_tindakan,
+                    'harga' => $tindakan->tarif,
+                    'created_at' => $tgl,
+                    'updated_at' => $tgl,
+                ]);
+                $totalBiayaTindakan += $tindakan->tarif;
+            }
+
+            // 5. Simpan Tagihan (Billing)
             // Biaya Dokter diambil dari tarif dokter yang dipilih
             $biayaDokter = $dokter->tarif;
-            $grandTotal = $biayaDokter + $totalBiayaObat;
+            $grandTotal = $biayaDokter + $totalBiayaObat + $totalBiayaTindakan;
 
             Tagihan::create([
                 'rekam_medis_id' => $rm->id_rm,
                 'biaya_dokter' => $biayaDokter,
                 'biaya_obat' => $totalBiayaObat,
+                'biaya_tindakan' => $totalBiayaTindakan,
                 'total_bayar' => $grandTotal,
                 'status' => $faker->randomElement(['Lunas', 'Belum Lunas']),
                 'created_at' => $tgl,

@@ -67,6 +67,11 @@ class ObatSeeder extends Seeder
             ],
         ];
 
-        DB::table('obats')->insert($data);
+        foreach ($data as $item) {
+            DB::table('obats')->updateOrInsert(
+                ['kode_obat' => $item['kode_obat']],
+                $item
+            );
+        }
     }
 }
