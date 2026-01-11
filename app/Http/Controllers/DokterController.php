@@ -53,17 +53,18 @@ class DokterController extends Controller
      */
     public function store(Request $request)
     {
-      $request->validate([
-    'nama_dokter' => 'required|string|max:255',
-    'spesialisasi' => 'required|string',
-    'tarif' => 'required|numeric|min:0', // <--- Tambahkan validasi ini
-    'no_sip' => 'required...',
-    'no_telepon' => 'required...',
-]);
+        $request->validate([
+            'nama_dokter' => 'required|string|max:255',
+            'spesialisasi' => 'required|string',
+            'tarif' => 'required|numeric|min:0',
+            'no_sip' => 'required|string|max:50|unique:dokters,no_sip',
+            'no_telepon' => 'required|string|max:20',
+        ]);
         
         Dokter::create([
             'nama_dokter' => $request->nama_dokter,
             'spesialisasi' => $request->spesialisasi,
+            'tarif' => $request->tarif,
             'no_sip' => $request->no_sip,
             'no_telepon' => $request->no_telepon,
         ]);
@@ -97,16 +98,17 @@ class DokterController extends Controller
         $dokter = Dokter::findOrFail($id);
         
         $request->validate([
-    'nama_dokter' => 'required|string|max:255',
-    'spesialisasi' => 'required|string',
-    'tarif' => 'required|numeric|min:0', // <--- Tambahkan validasi ini
-    'no_sip' => 'required...',
-    'no_telepon' => 'required...',
-]);
+            'nama_dokter' => 'required|string|max:255',
+            'spesialisasi' => 'required|string',
+            'tarif' => 'required|numeric|min:0',
+            'no_sip' => 'required|string|max:50|unique:dokters,no_sip,' . $dokter->id_dokter . ',id_dokter',
+            'no_telepon' => 'required|string|max:20',
+        ]);
         
         $dokter->update([
             'nama_dokter' => $request->nama_dokter,
             'spesialisasi' => $request->spesialisasi,
+            'tarif' => $request->tarif,
             'no_sip' => $request->no_sip,
             'no_telepon' => $request->no_telepon,
         ]);

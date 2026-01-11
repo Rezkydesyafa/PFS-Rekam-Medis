@@ -20,10 +20,6 @@
                 <h1 class="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">Daftar Tagihan</h1>
                 <p class="text-slate-500 dark:text-slate-400">Kelola pembayaran dan cetak struk pasien.</p>
             </div>
-            <a href="{{ route('tagihan.create') }}" class="inline-flex h-10 items-center justify-center gap-2 whitespace-nowrap rounded-lg bg-primary px-4 py-2 text-sm font-bold text-white shadow hover:bg-primary/90 transition-colors">
-                <span class="material-symbols-outlined text-lg">add_card</span>
-                Buat Tagihan Manual
-            </a>
         </div>
 
         @if(session('success'))
@@ -93,7 +89,7 @@
                             </td>
 
                             <td class="p-4 align-middle text-slate-600 dark:text-slate-300 text-xs">
-                                {{ \Carbon\Carbon::parse($tagihan->created_at)->format('d M Y H:i') }}
+                                {{ \Carbon\Carbon::parse($tagihan->created_at)->locale('id')->translatedFormat('d F Y H:i') }}
                             </td>
 
                             <td class="p-4 align-middle text-right">

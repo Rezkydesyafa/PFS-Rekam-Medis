@@ -59,11 +59,11 @@
             $allRoles = ['superadmin', 'admin', 'petugas', 'petugas_rekam_medis', 'unit_pendaftaran', 'dokter', 'apoteker', 'kasir'];
             
             // Define access lists
-            $accessPasien = ['superadmin', 'admin', 'petugas', 'petugas_rekam_medis', 'unit_pendaftaran', 'dokter', 'kasir'];
+            $accessPasien = ['superadmin', 'petugas', 'petugas_rekam_medis', 'unit_pendaftaran', 'dokter', 'kasir'];
             $accessDokter = ['superadmin', 'admin', 'petugas', 'petugas_rekam_medis'];
-            $accessRekamMedis = ['superadmin', 'admin', 'petugas', 'petugas_rekam_medis', 'dokter', 'kasir'];
-            $accessTagihan = ['superadmin', 'admin', 'petugas', 'petugas_rekam_medis', 'kasir'];
-            $accessObat = ['superadmin', 'admin', 'petugas', 'petugas_rekam_medis', 'dokter', 'apoteker'];
+            $accessRekamMedis = ['superadmin', 'petugas', 'petugas_rekam_medis', 'dokter', 'kasir'];
+            $accessTagihan = ['superadmin', 'petugas', 'petugas_rekam_medis', 'kasir'];
+            $accessObat = ['superadmin', 'petugas', 'petugas_rekam_medis', 'dokter', 'apoteker'];
         @endphp
 
         <div x-show="sidebarExpanded" class="px-4 mt-6 mb-2">

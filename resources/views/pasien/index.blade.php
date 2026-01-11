@@ -12,12 +12,10 @@
                     <h1 class="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">Daftar Pasien</h1>
                     <p class="text-slate-500 dark:text-slate-400">Kelola data pasien, riwayat medis, dan informasi kontak.</p>
                 </div>
-                @if(auth()->user()->role !== 'kasir')
                 <a href="{{ route('pasien.create') }}" class="inline-flex h-10 items-center justify-center gap-2 whitespace-nowrap rounded-lg bg-primary px-4 py-2 text-sm font-bold text-white shadow hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50">
                     <span class="material-symbols-outlined text-lg">add</span>
                     Tambah Pasien Baru
                 </a>
-                @endif
             </div>
             
             <!-- Alert Success -->
