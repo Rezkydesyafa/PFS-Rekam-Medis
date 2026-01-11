@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Tagihan;
 use Illuminate\Http\Request;
+use App\Models\RekamMedis;
 use Barryvdh\DomPDF\Facade\Pdf; // Pastikan package dompdf sudah terinstall
 
 class TagihanController extends Controller
@@ -34,6 +35,45 @@ class TagihanController extends Controller
         $tagihans = $query->paginate(10);
 
         return view('tagihan.index', compact('tagihans'));
+    }
+
+    /**
+     * Menampilkan form buat tagihan baru.
+     */
+    public function create()
+    {
+        $rekamMedis = RekamMedis::with(['pasien', 'dokter'])->latest()->get();
+        return view('tagihan.create', compact('rekamMedis'));
+    }
+
+    /**
+     * Menyimpan tagihan baru ke database.
+     */
+    public function store(Request $request)
+    {
+        $request->validate([
+            'rekam_medis_id' => 'required|exists:rekam_medis,id_rm',
+            'biaya_dokter' => 'required|numeric|min:0',
+            'biaya_obat' => 'required|numeric|min:0',
+            'biaya_tindakan' => 'required|numeric|min:0',
+            'status' => 'required|in:Lunas,Belum Lunas',
+            'metode_pembayaran' => 'nullable|string',
+        ]);
+
+        $total_biaya = $request->biaya_dokter + $request->biaya_obat + $request->biaya_tindakan;
+
+        Tagihan::create([
+            'rekam_medis_id' => $request->rekam_medis_id,
+            'biaya_dokter' => $request->biaya_dokter,
+            'biaya_obat' => $request->biaya_obat,
+            'biaya_tindakan' => $request->biaya_tindakan,
+            'total_biaya' => $total_biaya,
+            'status' => $request->status,
+            'metode_pembayaran' => $request->status == 'Lunas' ? $request->metode_pembayaran : null,
+            'waktu_pembayaran' => $request->status == 'Lunas' ? now() : null,
+        ]);
+
+        return redirect()->route('tagihan.index')->with('success', 'Tagihan berhasil dibuat.');
     }
 
     /**

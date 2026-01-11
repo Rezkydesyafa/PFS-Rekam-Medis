@@ -10,38 +10,64 @@ class DatabaseSeeder extends Seeder
 {
     use WithoutModelEvents;
 
+
     /**
      * Seed the application's database.
      */
     public function run(): void
     {
-        // 1. Create Users (Admin & Petugas)
-        // Cek dulu apakah user sudah ada untuk menghindari error duplicate entry saat seeding ulang
-        if (!User::where('username', 'admin')->exists()) {
-            User::create([
-                'name' => 'Dr. Hendra S.',
+        // 1. Create Users for each Role
+        $users = [
+            [
+                'name' => 'Administrator',
                 'username' => 'admin',
-                'email' => 'admin@medrecord.pro',
-                'password' => bcrypt('password'),
-                'role' => 'superadmin',
-            ]);
-        }
-
-        if (!User::where('username', 'petugas')->exists()) {
-            User::create([
-                'name' => 'Sarah Wijaya',
+                'role' => 'admin', // Was superadmin
+            ],
+            [
+                'name' => 'Staff Pendaftaran',
+                'username' => 'pendaftaran',
+                'role' => 'unit_pendaftaran',
+            ],
+            [
+                'name' => 'Petugas RM',
                 'username' => 'petugas',
-                'email' => 'petugas@medrecord.pro',
-                'password' => bcrypt('password'),
-                'role' => 'petugas',
-            ]);
+                'role' => 'petugas_rekam_medis',
+            ],
+            [
+                'name' => 'dr. Budi Santoso',
+                'username' => 'dokter',
+                'role' => 'dokter',
+            ],
+            [
+                'name' => 'Apoteker Siti',
+                'username' => 'apoteker',
+                'role' => 'apoteker',
+            ],
+            [
+                'name' => 'Kasir Andi',
+                'username' => 'kasir',
+                'role' => 'kasir',
+            ]
+        ];
+
+        foreach ($users as $user) {
+            if (!User::where('username', $user['username'])->exists()) {
+                User::create([
+                    'name' => $user['name'],
+                    'username' => $user['username'],
+                    'email' => $user['username'] . '@sirm.com',
+                    'password' => bcrypt('password'), // Access with generic password
+                    'role' => $user['role'],
+                ]);
+            }
         }
 
-        // 2. Panggil Seeder Lainnya
+        // 2. Call Other Seeders
         $this->call([
             PasienSeeder::class, // Data Pasien
             DokterSeeder::class, // Data Dokter (Baru)
             ObatSeeder::class,   // Data Obat (Baru)
+            TindakanMedisSeeder::class, // Data Tindakan (Baru)
             RekamMedisSeeder::class, // Data Rekam Medis (Baru)
         ]);
     }

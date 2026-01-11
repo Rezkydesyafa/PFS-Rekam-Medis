@@ -65,6 +65,11 @@ class DokterSeeder extends Seeder
             ],
         ];
 
-        DB::table('dokters')->insert($data);
+        foreach ($data as $dokter) {
+            DB::table('dokters')->updateOrInsert(
+                ['no_sip' => $dokter['no_sip']], // Unique Key
+                $dokter
+            );
+        }
     }
 }

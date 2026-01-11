@@ -25,12 +25,13 @@ class User extends Authenticatable
         'role',
     ];
 
+
     /**
-     * Check if the user is a superadmin.
+     * Check if the user is a superadmin. (Aliased to admin)
      */
     public function isSuperadmin(): bool
     {
-        return $this->role === 'superadmin';
+        return $this->role === 'admin' || $this->role === 'superadmin';
     }
 
     /**
@@ -38,7 +39,39 @@ class User extends Authenticatable
      */
     public function isPetugas(): bool
     {
-        return $this->role === 'petugas';
+        return $this->role === 'petugas_rekam_medis' || $this->role === 'petugas';
+    }
+
+    // --- Role Helpers ---
+
+    public function isUnitPendaftaran(): bool
+    {
+        return $this->role === 'unit_pendaftaran';
+    }
+
+    public function isAdmin(): bool
+    {
+        return in_array($this->role, ['admin', 'superadmin']);
+    }
+
+    public function isPetugasRekamMedis(): bool
+    {
+        return in_array($this->role, ['petugas_rekam_medis', 'petugas']);
+    }
+
+    public function isDokter(): bool
+    {
+        return $this->role === 'dokter';
+    }
+
+    public function isApoteker(): bool
+    {
+        return $this->role === 'apoteker';
+    }
+
+    public function isKasir(): bool
+    {
+        return $this->role === 'kasir';
     }
 
     /**
