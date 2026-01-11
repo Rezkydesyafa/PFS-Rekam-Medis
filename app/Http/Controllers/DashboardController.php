@@ -119,4 +119,44 @@ class DashboardController extends Controller
             'selectedDate'
         ));
     }
+
+    public function exportPdf(Request $request)
+    {
+        // 1. FILTER TANGGAL (Sama dengan Index)
+        $selectedDate = $request->has('date') ? Carbon::parse($request->date) : Carbon::today();
+        $isFuture = $selectedDate->gt(Carbon::today());
+
+        if ($isFuture) {
+            $total_pasien = 0;
+            $kunjungan_hari_ini = 0;
+            $total_rm = 0;
+            $rm_tercetak = 0;
+        } else {
+            $total_pasien = Pasien::whereDate('created_at', '<=', $selectedDate)->count();
+            $kunjungan_hari_ini = RekamMedis::whereDate('tgl_kunjungan', $selectedDate)->count();
+            $total_rm = RekamMedis::whereDate('created_at', '<=', $selectedDate)->count();
+            $rm_tercetak = RekamMedis::where('status_cetak', 'Sudah Dicetak')
+                                     ->whereDate('created_at', '<=', $selectedDate)
+                                     ->count(); 
+        }
+
+        // 2. PASIEN TERBARU (10 Data terakhir untuk laporan)
+        $latest_patients = Pasien::latest()->take(10)->get();
+
+        // 3. GENERATE PDF
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('dashboard.pdf', compact(
+            'total_pasien', 
+            'kunjungan_hari_ini', 
+            'total_rm', 
+            'rm_tercetak',
+            'latest_patients',
+            'selectedDate'
+        ));
+
+        // 4. SETTING KERTAS & ORIENTASI
+        $pdf->setPaper('a4', 'portrait');
+
+        // 5. DOWNLOAD
+        return $pdf->download('Laporan_Dashboard_' . $selectedDate->format('Y-m-d') . '.pdf');
+    }
 }

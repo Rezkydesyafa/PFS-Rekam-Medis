@@ -22,10 +22,10 @@
                 <span class="material-symbols-outlined text-[18px] text-slate-500">calendar_today</span>
                 <input type="text" id="dashboardCalendar" value="{{ $selectedDate->format('d M Y') }}" class="border-none p-0 text-sm font-semibold text-slate-700 focus:ring-0 w-24 cursor-pointer bg-transparent" readonly>
             </div>
-             <button class="bg-blue-600 text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700 transition-colors shadow-sm shadow-blue-600/20 flex items-center gap-2">
+             <a href="{{ route('dashboard.export-pdf', ['date' => request('date')]) }}" class="bg-blue-600 text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700 transition-colors shadow-sm shadow-blue-600/20 flex items-center gap-2">
                 <span class="material-symbols-outlined text-[18px]">download</span>
                 <span>Export Laporan</span>
-            </button>
+            </a>
         </div>
     </div>
 
