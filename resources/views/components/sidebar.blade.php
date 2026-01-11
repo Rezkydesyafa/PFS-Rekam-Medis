@@ -54,11 +54,23 @@
         </a>
         @endif
 
-        @if(auth()->user()->isPetugas())
+        @php
+            $userRole = auth()->user()->role;
+            $allRoles = ['superadmin', 'admin', 'petugas', 'petugas_rekam_medis', 'unit_pendaftaran', 'dokter', 'apoteker', 'kasir'];
+            
+            // Define access lists
+            $accessPasien = ['superadmin', 'admin', 'petugas', 'petugas_rekam_medis', 'unit_pendaftaran', 'dokter', 'kasir'];
+            $accessDokter = ['superadmin', 'admin', 'petugas', 'petugas_rekam_medis'];
+            $accessRekamMedis = ['superadmin', 'admin', 'petugas', 'petugas_rekam_medis', 'dokter', 'kasir'];
+            $accessTagihan = ['superadmin', 'admin', 'petugas', 'petugas_rekam_medis', 'kasir'];
+            $accessObat = ['superadmin', 'admin', 'petugas', 'petugas_rekam_medis', 'dokter', 'apoteker'];
+        @endphp
+
         <div x-show="sidebarExpanded" class="px-4 mt-6 mb-2">
             <p class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest">Layanan</p>
         </div>
 
+        @if(in_array($userRole, $accessPasien))
         <a href="{{ route('pasien.index') }}" 
            class="flex items-center gap-3 px-3.5 py-3 rounded-2xl transition-all duration-200 group relative {{ request()->routeIs('pasien.*') ? 'bg-blue-50 text-blue-600' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900' }}"
            :class="sidebarExpanded ? 'justify-start' : 'justify-center'">
@@ -66,7 +78,9 @@
             <span x-show="sidebarExpanded" class="text-sm font-bold whitespace-nowrap {{ request()->routeIs('pasien.*') ? 'text-blue-700' : 'text-slate-600 group-hover:text-slate-900' }}">Data Pasien</span>
             <div x-show="!sidebarExpanded" class="absolute left-full ml-3 px-2 py-1 bg-slate-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50">Pasien</div>
         </a>
+        @endif
 
+        @if(in_array($userRole, $accessDokter))
         <a href="{{ route('dokter.index') }}" 
            class="flex items-center gap-3 px-3.5 py-3 rounded-2xl transition-all duration-200 group relative {{ request()->routeIs('dokter.*') ? 'bg-blue-50 text-blue-600' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900' }}"
            :class="sidebarExpanded ? 'justify-start' : 'justify-center'">
@@ -74,7 +88,9 @@
             <span x-show="sidebarExpanded" class="text-sm font-bold whitespace-nowrap {{ request()->routeIs('dokter.*') ? 'text-blue-700' : 'text-slate-600 group-hover:text-slate-900' }}">Data Dokter</span>
             <div x-show="!sidebarExpanded" class="absolute left-full ml-3 px-2 py-1 bg-slate-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50">Dokter</div>
         </a>
+        @endif
 
+        @if(in_array($userRole, $accessRekamMedis))
         <a href="{{ route('rekam-medis.index') }}" 
            class="flex items-center gap-3 px-3.5 py-3 rounded-2xl transition-all duration-200 group relative {{ request()->routeIs('rekam-medis.*') ? 'bg-blue-50 text-blue-600' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900' }}"
            :class="sidebarExpanded ? 'justify-start' : 'justify-center'">
@@ -82,7 +98,9 @@
             <span x-show="sidebarExpanded" class="text-sm font-bold whitespace-nowrap {{ request()->routeIs('rekam-medis.*') ? 'text-blue-700' : 'text-slate-600 group-hover:text-slate-900' }}">Rekam Medis</span>
             <div x-show="!sidebarExpanded" class="absolute left-full ml-3 px-2 py-1 bg-slate-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50">Rekam Medis</div>
         </a>
+        @endif
 
+        @if(in_array($userRole, $accessTagihan))
         <a href="{{ route('tagihan.index') }}" 
            class="flex items-center gap-3 px-3.5 py-3 rounded-2xl transition-all duration-200 group relative {{ request()->routeIs('tagihan.*') ? 'bg-blue-50 text-blue-600' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900' }}"
            :class="sidebarExpanded ? 'justify-start' : 'justify-center'">
@@ -106,7 +124,9 @@
             
             <div x-show="!sidebarExpanded" class="absolute left-full ml-3 px-2 py-1 bg-slate-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50">Kasir & Tagihan</div>
         </a>
+        @endif
 
+        @if(in_array($userRole, $accessObat))
         <a href="{{ route('obat.index') }}" 
            class="flex items-center gap-3 px-3.5 py-3 rounded-2xl transition-all duration-200 group relative {{ request()->routeIs('obat.*') ? 'bg-blue-50 text-blue-600' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900' }}"
            :class="sidebarExpanded ? 'justify-start' : 'justify-center'">

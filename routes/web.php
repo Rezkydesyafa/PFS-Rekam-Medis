@@ -41,7 +41,7 @@ Route::middleware(['auth'])->group(function () {
     
     // 1. UNIT PENDAFTARAN (Akses: Pasien)
     // Petugas RM & Dokter juga biasanya butuh akses data pasien
-    Route::middleware('role:unit_pendaftaran,petugas_rekam_medis,petugas,dokter,admin,superadmin')->group(function () {
+    Route::middleware('role:unit_pendaftaran,petugas_rekam_medis,petugas,dokter,kasir,admin,superadmin')->group(function () {
         Route::resource('pasien', PasienController::class);
     });
     
@@ -57,7 +57,7 @@ Route::middleware(['auth'])->group(function () {
     });
     
     // 4. DOKTER & PETUGAS RM (Akses: Rekam Medis)
-    Route::middleware('role:dokter,petugas_rekam_medis,petugas,admin,superadmin')->group(function () {
+    Route::middleware('role:dokter,petugas_rekam_medis,petugas,kasir,admin,superadmin')->group(function () {
         Route::get('rekam-medis/{id}/print', [RekamMedisController::class, 'print'])->name('rekam-medis.print');
         Route::resource('rekam-medis', RekamMedisController::class);
     });
