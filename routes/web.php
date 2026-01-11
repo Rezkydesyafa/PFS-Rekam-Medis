@@ -31,7 +31,7 @@ Route::middleware('auth')->group(function () {
 }); 
 
 // Group untuk Superadmin
-Route::middleware(['auth', 'superadmin'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', 'role:admin,superadmin'])->prefix('admin')->name('admin.')->group(function () {
     // User Management (CRUD)
     Route::resource('users', UserController::class);
 });
@@ -40,32 +40,31 @@ Route::middleware(['auth', 'superadmin'])->prefix('admin')->name('admin.')->grou
 Route::middleware(['auth'])->group(function () {
     
     // 1. UNIT PENDAFTARAN (Akses: Pasien)
-    // 1. UNIT PENDAFTARAN (Akses: Pasien)
     // Petugas RM & Dokter juga biasanya butuh akses data pasien
-    Route::middleware('role:unit_pendaftaran,petugas_rekam_medis,petugas,dokter,kasir,superadmin,apoteker')->group(function () {
+    Route::middleware('role:unit_pendaftaran,petugas_rekam_medis,petugas,dokter,kasir,superadmin,apoteker,petugas2')->group(function () {
         Route::resource('pasien', PasienController::class);
     });
     
     // 2. DATA DOKTER (Biasanya Admin / Petugas RM)
-    Route::middleware('role:admin,superadmin')->group(function () {
+    Route::middleware('role:petugas_rekam_medis,petugas,admin,superadmin,petugas2')->group(function () {
         Route::resource('dokter', DokterController::class);
     });
     
     // 3. APOTEKER (Akses: Obat)
     // Dokter & Petugas RM juga mungkin perlu lihat stok obat
-    Route::middleware('role:apoteker,dokter,petugas_rekam_medis,petugas,superadmin')->group(function () {
+    Route::middleware('role:apoteker,dokter,petugas_rekam_medis,petugas,superadmin,petugas2')->group(function () {
         Route::resource('obat', ObatController::class);
     });
     
     // 4. DOKTER & PETUGAS RM (Akses: Rekam Medis)
-    Route::middleware('role:dokter,petugas_rekam_medis,petugas,kasir,superadmin,apoteker,unit_pendaftaran')->group(function () {
+    Route::middleware('role:dokter,petugas_rekam_medis,petugas,kasir,superadmin,apoteker,petugas2,unit_pendaftaran')->group(function () {
         Route::get('rekam-medis/{id}/print', [RekamMedisController::class, 'print'])->name('rekam-medis.print');
         Route::resource('rekam-medis', RekamMedisController::class);
     });
 
     // 5. KASIR (Akses: Tagihan)
     // Petugas RM & Admin mungkin perlu akses juga
-    Route::middleware('role:kasir,superadmin')->group(function () {
+    Route::middleware('role:kasir,petugas_rekam_medis,petugas,superadmin,petugas2')->group(function () {
         // Print Struk Tagihan
         Route::get('tagihan/{id}/print', [TagihanController::class, 'print'])->name('tagihan.print');
         // Update Status Bayar (Lunas/Belum)

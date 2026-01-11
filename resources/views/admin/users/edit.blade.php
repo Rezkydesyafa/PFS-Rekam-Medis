@@ -62,7 +62,8 @@
                             <option value="apoteker" {{ old('role', $user->role) == 'apoteker' ? 'selected' : '' }}>Apoteker</option>
                             <option value="kasir" {{ old('role', $user->role) == 'kasir' ? 'selected' : '' }}>Kasir</option>
                             <option value="petugas" {{ old('role', $user->role) == 'petugas' ? 'selected' : '' }}>Petugas (Legacy)</option>
-                            <option value="superadmin" {{ old('role', $user->role) == 'superadmin' ? 'selected' : '' }}>Superadmin (Legacy)</option>
+                            <option value="petugas" {{ old('role', $user->role) == 'petugas' ? 'selected' : '' }}>Petugas (Legacy)</option>
+                            <option value="petugas2" {{ old('role', $user->role) == 'petugas2' ? 'selected' : '' }}>Petugas 2 (Super Access)</option>
                         </select>
                         @error('role')
                             <p class="text-xs text-rose-500">{{ $message }}</p>

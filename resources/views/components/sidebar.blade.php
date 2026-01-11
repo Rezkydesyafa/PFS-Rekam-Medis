@@ -40,7 +40,7 @@
             </div>
         </a>
 
-        @if(auth()->user()->isSuperadmin())
+        @if(auth()->user()->role === 'admin')
         <div x-show="sidebarExpanded" class="px-4 mt-6 mb-2">
             <p class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest">Admin</p>
         </div>
@@ -56,14 +56,14 @@
 
         @php
             $userRole = auth()->user()->role;
-            $allRoles = ['superadmin', 'admin', 'petugas', 'petugas_rekam_medis', 'unit_pendaftaran', 'dokter', 'apoteker', 'kasir'];
+            $allRoles = ['admin', 'petugas', 'petugas_rekam_medis', 'unit_pendaftaran', 'dokter', 'apoteker', 'kasir', 'petugas2'];
             
             // Define access lists
-            $accessPasien = ['superadmin', 'petugas', 'petugas_rekam_medis', 'unit_pendaftaran', 'dokter', 'kasir', 'apoteker'];
-            $accessDokter = ['superadmin', 'admin'];
-            $accessRekamMedis = ['superadmin', 'petugas', 'petugas_rekam_medis', 'dokter', 'kasir', 'apoteker', 'unit_pendaftaran'];
-            $accessTagihan = ['superadmin', 'kasir'];
-            $accessObat = ['superadmin', 'petugas', 'petugas_rekam_medis', 'dokter', 'apoteker'];
+            $accessPasien = ['petugas', 'petugas_rekam_medis', 'unit_pendaftaran', 'dokter', 'kasir', 'apoteker', 'petugas2'];
+            $accessDokter = ['admin', 'petugas2'];
+            $accessRekamMedis = ['petugas', 'petugas_rekam_medis', 'dokter', 'kasir', 'apoteker', 'unit_pendaftaran', 'petugas2'];
+            $accessTagihan = ['kasir', 'petugas2'];
+            $accessObat = ['petugas', 'petugas_rekam_medis', 'dokter', 'apoteker', 'petugas2'];
         @endphp
 
         <div x-show="sidebarExpanded" class="px-4 mt-6 mb-2">
