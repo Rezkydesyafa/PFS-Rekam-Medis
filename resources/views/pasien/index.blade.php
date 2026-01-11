@@ -28,12 +28,12 @@
 
             {{-- Filter Bar --}}
             <x-filter-bar :action="route('pasien.index')" placeholder="Nama, NIK, No. RM...">
-                <select name="status" onchange="this.form.submit()" class="w-full md:w-40 py-2 pl-3 pr-8 rounded-lg border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 text-sm md:text-xs lg:text-sm focus:ring-primary focus:border-primary dark:text-white shadow-sm cursor-pointer">
+                <!-- <select name="status" onchange="this.form.submit()" class="w-full md:w-40 py-2 pl-3 pr-8 rounded-lg border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 text-sm md:text-xs lg:text-sm focus:ring-primary focus:border-primary dark:text-white shadow-sm cursor-pointer">
                     <option value="all">Semua Status</option>
                     <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>Aktif</option>
                     <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Pending</option>
                     <option value="inactive" {{ request('status') == 'inactive' ? 'selected' : '' }}>Non-Aktif</option>
-                </select>
+                </select> -->
             </x-filter-bar>
 
             <!-- Table -->
@@ -46,7 +46,6 @@
                                 <th class="h-12 px-4 py-3 font-semibold text-slate-900 dark:text-white">ID Medis</th>
                                 <th class="h-12 px-4 py-3 font-semibold text-slate-900 dark:text-white">Tanggal Lahir</th>
                                 <th class="h-12 px-4 py-3 font-semibold text-slate-900 dark:text-white">Kontak</th>
-                                <th class="h-12 px-4 py-3 font-semibold text-slate-900 dark:text-white">Status</th>
                                 <th class="h-12 px-4 py-3 font-semibold text-slate-900 dark:text-white text-right">Aksi</th>
                             </tr>
                         </thead>
@@ -82,7 +81,7 @@
                                         <span class="text-xs text-slate-500 truncate max-w-[150px]" title="{{ $pasien->alamat }}">{{ Str::limit($pasien->alamat, 20) }}</span>
                                     </div>
                                 </td>
-                                <td class="p-4 align-middle">
+                                <!-- <td class="p-4 align-middle">
                                     @if($pasien->status == 'active')
                                         <span class="inline-flex items-center rounded-full bg-emerald-100 dark:bg-emerald-900/30 px-2.5 py-0.5 text-xs font-semibold text-emerald-800 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800">
                                             Aktif
@@ -95,7 +94,7 @@
                                         <span class="inline-flex items-center rounded-full bg-slate-100 dark:bg-slate-700 px-2.5 py-0.5 text-xs font-semibold text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-600">
                                             Non-Aktif
                                         </span>
-                                    @endif
+                                    @endif -->
                                 </td>
                                 <td class="p-4 align-middle text-right">
                                     <div class="flex justify-end gap-2">

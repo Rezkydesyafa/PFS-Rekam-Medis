@@ -158,7 +158,7 @@
                                 <span class="material-symbols-outlined fill-1">star</span>
                                 <span class="material-symbols-outlined fill-1">star</span>
                                 <span class="material-symbols-outlined fill-1 text-slate-200">star</span>
-                                <span class="text-slate-400 text-xs ml-1 font-medium text-black">(4.7 Stars)</span>
+                                <span class="text-slate-400 text-xs ml-1 font-medium text-black">(4.8 Stars)</span>
                             </div>
                         </div>
 
@@ -167,7 +167,7 @@
                             <div class="w-8 h-8 bg-blue-50 rounded-lg flex items-center justify-center text-blue-600">
                                 <span class="material-symbols-outlined text-[20px] fill-1">star</span>
                             </div>
-                            <span class="font-bold text-slate-700 text-sm">Easy Appointment Booking</span>
+                            <span class="font-bold text-slate-700 text-sm">Mudah di Gunakan</span>
                         </div>
 
                         <!-- Floating Card: Quote -->
@@ -293,7 +293,7 @@
                      <div class="lg:w-1/2">
                         <div class="relative group">
                             <div class="absolute inset-0 bg-blue-600 rounded-[2rem] rotate-3 opacity-20 group-hover:rotate-6 transition-transform duration-300"></div>
-                            <img src="https://img.freepik.com/free-photo/medical-banner-with-doctor-working-laptop_23-2149611211.jpg" alt="Tim Medis SIRM" class="relative rounded-[2rem] shadow-lg w-full object-cover h-[400px] group-hover:-translate-y-2 transition-transform duration-300" onerror="this.src='https://placehold.co/600x400/png?text=Tentang+Kami'">
+                            <img src="{{ asset('about-image.png') }}" alt="Tim Medis SIRM" class="relative rounded-[2rem] shadow-lg w-full object-cover h-[400px] group-hover:-translate-y-2 transition-transform duration-300" onerror="this.src='https://placehold.co/600x400/png?text=Tentang+Kami'">
                         </div>
                     </div>
                     <div class="lg:w-1/2">

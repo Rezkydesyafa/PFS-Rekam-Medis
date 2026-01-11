@@ -35,7 +35,7 @@
                         <div class="flex flex-col gap-2">
                             <label class="text-sm font-medium text-slate-700 dark:text-slate-300" for="nik">NIK (Nomor Induk Kependudukan)</label>
                             <input class="w-full rounded-lg border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:border-primary focus:ring-primary shadow-sm placeholder:text-slate-400" 
-                                   id="nik" name="nik" type="text" placeholder="16 digit NIK" required/>
+                                   id="nik" name="nik" type="number" placeholder="16 digit NIK" required/>
                         </div>
                         <div class="flex flex-col gap-2">
                             <label class="text-sm font-medium text-slate-700 dark:text-slate-300" for="medicalId">No. Rekam Medis</label>
