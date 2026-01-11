@@ -13,12 +13,12 @@ class Dokter extends Model
     protected $primaryKey = 'id_dokter';
 
     protected $fillable = [
-        'nama_dokter',
-        'spesialisasi',
-        'no_sip',
-        'no_telepon',
-    ];
-
+    'nama_dokter',
+    'spesialisasi',
+    'tarif', // <--- Tambahkan ini
+    'no_sip',
+    'no_telepon',
+];
     /**
      * Get the medical records handled by this doctor.
      */

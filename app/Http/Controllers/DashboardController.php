@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Pasien;
 use App\Models\RekamMedis;
+use App\Models\Dokter; // Opsional jika dibutuhkan
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -12,49 +13,52 @@ class DashboardController extends Controller
 {
     public function index(Request $request)
     {
-        // Date Filter
+        // 1. FILTER TANGGAL
+        // Jika user memilih tanggal, gunakan itu. Jika tidak, gunakan hari ini.
         $selectedDate = $request->has('date') ? Carbon::parse($request->date) : Carbon::today();
-
-        // Check if future date
+        
+        // Cek apakah tanggal masa depan (untuk validasi tampilan)
         $isFuture = $selectedDate->gt(Carbon::today());
 
+        // 2. HITUNG STATISTIK UTAMA (Cards)
         if ($isFuture) {
+            // Jika tanggal masa depan, datanya 0 semua
             $total_pasien = 0;
             $kunjungan_hari_ini = 0;
             $total_rm = 0;
             $rm_tercetak = 0;
         } else {
-            // 1. STATS CARDS
-            // Total Pasien (Cumulative up to selected date)
+            // A. Total Pasien (Akumulasi sampai tanggal dipilih)
             $total_pasien = Pasien::whereDate('created_at', '<=', $selectedDate)->count();
             
-            // Kunjungan Hari Ini (Exact on selected date)
-            $kunjungan_hari_ini = RekamMedis::whereDate('tanggal_kunjungan', $selectedDate)->count();
+            // B. Kunjungan Pada Tanggal Tersebut
+            // PENTING: Menggunakan kolom 'tgl_kunjungan' bukan 'tanggal_kunjungan'
+            $kunjungan_hari_ini = RekamMedis::whereDate('tgl_kunjungan', $selectedDate)->count();
             
-            // Total Data Rekam Medis (Cumulative up to selected date)
+            // C. Total Rekam Medis (Akumulasi)
             $total_rm = RekamMedis::whereDate('created_at', '<=', $selectedDate)->count();
             
-            // Rekam Medis Tercetak (Cumulative up to selected date)
+            // D. Rekam Medis Tercetak (Asumsi sama dengan total RM atau logika lain)
             $rm_tercetak = $total_rm; 
         } 
 
-        // 2. ACTIVE QUEUE & DOCUMENT ACTIVITY
-        $antrian_aktif = $kunjungan_hari_ini; 
-        
-        // Kelengkapan Rekam Medis
-        $kelengkapan_rm = 95;
+        // 3. LOGIKA TAMBAHAN (Queue & Activity)
+        $antrian_aktif = $kunjungan_hari_ini; // Asumsi antrian = jumlah kunjungan hari ini
+        $kelengkapan_rm = 95; // Nilai statis atau bisa dibuat dinamis nanti
 
-        // 3. CHART: Kunjungan Pasien (Statistik Kunjungan - Last 7 Days from Selected Date)
+        // 4. CHART: STATISTIK KUNJUNGAN (7 Hari Terakhir dari Tanggal Dipilih)
         $endDate = $selectedDate->copy();
         $startDate = $endDate->copy()->subDays(6);
         
-        $visits = RekamMedis::select(DB::raw('DATE(tanggal_kunjungan) as date'), DB::raw('count(*) as count'))
-            ->whereBetween('tanggal_kunjungan', [$startDate->format('Y-m-d'), $endDate->format('Y-m-d')])
+        // Query Group By Tanggal
+        // PENTING: Perbaikan nama kolom 'tgl_kunjungan'
+        $visits = RekamMedis::select(DB::raw('DATE(tgl_kunjungan) as date'), DB::raw('count(*) as count'))
+            ->whereBetween('tgl_kunjungan', [$startDate->format('Y-m-d'), $endDate->format('Y-m-d')])
             ->groupBy('date')
             ->orderBy('date', 'asc')
             ->get();
 
-        // Fill missing dates with 0
+        // Siapkan Data Chart (Isi 0 jika tanggal kosong)
         $chart_data = [];
         $categories = [];
         
@@ -70,34 +74,35 @@ class DashboardController extends Controller
             }
             
             $chart_data[] = $count;
-            $categories[] = $date->format('d M'); // Format for X-axis
+            $categories[] = $date->format('d M'); // Label Sumbu X (Contoh: 12 Jan)
         }
 
-        // 4. CHART: Demografi Pasien (Age Distribution)
-        // Logic: Calculate age for each patient and group buckets
+        // 5. CHART: DEMOGRAFI PASIEN (Pie Chart Umur)
+        // Ambil semua tanggal lahir pasien
         $ages = Pasien::select('tgl_lahir')->get()->map(function ($pasien) {
             return Carbon::parse($pasien->tgl_lahir)->age;
         });
 
+        // Kelompokkan Umur
         $age_18_35 = $ages->filter(fn($age) => $age >= 18 && $age <= 35)->count();
         $age_36_55 = $ages->filter(fn($age) => $age > 35 && $age <= 55)->count();
         $age_gt_55 = $ages->filter(fn($age) => $age > 55)->count();
-        // Assuming rest are < 18 or fit in other buckets, but user requested specific buckets in previous update:
-        // "18-35 Th", "36-55 Th", ">55 Th". We can add "<18" if needed, but let's stick to the visible ones or normalize.
-        // Let's normalize percentages based on total patients (or total in these buckets).
+        
+        // Hitung Persentase (Untuk Pie Chart)
         $total_for_pie = $age_18_35 + $age_36_55 + $age_gt_55;
-        $total_for_pie = $total_for_pie == 0 ? 1 : $total_for_pie; // Avoid division by zero
+        $total_for_pie = $total_for_pie == 0 ? 1 : $total_for_pie; // Hindari pembagian dengan 0
 
         $age_stats = [
             '18_35' => round(($age_18_35 / $total_for_pie) * 100),
             '36_55' => round(($age_36_55 / $total_for_pie) * 100),
             'gt_55' => round(($age_gt_55 / $total_for_pie) * 100),
-            'counts' => [$age_18_35, $age_36_55, $age_gt_55]
+            'counts' => [$age_18_35, $age_36_55, $age_gt_55] // Data mentah untuk tooltip chart
         ];
         
-        // 5. RECENT PATIENTS (Pasien Terbaru)
+        // 6. PASIEN TERBARU (Tabel kecil di dashboard)
         $latest_patients = Pasien::latest()->take(5)->get();
 
+        // 7. RETURN VIEW
         return view('dashboard', compact(
             'total_pasien', 
             'kunjungan_hari_ini', 
