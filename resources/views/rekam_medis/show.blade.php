@@ -4,7 +4,7 @@
         <div class="flex justify-between items-center mb-6">
             <h1 class="text-2xl font-bold text-slate-900 dark:text-white">Detail Rekam Medis</h1>
             <div class="flex items-center gap-3">
-                <a href="{{ route('rekam-medis.print', $rm->id_rm) }}" target="_blank" class="inline-flex h-9 items-center justify-center gap-2 rounded-lg bg-slate-100 dark:bg-slate-700 px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors">
+                <a href="{{ route('rekam-medis.print', $rm->id_rm) }}" target="_blank" class="inline-flex h-9 items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-bold text-white shadow-sm hover:bg-primary/90 transition-colors">
                     <span class="material-symbols-outlined text-[18px]">print</span>
                     Cetak PDF
                 </a>
@@ -126,9 +126,9 @@
         </div>
 
         <div class="mt-6 flex justify-end gap-3">
-            <button onclick="window.print()" class="px-4 py-2 bg-slate-800 text-white rounded-lg hover:bg-slate-700 flex items-center gap-2">
+            <a href="{{ route('rekam-medis.print', $rm->id_rm) }}" target="_blank" class="px-4 py-2 bg-slate-800 text-white rounded-lg hover:bg-slate-700 flex items-center gap-2" title="Cetak PDF">
                 <span class="material-symbols-outlined text-sm">print</span> Cetak
-            </button>
+            </a>
         </div>
 
     </div>

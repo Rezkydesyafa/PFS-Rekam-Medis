@@ -24,7 +24,10 @@ class TindakanMedisSeeder extends Seeder
         ];
 
         foreach ($data as $item) {
-            \App\Models\TindakanMedis::create($item);
+            \App\Models\TindakanMedis::firstOrCreate(
+                ['nama_tindakan' => $item['nama_tindakan']], 
+                $item
+            );
         }
     }
 }
