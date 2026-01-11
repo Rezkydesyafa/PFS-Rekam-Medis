@@ -77,6 +77,9 @@
                             </td>
                             <td class="p-4 align-middle text-right">
                                 <div class="flex justify-end gap-2">
+                                    <a href="{{ route('rekam-medis.print', $rm->id_rm) }}" target="_blank" class="h-8 w-8 inline-flex items-center justify-center rounded-lg text-slate-500 hover:text-primary hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors" title="Cetak PDF">
+                                        <span class="material-symbols-outlined text-[20px]">print</span>
+                                    </a>
                                     <a href="{{ route('rekam-medis.show', $rm->id_rm) }}" class="h-8 w-8 inline-flex items-center justify-center rounded-lg text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors" title="Lihat Detail">
                                         <span class="material-symbols-outlined text-[20px]">visibility</span>
                                     </a>

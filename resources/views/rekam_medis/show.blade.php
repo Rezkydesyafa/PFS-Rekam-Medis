@@ -3,9 +3,15 @@
         
         <div class="flex justify-between items-center mb-6">
             <h1 class="text-2xl font-bold text-slate-900 dark:text-white">Detail Rekam Medis</h1>
-            <a href="{{ route('rekam-medis.index') }}" class="text-slate-500 hover:text-primary text-sm flex items-center gap-1">
-                <span class="material-symbols-outlined text-sm">arrow_back</span> Kembali
-            </a>
+            <div class="flex items-center gap-3">
+                <a href="{{ route('rekam-medis.print', $rm->id_rm) }}" target="_blank" class="inline-flex h-9 items-center justify-center gap-2 rounded-lg bg-slate-100 dark:bg-slate-700 px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors">
+                    <span class="material-symbols-outlined text-[18px]">print</span>
+                    Cetak PDF
+                </a>
+                <a href="{{ route('rekam-medis.index') }}" class="text-slate-500 hover:text-primary text-sm flex items-center gap-1">
+                    <span class="material-symbols-outlined text-sm">arrow_back</span> Kembali
+                </a>
+            </div>
         </div>
 
         <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6 mb-6">

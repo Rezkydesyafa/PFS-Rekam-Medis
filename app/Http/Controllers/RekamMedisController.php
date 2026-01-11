@@ -11,9 +11,23 @@ use App\Models\Tagihan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class RekamMedisController extends Controller
 {
+    /**
+     * Cetak Rekam Medis ke PDF
+     */
+    public function print($id)
+    {
+        $rekamMedis = RekamMedis::with(['pasien', 'dokter', 'tindakans', 'obats'])->findOrFail($id);
+        
+        $pdf = Pdf::loadView('rekam_medis.pdf', compact('rekamMedis'));
+        
+        $fileName = 'Rekam-Medis-' . str_replace('/', '-', $rekamMedis->pasien->no_rm) . '-' . $rekamMedis->id_rekam_medis . '.pdf';
+        
+        return $pdf->stream($fileName);
+    }
     /**
      * Menampilkan daftar riwayat rekam medis.
      */
