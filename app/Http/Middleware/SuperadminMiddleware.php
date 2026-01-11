@@ -21,8 +21,8 @@ class SuperadminMiddleware
             return redirect()->route('login');
         }
 
-        // Check if user is superadmin
-        if ($request->user()->role !== 'superadmin') {
+        // Check if user is superadmin (or admin)
+        if (!$request->user()->isSuperadmin()) {
             abort(403, 'Unauthorized. Only superadmin can access this page.');
         }
 

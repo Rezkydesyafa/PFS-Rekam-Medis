@@ -147,7 +147,10 @@ class PasienSeeder extends Seeder
         ];
 
         foreach ($patients as $patient) {
-            Pasien::create($patient);
+            Pasien::firstOrCreate(
+                ['nik' => $patient['nik']], // Kunci pencarian
+                $patient // Data yang akan diinsert jika tidak ditemukan
+            );
         }
     }
 }

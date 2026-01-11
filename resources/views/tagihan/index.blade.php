@@ -37,7 +37,7 @@
         <form method="GET" action="{{ route('tagihan.index') }}" class="flex flex-col md:flex-row gap-4">
             <div class="flex-1 relative">
                 <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
-                <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari No. Tagihan / Nama Pasien..." 
+                <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari Nama Pasien..." 
                        class="w-full pl-10 h-10 rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-sm focus:ring-primary focus:border-primary">
             </div>
             <select name="status" onchange="this.form.submit()" class="w-full md:w-40 h-10 rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-sm focus:ring-primary focus:border-primary cursor-pointer">

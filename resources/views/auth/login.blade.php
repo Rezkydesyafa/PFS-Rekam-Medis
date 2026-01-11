@@ -52,7 +52,7 @@
                                    autofocus 
                                    autocomplete="username"
                                    class="w-full pl-11 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-sm font-semibold focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all placeholder:text-slate-400 shadow-sm"
-                                   placeholder="dokter@rumahsakit.com">
+                                   placeholder="dokter@sirm.com">
                         </div>
                         <x-input-error :messages="$errors->get('email')" class="mt-1" />
                     </div>

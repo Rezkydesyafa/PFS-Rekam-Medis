@@ -54,8 +54,14 @@
                         <select name="role" id="role" required
                             class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary text-sm">
                             <option value="" disabled selected>Pilih Role</option>
-                            <option value="superadmin" {{ old('role') == 'superadmin' ? 'selected' : '' }}>Administrator (Superadmin)</option>
-                            <option value="petugas" {{ old('role') == 'petugas' ? 'selected' : '' }}>Petugas Rekam Medis</option>
+                            <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Administrator (Admin)</option>
+                            <option value="unit_pendaftaran" {{ old('role') == 'unit_pendaftaran' ? 'selected' : '' }}>Unit Pendaftaran</option>
+                            <option value="petugas_rekam_medis" {{ old('role') == 'petugas_rekam_medis' ? 'selected' : '' }}>Petugas Rekam Medis</option>
+                            <option value="dokter" {{ old('role') == 'dokter' ? 'selected' : '' }}>Dokter</option>
+                            <option value="apoteker" {{ old('role') == 'apoteker' ? 'selected' : '' }}>Apoteker</option>
+                            <option value="kasir" {{ old('role') == 'kasir' ? 'selected' : '' }}>Kasir</option>
+                            <option value="petugas" {{ old('role') == 'petugas' ? 'selected' : '' }}>Petugas (Legacy)</option>
+                            <option value="superadmin" {{ old('role') == 'superadmin' ? 'selected' : '' }}>Superadmin (Legacy)</option>
                         </select>
                         @error('role')
                             <p class="text-xs text-rose-500">{{ $message }}</p>
