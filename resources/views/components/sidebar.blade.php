@@ -1,11 +1,9 @@
 <aside class="fixed left-0 top-0 z-40 h-screen bg-white border-r border-slate-100 flex flex-col transition-all duration-300 ease-in-out shadow-[4px_0_24px_rgba(0,0,0,0.02)] rounded-r-3xl"
        :class="sidebarExpanded ? 'w-72' : 'w-[5.5rem]'">
 
-    <!-- Header & Toggle -->
     <div class="h-24 flex items-center w-full transition-all duration-300" 
          :class="sidebarExpanded ? 'px-6 justify-between' : 'justify-center px-0'">
         
-        <!-- Logo Text (Only visible when expanded) -->
         <div class="flex items-center gap-3 overflow-hidden" x-show="sidebarExpanded">
              <div class="relative shrink-0 flex items-center justify-center">
                  <img src="{{ asset('logo.png') }}" alt="Logo" class="w-8 h-8 object-contain">
@@ -16,7 +14,6 @@
              </div>
         </div>
 
-        <!-- Menu Toggle Button -->
         <button @click="sidebarExpanded = !sidebarExpanded" 
                 class="w-10 h-10 bg-white hover:bg-slate-50 border border-transparent hover:border-slate-100 rounded-xl flex items-center justify-center text-slate-500 hover:text-blue-600 transition-all duration-300"
                 :class="sidebarExpanded ? '' : 'w-12 h-12 bg-transparent border-0 hover:bg-blue-50/50'">
@@ -24,10 +21,8 @@
         </button>
     </div>
 
-    <!-- Navigation Menu -->
     <nav class="flex-1 overflow-y-auto overflow-x-hidden py-4 px-4 space-y-1.5 custom-scrollbar">
         
-        <!-- Dashboard -->
         <a href="{{ route('dashboard') }}" 
            class="flex items-center gap-3 px-3.5 py-3 rounded-2xl transition-all duration-200 group relative {{ request()->routeIs('dashboard') ? 'bg-blue-50 text-blue-600' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900' }}"
            :class="sidebarExpanded ? 'justify-start' : 'justify-center'">
@@ -39,7 +34,6 @@
                   Dashboard
             </span>
             
-            <!-- Tooltip for Collapsed State -->
             <div x-show="!sidebarExpanded" 
                  class="absolute left-full ml-3 px-2 py-1 bg-slate-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50 shadow-lg">
                 Dashboard
@@ -47,7 +41,6 @@
         </a>
 
         @if(auth()->user()->isSuperadmin())
-        <!-- Label -->
         <div x-show="sidebarExpanded" class="px-4 mt-6 mb-2">
             <p class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest">Admin</p>
         </div>
@@ -62,7 +55,6 @@
         @endif
 
         @if(auth()->user()->isPetugas())
-        <!-- Label -->
         <div x-show="sidebarExpanded" class="px-4 mt-6 mb-2">
             <p class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest">Layanan</p>
         </div>
@@ -83,17 +75,43 @@
             <div x-show="!sidebarExpanded" class="absolute left-full ml-3 px-2 py-1 bg-slate-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50">Dokter</div>
         </a>
 
-        <a href="{{ route('rekam-medis.index') }}" class="flex items-center gap-3 px-3.5 py-3 rounded-2xl transition-all duration-200 group relative text-slate-500 hover:bg-slate-50 hover:text-slate-900"
+        <a href="{{ route('rekam-medis.index') }}" 
+           class="flex items-center gap-3 px-3.5 py-3 rounded-2xl transition-all duration-200 group relative {{ request()->routeIs('rekam-medis.*') ? 'bg-blue-50 text-blue-600' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900' }}"
            :class="sidebarExpanded ? 'justify-start' : 'justify-center'">
-            <span class="material-symbols-outlined text-[22px] text-slate-400 group-hover:text-slate-600">folder_shared</span>
-            <span x-show="sidebarExpanded" class="text-sm font-bold whitespace-nowrap text-slate-600 group-hover:text-slate-900">Rekam Medis</span>
+            <span class="material-symbols-outlined text-[22px] transition-colors {{ request()->routeIs('rekam-medis.*') ? 'text-blue-600' : 'text-slate-400 group-hover:text-slate-600' }}">folder_shared</span>
+            <span x-show="sidebarExpanded" class="text-sm font-bold whitespace-nowrap {{ request()->routeIs('rekam-medis.*') ? 'text-blue-700' : 'text-slate-600 group-hover:text-slate-900' }}">Rekam Medis</span>
             <div x-show="!sidebarExpanded" class="absolute left-full ml-3 px-2 py-1 bg-slate-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50">Rekam Medis</div>
         </a>
 
-        <a href="{{ route('obat.index') }}" class="flex items-center gap-3 px-3.5 py-3 rounded-2xl transition-all duration-200 group relative text-slate-500 hover:bg-slate-50 hover:text-slate-900"
+        <a href="{{ route('tagihan.index') }}" 
+           class="flex items-center gap-3 px-3.5 py-3 rounded-2xl transition-all duration-200 group relative {{ request()->routeIs('tagihan.*') ? 'bg-blue-50 text-blue-600' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900' }}"
            :class="sidebarExpanded ? 'justify-start' : 'justify-center'">
-            <span class="material-symbols-outlined text-[22px] text-slate-400 group-hover:text-slate-600">medication</span>
-            <span x-show="sidebarExpanded" class="text-sm font-bold whitespace-nowrap text-slate-600 group-hover:text-slate-900">Obat & Apotek</span>
+            
+            <span class="material-symbols-outlined text-[22px] transition-colors {{ request()->routeIs('tagihan.*') ? 'text-blue-600' : 'text-slate-400 group-hover:text-slate-600' }}">receipt_long</span>
+            
+            <span x-show="sidebarExpanded" class="text-sm font-bold whitespace-nowrap {{ request()->routeIs('tagihan.*') ? 'text-blue-700' : 'text-slate-600 group-hover:text-slate-900' }}">
+                Kasir & Tagihan
+            </span>
+
+            {{-- Badge Notifikasi Tagihan Belum Lunas --}}
+            @php
+                $unpaidCount = \App\Models\Tagihan::where('status', 'Belum Lunas')->count();
+            @endphp
+            @if($unpaidCount > 0)
+                <span x-show="sidebarExpanded" class="ml-auto bg-rose-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm">
+                    {{ $unpaidCount }}
+                </span>
+                <span x-show="!sidebarExpanded" class="absolute top-2 right-2 w-2 h-2 bg-rose-500 rounded-full border border-white"></span>
+            @endif
+            
+            <div x-show="!sidebarExpanded" class="absolute left-full ml-3 px-2 py-1 bg-slate-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50">Kasir & Tagihan</div>
+        </a>
+
+        <a href="{{ route('obat.index') }}" 
+           class="flex items-center gap-3 px-3.5 py-3 rounded-2xl transition-all duration-200 group relative {{ request()->routeIs('obat.*') ? 'bg-blue-50 text-blue-600' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900' }}"
+           :class="sidebarExpanded ? 'justify-start' : 'justify-center'">
+            <span class="material-symbols-outlined text-[22px] transition-colors {{ request()->routeIs('obat.*') ? 'text-blue-600' : 'text-slate-400 group-hover:text-slate-600' }}">medication</span>
+            <span x-show="sidebarExpanded" class="text-sm font-bold whitespace-nowrap {{ request()->routeIs('obat.*') ? 'text-blue-700' : 'text-slate-600 group-hover:text-slate-900' }}">Obat & Apotek</span>
             <div x-show="!sidebarExpanded" class="absolute left-full ml-3 px-2 py-1 bg-slate-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50">Obat</div>
         </a>
         @endif
@@ -108,10 +126,8 @@
              <div x-show="!sidebarExpanded" class="absolute left-full ml-3 px-2 py-1 bg-slate-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50">Pengaturan</div>
         </a>
 
-
     </nav>
 
-    <!-- Footer Profile -->
     <div class="p-4 border-t border-slate-50">
         <div class="flex items-center gap-3 p-3 rounded-2xl bg-slate-50 border border-slate-100 transition-all duration-300 relative group"
              :class="sidebarExpanded ? 'justify-start' : 'justify-center p-2'">
@@ -125,17 +141,15 @@
                 <p class="text-[10px] text-slate-500 truncate">{{ Auth::user()->email }}</p>
             </div>
 
-            <!-- Logout Button -->
-             <form method="POST" action="{{ route('logout') }}" class="ml-auto" x-show="sidebarExpanded">
+            <form method="POST" action="{{ route('logout') }}" class="ml-auto" x-show="sidebarExpanded">
                 @csrf
                 <button type="submit" class="text-slate-400 hover:text-red-500 transition-colors p-1.5 rounded-lg hover:bg-white" title="Keluar">
                     <span class="material-symbols-outlined text-[18px]">logout</span>
                 </button>
             </form>
              
-             <!-- Tooltip for collapsed profile -->
-              <div x-show="!sidebarExpanded" 
-                 class="absolute left-full ml-3 px-3 py-2 bg-white border border-slate-100 text-slate-600 text-xs rounded-xl shadow-xl opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-50">
+             <div x-show="!sidebarExpanded" 
+                  class="absolute left-full ml-3 px-3 py-2 bg-white border border-slate-100 text-slate-600 text-xs rounded-xl shadow-xl opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-50">
                 <div class="font-bold mb-1">{{ Auth::user()->name }}</div>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
