@@ -25,6 +25,16 @@
         </div>
         @endif
 
+        {{-- Filter Section --}}
+        <x-filter-bar :action="route('rekam-medis.index')" placeholder="Cari Pasien, Dokter, Diagnosa...">
+            {{-- Custom Filter Slot: Status --}}
+            <select name="status" onchange="this.form.submit()" class="w-full md:w-40 py-2 pl-3 pr-8 rounded-lg border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 text-sm md:text-xs lg:text-sm focus:ring-primary focus:border-primary dark:text-white shadow-sm cursor-pointer">
+                <option value="">Semua Status</option>
+                <option value="Lunas" {{ request('status') == 'Lunas' ? 'selected' : '' }}>Lunas</option>
+                <option value="Belum Lunas" {{ request('status') == 'Belum Lunas' ? 'selected' : '' }}>Belum Lunas</option>
+            </select>
+        </x-filter-bar>
+
         <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-background-dark shadow-sm overflow-hidden flex flex-col">
             <div class="overflow-x-auto">
                 <table class="w-full text-left text-sm">

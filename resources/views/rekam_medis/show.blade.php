@@ -55,6 +55,36 @@
             </div>
         </div>
 
+        <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden mb-6">
+            <div class="px-6 py-4 border-b border-slate-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/50 flex justify-between items-center">
+                <h3 class="font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                    <span class="material-symbols-outlined text-blue-500">medical_services</span> Tindakan Medis
+                </h3>
+            </div>
+            <table class="w-full text-sm text-left">
+                <thead class="text-slate-500 bg-slate-50 dark:bg-slate-900 dark:text-slate-400">
+                    <tr>
+                        <th class="px-6 py-3">Nama Tindakan</th>
+                        <th class="px-6 py-3 text-right">Biaya</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 dark:divide-slate-700">
+                    @forelse($rm->tindakans as $tindakan)
+                    <tr class="dark:text-slate-300">
+                        <td class="px-6 py-3 font-medium">{{ $tindakan->nama_tindakan }}</td>
+                        <td class="px-6 py-3 text-right font-mono">
+                            Rp {{ number_format($tindakan->pivot->harga, 0, ',', '.') }}
+                        </td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="2" class="px-6 py-4 text-center text-slate-500">Tidak ada tindakan medis.</td>
+                    </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+
         <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
             <div class="px-6 py-4 border-b border-slate-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/50 flex justify-between items-center">
                 <h3 class="font-bold text-slate-900 dark:text-white flex items-center gap-2">

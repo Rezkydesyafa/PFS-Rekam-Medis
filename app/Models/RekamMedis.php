@@ -27,14 +27,24 @@ class RekamMedis extends Model
 
     // Relasi ke Obat (Many-to-Many)
    // Relasi ke Obat (Many-to-Many)
-public function obats()
-{
-    return $this->belongsToMany(Obat::class, 'rekam_medis_obat', 'rekam_medis_id', 'obat_id')
-                ->withPivot('jumlah', 'aturan_pakai') // <--- Agar kolom tambahan bisa diambil
-                ->withTimestamps();
-}
+    public function obats()
+    {
+        return $this->belongsToMany(Obat::class, 'rekam_medis_obat', 'rekam_medis_id', 'obat_id')
+                    ->withPivot('jumlah', 'aturan_pakai') // <--- Agar kolom tambahan bisa diambil
+                    ->withTimestamps();
+    }
 
+    // Relasi ke Tindakan Medis (Many-to-Many)
+    public function tindakans()
+    {
+        return $this->belongsToMany(TindakanMedis::class, 'rekam_medis_tindakan', 'rekam_medis_id', 'tindakan_medis_id')
+                    ->withPivot('harga') // Snapshot harga
+                    ->withTimestamps();
+    }
 
-
-   
+    // Relasi ke Tagihan (One-to-One)
+    public function tagihan()
+    {
+        return $this->hasOne(Tagihan::class, 'rekam_medis_id', 'id_rm');
+    }
 }

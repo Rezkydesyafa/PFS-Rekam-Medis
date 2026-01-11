@@ -6,6 +6,8 @@ use App\Models\RekamMedis;
 use App\Models\Pasien;
 use App\Models\Dokter;
 use App\Models\Obat;
+use App\Models\TindakanMedis;
+use App\Models\Tagihan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -15,11 +17,44 @@ class RekamMedisController extends Controller
     /**
      * Menampilkan daftar riwayat rekam medis.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $rekamMedis = RekamMedis::with(['pasien', 'dokter'])
-            ->latest()
-            ->paginate(10);
+        $query = RekamMedis::with(['pasien', 'dokter', 'tagihan']);
+
+        // Search (Pasien, Dokter, Diagnosa)
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->whereHas('pasien', function($sub) use ($search) {
+                    $sub->where('name', 'like', "%{$search}%")
+                        ->orWhere('no_rm', 'like', "%{$search}%");
+                })
+                ->orWhereHas('dokter', function($sub) use ($search) {
+                    $sub->where('nama_dokter', 'like', "%{$search}%");
+                })
+                ->orWhere('diagnosa', 'like', "%{$search}%");
+            });
+        }
+
+        // Filter Status Bayar
+        if ($request->filled('status')) {
+            $status = $request->status;
+            if ($status === 'Lunas') {
+                $query->whereHas('tagihan', function($q) { $q->where('status', 'Lunas'); });
+            } elseif ($status === 'Belum Lunas') {
+                $query->whereHas('tagihan', function($q) { $q->where('status', 'Belum Lunas'); })
+                      ->orWhereDoesntHave('tagihan'); // Asumsi jika belum ada tagihan = Belum bayar? Atau handle default creation.
+            }
+        }
+
+        // Sorting
+        if ($request->sort == 'oldest') {
+            $query->oldest('tgl_kunjungan');
+        } else {
+            $query->latest('tgl_kunjungan');
+        }
+
+        $rekamMedis = $query->paginate(10)->withQueryString();
 
         return view('rekam_medis.index', compact('rekamMedis'));
     }
@@ -39,8 +74,9 @@ class RekamMedisController extends Controller
         $random = rand(100, 999);
         $newRegNumber = "REG-{$today}-{$random}";
 
-        // Variabel $tindakans DIHAPUS
-        return view('rekam_medis.create', compact('pasiens', 'dokters', 'obats', 'newRegNumber'));
+        $tindakans = TindakanMedis::all(); // Ambil semua data tindakan
+
+        return view('rekam_medis.create', compact('pasiens', 'dokters', 'obats', 'newRegNumber', 'tindakans'));
     }
 
     /**
@@ -48,17 +84,19 @@ class RekamMedisController extends Controller
      */
     public function store(Request $request)
     {
-        // 1. Validasi Input (Bagian Tindakan DIHAPUS)
         $request->validate([
             'pasien_id' => 'required|exists:pasiens,id_pasien',
             'dokter_id' => 'required|exists:dokters,id_dokter',
             'tgl_kunjungan' => 'required|date',
             'keluhan' => 'required|string',
             'diagnosa' => 'required|string',
-            // Validasi Resep Obat tetap ada
+            // Validasi Resep Obat - lebih permisif untuk dynamic rows
             'resep' => 'nullable|array',
-            'resep.*.obat_id' => 'required_with:resep|exists:obats,id_obat',
-            'resep.*.jumlah' => 'required_with:resep|integer|min:1',
+            'resep.*.obat_id' => 'nullable|exists:obats,id_obat',
+            'resep.*.jumlah' => 'nullable|integer|min:1',
+            // Validasi Tindakan
+            'actions' => 'nullable|array',
+            'actions.*' => 'nullable|exists:tindakan_medis,id_tindakan',
         ]);
 
         try {
@@ -79,24 +117,57 @@ class RekamMedisController extends Controller
                 ]);
 
                 // B. SIMPAN RESEP OBAT & KURANGI STOK
+                $totalBiayaObat = 0;
                 if ($request->has('resep')) {
                     foreach ($request->resep as $item) {
                         if (!empty($item['obat_id'])) {
-                            // Ambil data obat untuk update stok
+                            // Ambil data obat
                             $obatDB = Obat::find($item['obat_id']);
-                            
-                            // Simpan ke tabel pivot rekam_medis_obat
-                            $rm->obats()->attach($item['obat_id'], [
-                                'jumlah' => $item['jumlah'],
-                                'aturan_pakai' => $item['aturan_pakai'] ?? '-'
-                            ]);
-
-                            // Kurangi Stok
-                            $obatDB->decrement('stok', $item['jumlah']);
+                            if ($obatDB) {
+                                // Simpan pivot
+                                $rm->obats()->attach($item['obat_id'], [
+                                    'jumlah' => $item['jumlah'],
+                                    'aturan_pakai' => $item['aturan_pakai'] ?? '-'
+                                ]);
+    
+                                // Kurangi Stok
+                                $obatDB->decrement('stok', $item['jumlah']);
+                                
+                                // Hitung Biaya
+                                $totalBiayaObat += ($obatDB->harga * $item['jumlah']);
+                            }
                         }
                     }
                 }
 
+                // C. SIMPAN TINDAKAN MEDIS
+                $totalBiayaTindakan = 0;
+                if ($request->has('actions') && is_array($request->actions)) {
+                    $cleanActions = array_filter($request->actions, function($v) { return !empty($v); });
+                    foreach ($cleanActions as $tindakanId) {
+                        $tindakanDB = TindakanMedis::find($tindakanId);
+                        if ($tindakanDB) {
+                            $rm->tindakans()->attach($tindakanId, [
+                                'harga' => $tindakanDB->tarif
+                            ]);
+                            $totalBiayaTindakan += $tindakanDB->tarif;
+                        }
+                    }
+                }
+
+                // D. CREATE TAGIHAN
+                $dokter = Dokter::find($request->dokter_id);
+                $biayaDokter = $dokter ? $dokter->tarif : 0;
+                $grandTotal = $biayaDokter + $totalBiayaObat + $totalBiayaTindakan;
+
+                Tagihan::create([
+                    'rekam_medis_id' => $rm->id_rm,
+                    'biaya_dokter' => $biayaDokter,
+                    'biaya_obat' => $totalBiayaObat,
+                    'biaya_tindakan' => $totalBiayaTindakan,
+                    'total_bayar' => $grandTotal,
+                    'status' => 'Belum Lunas'
+                ]);
 
             }); // End Transaction
 
@@ -112,7 +183,7 @@ class RekamMedisController extends Controller
      */
     public function show($id)
     {
-        $rm = RekamMedis::with(['pasien', 'dokter', 'obats'])
+        $rm = RekamMedis::with(['pasien', 'dokter', 'obats', 'tindakans'])
             ->findOrFail($id);
 
         return view('rekam_medis.show', compact('rm'));
@@ -135,11 +206,12 @@ class RekamMedisController extends Controller
 
     public function edit($id)
     {
-        $rm = RekamMedis::with('obats', 'pasien')->findOrFail($id);
+        $rm = RekamMedis::with('obats', 'pasien', 'tindakans')->findOrFail($id);
         $dokters = Dokter::all();
         $obats = Obat::all(); // Ambil semua obat (termasuk stok 0, jaga-jaga kalau obat lama stoknya habis)
+        $tindakans = TindakanMedis::all();
 
-        return view('rekam_medis.edit', compact('rm', 'dokters', 'obats'));
+        return view('rekam_medis.edit', compact('rm', 'dokters', 'obats', 'tindakans'));
     }
 
     public function update(Request $request, $id)
@@ -149,6 +221,8 @@ class RekamMedisController extends Controller
             'tgl_kunjungan' => 'required|date',
             'keluhan' => 'required',
             'diagnosa' => 'required',
+            'actions' => 'nullable|array',
+            'actions.*' => 'nullable|exists:tindakan_medis,id_tindakan',
         ]);
 
         try {
@@ -193,6 +267,51 @@ class RekamMedisController extends Controller
                         }
                     }
                 }
+
+                // 3. Kelola Tindakan Medis (Sync)
+                $dataTindakan = [];
+                $totalBiayaTindakan = 0;
+                
+                if ($request->has('actions') && is_array($request->actions)) {
+                    $cleanActions = array_filter($request->actions, function($v) { return !empty($v); });
+                    foreach ($cleanActions as $tindakanId) {
+                        $tindakanDB = TindakanMedis::find($tindakanId);
+                        if ($tindakanDB) {
+                            $dataTindakan[$tindakanId] = ['harga' => $tindakanDB->tarif];
+                            $totalBiayaTindakan += $tindakanDB->tarif;
+                        }
+                    }
+                }
+                $rm->tindakans()->sync($dataTindakan);
+
+                // 4. Update Tagihan
+                // Hitung ulang Biaya Obat
+                $totalBiayaObat = 0;
+                 if ($request->has('resep')) {
+                    foreach ($request->resep as $item) {
+                        if (!empty($item['obat_id'])) {
+                             $obatDB = Obat::find($item['obat_id']);
+                             $totalBiayaObat += ($obatDB->harga * $item['jumlah']);
+                        }
+                    }
+                }
+                
+                $dokter = Dokter::find($request->dokter_id);
+                $biayaDokter = $dokter->tarif;
+                $grandTotal = $biayaDokter + $totalBiayaObat + $totalBiayaTindakan;
+
+                // Cek apakah tagihan sudah ada (create or update)
+                // Asumsi 1 Rekam Medis punya 1 Tagihan (One to One)
+                Tagihan::updateOrCreate(
+                    ['rekam_medis_id' => $rm->id_rm],
+                    [
+                        'biaya_dokter' => $biayaDokter,
+                        'biaya_obat' => $totalBiayaObat,
+                        'biaya_tindakan' => $totalBiayaTindakan,
+                        'total_bayar' => $grandTotal,
+                        // Status tidak direset, biarkan apa adanya atau default 'Belum Lunas' jika baru create
+                    ]
+                );
             });
 
             return redirect()->route('rekam-medis.index')->with('success', 'Data berhasil diperbarui.');

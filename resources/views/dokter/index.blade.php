@@ -24,118 +24,16 @@
         </div>
         @endif
 
-        <form method="GET" action="{{ route('dokter.index') }}" id="filterForm">
-            <div class="flex flex-col md:flex-row gap-4 items-end bg-white dark:bg-background-dark p-4 rounded-xl shadow-sm border border-slate-200/60 dark:border-slate-800">
-                <div class="flex-1 min-w-0">
-                    <label class="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1.5">Cari Dokter</label>
-                    <div class="relative">
-                        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[20px]">search</span>
-                        <input 
-                            name="search" 
-                            value="{{ request('search') }}"
-                            class="w-full h-10 pl-10 pr-4 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-primary/20 focus:border-primary text-sm text-slate-900 dark:text-white placeholder:text-slate-400" 
-                            placeholder="Nama Dokter, No. SIP, Telepon..." 
-                            type="text"
-                        />
-                    </div>
-                </div>
-
-                <div class="w-full md:w-48" x-data="{ open: false }" @click.outside="open = false">
-                    <label class="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1.5">Spesialisasi</label>
-                    <div class="relative">
-                        <button 
-                            type="button"
-                            @click="open = !open"
-                            class="w-full h-10 flex items-center justify-between gap-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
-                        >
-                            <span class="truncate">
-                                @if(request('spesialisasi') && request('spesialisasi') != 'all') 
-                                    {{ request('spesialisasi') }}
-                                @else 
-                                    Semua Spesialisasi
-                                @endif
-                            </span>
-                            <span class="material-symbols-outlined text-[18px]" :class="open ? 'rotate-180' : ''" style="transition: transform 0.2s">expand_more</span>
-                        </button>
-                        <div x-show="open" x-transition class="absolute z-20 mt-1 w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-lg py-1">
-                            <button type="button" @click="$refs.specInput.value = 'all'; open = false; $el.closest('form').submit()" class="w-full px-3 py-2 text-left text-sm hover:bg-slate-50 dark:hover:bg-slate-700 {{ !request('spesialisasi') || request('spesialisasi') == 'all' ? 'text-primary font-semibold' : 'text-slate-700 dark:text-slate-300' }}">Semua</button>
-                            <button type="button" @click="$refs.specInput.value = 'Umum'; open = false; $el.closest('form').submit()" class="w-full px-3 py-2 text-left text-sm hover:bg-slate-50 dark:hover:bg-slate-700 {{ request('spesialisasi') == 'Umum' ? 'text-primary font-semibold' : 'text-slate-700 dark:text-slate-300' }}">Umum</button>
-                            <button type="button" @click="$refs.specInput.value = 'Gigi'; open = false; $el.closest('form').submit()" class="w-full px-3 py-2 text-left text-sm hover:bg-slate-50 dark:hover:bg-slate-700 {{ request('spesialisasi') == 'Gigi' ? 'text-primary font-semibold' : 'text-slate-700 dark:text-slate-300' }}">Gigi</button>
-                            <button type="button" @click="$refs.specInput.value = 'Anak'; open = false; $el.closest('form').submit()" class="w-full px-3 py-2 text-left text-sm hover:bg-slate-50 dark:hover:bg-slate-700 {{ request('spesialisasi') == 'Anak' ? 'text-primary font-semibold' : 'text-slate-700 dark:text-slate-300' }}">Anak</button>
-                            <button type="button" @click="$refs.specInput.value = 'Jantung'; open = false; $el.closest('form').submit()" class="w-full px-3 py-2 text-left text-sm hover:bg-slate-50 dark:hover:bg-slate-700 {{ request('spesialisasi') == 'Jantung' ? 'text-primary font-semibold' : 'text-slate-700 dark:text-slate-300' }}">Jantung</button>
-                        </div>
-                        <input type="hidden" name="spesialisasi" x-ref="specInput" value="{{ request('spesialisasi', 'all') }}">
-                    </div>
-                </div>
-
-                <div class="w-full md:w-auto" x-data="{ open: false }" @click.outside="open = false">
-                    <label class="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1.5">Urutkan</label>
-                    <div class="relative">
-                        <button 
-                            type="button"
-                            @click="open = !open"
-                            class="w-full md:w-auto h-10 flex items-center justify-between gap-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
-                        >
-                            <span class="material-symbols-outlined text-[18px]">sort</span>
-                            <span>
-                                @if(request('sort_by') == 'nama_dokter' && request('sort_order') == 'asc') Nama A-Z
-                                @elseif(request('sort_by') == 'nama_dokter' && request('sort_order') == 'desc') Nama Z-A
-                                @elseif(request('sort_by') == 'created_at' && request('sort_order') == 'asc') Terlama
-                                @else Terbaru
-                                @endif
-                            </span>
-                            <span class="material-symbols-outlined text-[18px]" :class="open ? 'rotate-180' : ''" style="transition: transform 0.2s">expand_more</span>
-                        </button>
-                        <div x-show="open" x-transition class="absolute right-0 z-20 mt-1 w-48 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-lg py-1">
-                            <button type="button" @click="$refs.sortBy.value = 'created_at'; $refs.sortOrder.value = 'desc'; open = false; $el.closest('form').submit()" class="w-full px-3 py-2 text-left text-sm hover:bg-slate-50 dark:hover:bg-slate-700 flex items-center gap-2 {{ request('sort_by') == 'created_at' && request('sort_order') == 'desc' || !request('sort_by') ? 'text-primary font-semibold' : 'text-slate-700 dark:text-slate-300' }}">
-                                <span class="material-symbols-outlined text-[16px]">schedule</span> Terbaru
-                            </button>
-                            <button type="button" @click="$refs.sortBy.value = 'created_at'; $refs.sortOrder.value = 'asc'; open = false; $el.closest('form').submit()" class="w-full px-3 py-2 text-left text-sm hover:bg-slate-50 dark:hover:bg-slate-700 flex items-center gap-2 {{ request('sort_by') == 'created_at' && request('sort_order') == 'asc' ? 'text-primary font-semibold' : 'text-slate-700 dark:text-slate-300' }}">
-                                <span class="material-symbols-outlined text-[16px]">history</span> Terlama
-                            </button>
-                            <button type="button" @click="$refs.sortBy.value = 'nama_dokter'; $refs.sortOrder.value = 'asc'; open = false; $el.closest('form').submit()" class="w-full px-3 py-2 text-left text-sm hover:bg-slate-50 dark:hover:bg-slate-700 flex items-center gap-2 {{ request('sort_by') == 'nama_dokter' && request('sort_order') == 'asc' ? 'text-primary font-semibold' : 'text-slate-700 dark:text-slate-300' }}">
-                                <span class="material-symbols-outlined text-[16px]">arrow_upward</span> Nama A-Z
-                            </button>
-                            <button type="button" @click="$refs.sortBy.value = 'nama_dokter'; $refs.sortOrder.value = 'desc'; open = false; $el.closest('form').submit()" class="w-full px-3 py-2 text-left text-sm hover:bg-slate-50 dark:hover:bg-slate-700 flex items-center gap-2 {{ request('sort_by') == 'nama_dokter' && request('sort_order') == 'desc' ? 'text-primary font-semibold' : 'text-slate-700 dark:text-slate-300' }}">
-                                <span class="material-symbols-outlined text-[16px]">arrow_downward</span> Nama Z-A
-                            </button>
-                        </div>
-                        <input type="hidden" name="sort_by" x-ref="sortBy" value="{{ request('sort_by', 'created_at') }}">
-                        <input type="hidden" name="sort_order" x-ref="sortOrder" value="{{ request('sort_order', 'desc') }}">
-                    </div>
-                </div>
-
-                <div class="flex gap-2">
-                    <button type="submit" class="h-10 inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-4 text-sm font-medium text-white hover:bg-primary/90 transition-colors">
-                        <span class="material-symbols-outlined text-[18px]">search</span>
-                        Cari
-                    </button>
-
-                    @if(request()->hasAny(['search', 'spesialisasi', 'sort_by']) && (request('search') || (request('spesialisasi') && request('spesialisasi') != 'all') || request('sort_by')))
-                    <a href="{{ route('dokter.index') }}" class="h-10 inline-flex items-center justify-center gap-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors" title="Reset Filter">
-                        <span class="material-symbols-outlined text-[18px]">refresh</span>
-                    </a>
-                    @endif
-                </div>
-            </div>
-        </form>
-
-        @if((request('search') || (request('spesialisasi') && request('spesialisasi') != 'all')))
-        <div class="flex flex-wrap gap-2 items-center">
-            <span class="text-sm text-slate-500 dark:text-slate-400">Filter aktif:</span>
-            @if(request('search'))
-            <span class="inline-flex items-center gap-1 rounded-full bg-primary/10 text-primary px-3 py-1 text-xs font-medium">
-                <span class="material-symbols-outlined text-[14px]">search</span>
-                "{{ request('search') }}"
-            </span>
-            @endif
-            @if(request('spesialisasi') && request('spesialisasi') != 'all')
-            <span class="inline-flex items-center gap-1 rounded-full bg-primary/10 text-primary px-3 py-1 text-xs font-medium">
-                Spesialisasi: {{ request('spesialisasi') }}
-            </span>
-            @endif
-        </div>
-        @endif
+            {{-- Filter Bar --}}
+            <x-filter-bar :action="route('dokter.index')" placeholder="Nama, SIP, Telepon...">
+                <select name="spesialisasi" onchange="this.form.submit()" class="w-full md:w-48 py-2 pl-3 pr-8 rounded-lg border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 text-sm md:text-xs lg:text-sm focus:ring-primary focus:border-primary dark:text-white shadow-sm cursor-pointer">
+                    <option value="all">Semua Spesialisasi</option>
+                    <option value="Umum" {{ request('spesialisasi') == 'Umum' ? 'selected' : '' }}>Umum</option>
+                    <option value="Gigi" {{ request('spesialisasi') == 'Gigi' ? 'selected' : '' }}>Gigi</option>
+                    <option value="Anak" {{ request('spesialisasi') == 'Anak' ? 'selected' : '' }}>Anak</option>
+                    <option value="Jantung" {{ request('spesialisasi') == 'Jantung' ? 'selected' : '' }}>Jantung</option>
+                </select>
+            </x-filter-bar>
 
         <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-background-dark shadow-sm overflow-hidden flex flex-col">
             <div class="overflow-x-auto">

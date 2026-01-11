@@ -23,6 +23,20 @@
             </div>
         </div>
 
+        @if ($errors->any())
+        <div class="mb-4 p-4 rounded-lg bg-red-50 border border-red-200 text-red-700">
+            <div class="flex items-center gap-2 font-bold mb-2">
+                <span class="material-symbols-outlined">warning</span>
+                <span>Terjadi Kesalahan!</span>
+            </div>
+            <ul class="list-disc list-inside text-sm">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
+
         <form action="{{ route('rekam-medis.store') }}" method="POST">
             @csrf
 
@@ -37,7 +51,7 @@
                         
                         <div class="mb-4">
                             <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Tanggal Periksa</label>
-                            <input type="date" name="tgl_kunjungan" value="{{ date('Y-m-d') }}" 
+                            <input type="date" name="tgl_kunjungan" value="{{ old('tgl_kunjungan', date('Y-m-d')) }}" 
                                    class="w-full rounded-lg border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white text-sm focus:ring-primary focus:border-primary">
                         </div>
 
@@ -46,7 +60,7 @@
                             <select name="dokter_id" class="w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-sm focus:ring-primary focus:border-primary" required>
                                 <option value="">Pilih Dokter...</option>
                                 @foreach($dokters as $dokter)
-                                    <option value="{{ $dokter->id_dokter }}">{{ $dokter->nama_dokter }} ({{ $dokter->spesialisasi }})</option>
+                                    <option value="{{ $dokter->id_dokter }}" {{ old('dokter_id') == $dokter->id_dokter ? 'selected' : '' }}>{{ $dokter->nama_dokter }} ({{ $dokter->spesialisasi }})</option>
                                 @endforeach
                             </select>
                         </div>
@@ -57,7 +71,7 @@
                                     class="w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-sm focus:ring-primary focus:border-primary" required>
                                 <option value="">Cari Nama / No. RM...</option>
                                 @foreach($pasiens as $pasien)
-                                    <option value="{{ $pasien->id_pasien }}" 
+                                    <option value="{{ $pasien->id_pasien }}" {{ old('pasien_id') == $pasien->id_pasien ? 'selected' : '' }}
                                         data-rm="{{ $pasien->no_rm }}"
                                         data-nik="{{ $pasien->nik }}"
                                         data-tgl="{{ $pasien->tgl_lahir }}">
@@ -137,6 +151,53 @@
                     <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-6 shadow-sm">
                         <div class="flex justify-between items-center mb-4">
                             <h3 class="font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                                <span class="material-symbols-outlined text-blue-500">medical_services</span> Tindakan Medis
+                            </h3>
+                            <button type="button" @click="addActionRow()" class="text-xs bg-blue-100 text-blue-700 border border-blue-200 px-3 py-1.5 rounded-lg font-bold hover:bg-blue-200 transition flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[16px]">add</span> Tambah Tindakan
+                            </button>
+                        </div>
+
+                        <div class="overflow-hidden border border-slate-200 dark:border-slate-700 rounded-lg">
+                            <table class="w-full text-sm text-left">
+                                <thead class="bg-slate-50 dark:bg-slate-700/50 text-slate-500 dark:text-slate-400 font-bold uppercase text-xs">
+                                    <tr>
+                                        <th class="p-3">Nama Tindakan</th>
+                                        <th class="p-3 w-10 text-center"></th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-100 dark:divide-slate-700">
+                                    <template x-for="(row, index) in actionRows" :key="index">
+                                        <tr class="bg-white dark:bg-slate-800">
+                                            <td class="p-2">
+                                                <select :name="'actions['+index+']'" x-model="row.tindakan_id" class="w-full rounded border-slate-300 dark:border-slate-600 dark:bg-slate-900 dark:text-white text-sm" required>
+                                                    <option value="">-- Pilih Tindakan --</option>
+                                                    @foreach($tindakans as $tindakan)
+                                                        <option value="{{ $tindakan->id_tindakan }}">
+                                                            {{ $tindakan->nama_tindakan }} - Rp {{ number_format($tindakan->tarif, 0, ',', '.') }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+                                            <td class="p-2 text-center">
+                                                <button type="button" @click="removeActionRow(index)" class="text-slate-400 hover:text-red-500 transition p-1">
+                                                    <span class="material-symbols-outlined text-[20px]">delete</span>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </template>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div x-show="actionRows.length === 0" class="text-center py-4 text-xs text-slate-400 italic">
+                            Belum ada tindakan yang ditambahkan.
+                        </div>
+                    </div>
+
+                    <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-6 shadow-sm">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="font-bold text-slate-900 dark:text-white flex items-center gap-2">
                                 <span class="material-symbols-outlined text-emerald-500">pill</span> Resep Obat
                             </h3>
                             <button type="button" @click="addObatRow()" class="text-xs bg-emerald-100 text-emerald-700 border border-emerald-200 px-3 py-1.5 rounded-lg font-bold hover:bg-emerald-200 transition flex items-center gap-1">
@@ -158,7 +219,7 @@
                                     <template x-for="(row, index) in obatRows" :key="index">
                                         <tr class="bg-white dark:bg-slate-800">
                                             <td class="p-2">
-                                                <select :name="'resep['+index+'][obat_id]'" class="w-full rounded border-slate-300 dark:border-slate-600 dark:bg-slate-900 dark:text-white text-sm" required>
+                                                <select :name="'resep['+index+'][obat_id]'" x-model="row.obat_id" class="w-full rounded border-slate-300 dark:border-slate-600 dark:bg-slate-900 dark:text-white text-sm" required>
                                                     <option value="">-- Pilih Obat --</option>
                                                     @foreach($obats as $obat)
                                                         <option value="{{ $obat->id_obat }}">{{ $obat->nama_obat }} (Stok: {{ $obat->stok }})</option>
@@ -206,7 +267,8 @@
             return {
                 selectedPasien: '',
                 patientData: { rm: '-', nik: '-', tgl: '-' },
-                obatRows: [{ obat_id: '', jumlah: 1, aturan_pakai: '' }], // Mulai dengan 1 baris kosong
+                actionRows: [], // Mulai kosong untuk tindakan
+                obatRows: [{ obat_id: '', jumlah: 1, aturan_pakai: '' }], // Mulai dengan 1 baris untuk obat
 
                 fetchPatientDetails() {
                     const select = document.querySelector('select[name="pasien_id"]');
@@ -216,6 +278,13 @@
                         nik: option.getAttribute('data-nik') || '-',
                         tgl: option.getAttribute('data-tgl') || '-'
                     };
+                },
+
+                addActionRow() {
+                    this.actionRows.push({ tindakan_id: '' });
+                },
+                removeActionRow(index) {
+                    this.actionRows.splice(index, 1);
                 },
                 addObatRow() {
                     this.obatRows.push({ obat_id: '', jumlah: 1, aturan_pakai: '' });

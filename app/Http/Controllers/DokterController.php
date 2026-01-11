@@ -30,15 +30,11 @@ class DokterController extends Controller
         }
         
         // Sorting
-        $sortBy = $request->get('sort_by', 'created_at');
-        $sortOrder = $request->get('sort_order', 'desc');
-        
-        $allowedSortColumns = ['nama_dokter', 'no_sip', 'spesialisasi', 'created_at'];
-        if (!in_array($sortBy, $allowedSortColumns)) {
-            $sortBy = 'created_at';
+        if ($request->sort == 'oldest') {
+            $query->oldest();
+        } else {
+            $query->latest();
         }
-        
-        $query->orderBy($sortBy, $sortOrder === 'asc' ? 'asc' : 'desc');
         $dokters = $query->paginate(10)->withQueryString();
         
         return view('dokter.index', compact('dokters'));
