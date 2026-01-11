@@ -83,7 +83,7 @@
             <div x-show="!sidebarExpanded" class="absolute left-full ml-3 px-2 py-1 bg-slate-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50">Dokter</div>
         </a>
 
-        <a href="#" class="flex items-center gap-3 px-3.5 py-3 rounded-2xl transition-all duration-200 group relative text-slate-500 hover:bg-slate-50 hover:text-slate-900"
+        <a href="{{ route('rekam-medis.index') }}" class="flex items-center gap-3 px-3.5 py-3 rounded-2xl transition-all duration-200 group relative text-slate-500 hover:bg-slate-50 hover:text-slate-900"
            :class="sidebarExpanded ? 'justify-start' : 'justify-center'">
             <span class="material-symbols-outlined text-[22px] text-slate-400 group-hover:text-slate-600">folder_shared</span>
             <span x-show="sidebarExpanded" class="text-sm font-bold whitespace-nowrap text-slate-600 group-hover:text-slate-900">Rekam Medis</span>
@@ -107,6 +107,7 @@
             <span x-show="sidebarExpanded" class="text-sm font-bold whitespace-nowrap {{ request()->routeIs('profile.*') ? 'text-blue-700' : 'text-slate-600 group-hover:text-slate-900' }}">Pengaturan</span>
              <div x-show="!sidebarExpanded" class="absolute left-full ml-3 px-2 py-1 bg-slate-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50">Pengaturan</div>
         </a>
+
 
     </nav>
 

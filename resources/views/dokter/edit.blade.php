@@ -55,6 +55,27 @@
                             </select>
                         </div>
 
+                        <div>
+    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+        Tarif Jasa Medis (Rp) <span class="text-red-400">*</span>
+    </label>
+    <div class="relative">
+        <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-500">Rp</span>
+        <input 
+            type="number" 
+            name="tarif" 
+            value="{{ old('tarif', $dokter->tarif ?? 0) }}" 
+            class="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white focus:ring-primary focus:border-primary placeholder-slate-400" 
+            placeholder="150000" 
+            min="0"
+            required
+        />
+    </div>
+    @error('tarif')
+        <p class="text-red-400 text-xs mt-1">{{ $message }}</p>
+    @enderror
+</div>
+
                         <div class="flex flex-col gap-2">
                             <label class="text-sm font-medium text-slate-700 dark:text-slate-300" for="no_sip">Nomor SIP</label>
                             <input class="w-full rounded-lg border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:border-primary focus:ring-primary shadow-sm placeholder:text-slate-400" 

@@ -9,7 +9,7 @@
         <div class="flex flex-col md:flex-row md:items-start justify-between gap-4">
             <div class="flex flex-col gap-1">
                 <h1 class="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">Daftar Dokter</h1>
-                <p class="text-slate-500 dark:text-slate-400">Kelola data dokter, spesialisasi, dan jadwal praktik.</p>
+                <p class="text-slate-500 dark:text-slate-400">Kelola data dokter, spesialisasi, tarif, dan jadwal praktik.</p>
             </div>
             <a href="{{ route('dokter.create') }}" class="inline-flex h-10 items-center justify-center gap-2 whitespace-nowrap rounded-lg bg-primary px-4 py-2 text-sm font-bold text-white shadow hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50">
                 <span class="material-symbols-outlined text-lg">add</span>
@@ -144,6 +144,7 @@
                         <tr>
                             <th class="h-12 px-4 py-3 font-semibold text-slate-900 dark:text-white min-w-[250px]">Nama Dokter</th>
                             <th class="h-12 px-4 py-3 font-semibold text-slate-900 dark:text-white">Spesialisasi</th>
+                            <th class="h-12 px-4 py-3 font-semibold text-slate-900 dark:text-white">Tarif Jasa</th>
                             <th class="h-12 px-4 py-3 font-semibold text-slate-900 dark:text-white">No. SIP</th>
                             <th class="h-12 px-4 py-3 font-semibold text-slate-900 dark:text-white">Kontak</th>
                             <th class="h-12 px-4 py-3 font-semibold text-slate-900 dark:text-white text-right">Aksi</th>
@@ -178,6 +179,9 @@
                                     {{ $dokter->spesialisasi }}
                                 </span>
                             </td>
+                            <td class="p-4 align-middle text-emerald-600 dark:text-emerald-400 font-medium">
+                                Rp {{ number_format($dokter->tarif, 0, ',', '.') }}
+                            </td>
                             <td class="p-4 align-middle text-slate-600 dark:text-slate-300 font-mono text-xs">
                                 {{ $dokter->no_sip }}
                             </td>
@@ -206,7 +210,7 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="5" class="p-8 text-center text-slate-500 text-sm">
+                            <td colspan="6" class="p-8 text-center text-slate-500 text-sm">
                                 <div class="flex flex-col items-center gap-2">
                                     <span class="material-symbols-outlined text-4xl text-slate-300">medical_services</span>
                                     <p>Belum ada data dokter.</p>
