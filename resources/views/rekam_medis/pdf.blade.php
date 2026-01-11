@@ -216,7 +216,7 @@
         <div class="col-half" style="margin-left: 4%;">
             <div class="section-header">Data Kunjungan</div>
             <table class="info-table">
-                <tr><td class="label">No. Registrasi</td><td>: #{{ $rekamMedis->id_rekam_medis }}</td></tr>
+                <tr><td class="label">No. Registrasi</td><td>: #{{ $rekamMedis->pasien->no_rm }}</td></tr>
                 <tr><td class="label">Tanggal Periksa</td><td>: {{ \Carbon\Carbon::parse($rekamMedis->tgl_kunjungan)->format('d F Y, H:i') }}</td></tr>
                 <tr><td class="label">Dokter Pemeriksa</td><td>: {{ $rekamMedis->dokter->nama_dokter }}</td></tr>
                 <tr><td class="label">Spesialisasi</td><td>: {{ $rekamMedis->dokter->spesialisasi }}</td></tr>

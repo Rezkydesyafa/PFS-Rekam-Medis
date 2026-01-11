@@ -12,7 +12,7 @@
                 <h1 class="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">Riwayat Pemeriksaan</h1>
                 <p class="text-slate-500 dark:text-slate-400">Data rekam medis pasien dan status pembayaran.</p>
             </div>
-            @if(auth()->user()->role !== 'kasir')
+            @if(!in_array(auth()->user()->role, ['kasir', 'apoteker']))
             <a href="{{ route('rekam-medis.create') }}" class="inline-flex h-10 items-center justify-center gap-2 whitespace-nowrap rounded-lg bg-primary px-4 py-2 text-sm font-bold text-white shadow hover:bg-primary/90 transition-colors">
                 <span class="material-symbols-outlined text-lg">add_circle</span>
                 Input Pemeriksaan Baru
@@ -86,7 +86,7 @@
                                         <span class="material-symbols-outlined text-[20px]">visibility</span>
                                     </a>
                                     
-                                    @if(auth()->user()->role !== 'kasir')
+                                    @if(!in_array(auth()->user()->role, ['kasir', 'apoteker']))
                                         <a href="{{ route('rekam-medis.edit', $rm->id_rm) }}" class="h-8 w-8 inline-flex items-center justify-center rounded-lg text-amber-500 hover:bg-amber-50 dark:hover:bg-amber-900/20 transition-colors" title="Edit">
                                             <span class="material-symbols-outlined text-[20px]">edit</span>
                                         </a>

@@ -257,23 +257,27 @@
         </div>
     </div>
 
-    <div class="row clearfix" style="margin-bottom: 25px;">
-        <div class="col-half">
-            <div class="section-header">Info Pasien</div>
-            <table class="info-table">
-                <tr><td class="label">Nama Pasien</td><td>: <strong>{{ $tagihan->rekamMedis->pasien->name }}</strong></td></tr>
-                <tr><td class="label">No. Rekam Medis</td><td>: {{ $tagihan->rekamMedis->pasien->no_rm }}</td></tr>
-                <tr><td class="label">Alamat</td><td>: {{ $tagihan->rekamMedis->pasien->alamat }}</td></tr>
-            </table>
-        </div>
-        <div class="col-half" style="margin-left: 4%;">
-            <div class="section-header">Info Tagihan</div>
-            <table class="info-table">
-                <tr><td class="label">Tanggal</td><td>: {{ $tagihan->created_at->format('d/m/Y') }}</td></tr>
-                <tr><td class="label">Jam Cetak</td><td>: {{ now()->format('H:i') }}</td></tr>
-                <tr><td class="label">Kasir</td><td>: {{ auth()->user()->name ?? 'Administrator' }}</td></tr>
-            </table>
-        </div>
+    <div class="row" style="margin-bottom: 25px;">
+        <table style="width: 100%; border-collapse: collapse;">
+            <tr>
+                <td style="width: 50%; vertical-align: top; padding-right: 15px;">
+                    <div class="section-header">Info Pasien</div>
+                    <table class="info-table">
+                        <tr><td class="label">Nama Pasien</td><td>: <strong>{{ $tagihan->rekamMedis->pasien->name }}</strong></td></tr>
+                        <tr><td class="label">No. Rekam Medis</td><td>: {{ $tagihan->rekamMedis->pasien->no_rm }}</td></tr>
+                        <tr><td class="label">Alamat</td><td>: {{ \Illuminate\Support\Str::limit($tagihan->rekamMedis->pasien->alamat, 60) }}</td></tr>
+                    </table>
+                </td>
+                <td style="width: 50%; vertical-align: top; padding-left: 15px;">
+                    <div class="section-header">Info Tagihan</div>
+                    <table class="info-table">
+                        <tr><td class="label">Tanggal</td><td>: {{ $tagihan->created_at->format('d/m/Y') }}</td></tr>
+                        <tr><td class="label">Jam Cetak</td><td>: {{ now()->format('H:i') }}</td></tr>
+                        <tr><td class="label">Kasir</td><td>: {{ auth()->user()->name ?? 'Administrator' }}</td></tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
     </div>
 
     <div class="section-header">Rincian Transaksi</div>
@@ -333,30 +337,68 @@
         </tbody>
     </table>
 
-    <div class="clearfix">
-        <div class="total-box">
-            <div class="row clearfix total-row">
-                <div style="float: left; width: 50%;">Subtotal Jasa Medis</div>
-                <div style="float: right; width: 50%; text-align: right;">{{ number_format($tagihan->biaya_dokter + $tagihan->biaya_tindakan, 0, ',', '.') }}</div>
-            </div>
-            <div class="row clearfix total-row">
-                <div style="float: left; width: 50%;">Subtotal Obat</div>
-                <div style="float: right; width: 50%; text-align: right;">{{ number_format($tagihan->biaya_obat, 0, ',', '.') }}</div>
-            </div>
-            <div class="row clearfix grand-total">
-                <div style="float: left; width: 40%;">TOTAL BAYAR</div>
-                <div style="float: right; width: 60%; text-align: right;">Rp {{ number_format($tagihan->total_bayar, 0, ',', '.') }}</div>
-            </div>
-        </div>
-    </div>
+    {{-- Calculate Subtotals for Display Consistency --}}
+    @php
+        $totalTindakan = 0;
+        foreach($tagihan->rekamMedis->tindakans as $t) {
+                $harga = $t->pivot->harga ?? $t->tarif;
+                $totalTindakan += $harga;
+        }
+    @endphp
 
-    <div class="signature-box" style="page-break-inside: avoid;">
-        <p>Jakarta, {{ now()->format('d F Y') }}</p>
-        <p>Kasir / Bag. Keuangan,</p>
-        <div style="height: 50px;"></div> 
-        <div class="signature-line"></div>
-        <p><strong>{{ auth()->user()->name ?? 'Petugas' }}</strong></p>
-    </div>
+    {{-- Layout for Totals and Signature --}}
+    <table style="width: 100%; margin-top: 20px;">
+        <tr>
+            {{-- Left Side: Empty or Notes --}}
+            <td style="width: 50%; vertical-align: top;">
+                {{-- Optional: Notes section --}}
+            </td>
+
+            {{-- Right Side: Totals --}}
+            <td style="width: 50%; vertical-align: top;">
+                <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+                    <tr>
+                        <td style="padding: 5px 0; border-bottom: 1px solid #eee; color: #555;">Jasa Medis (Dokter)</td>
+                        <td style="padding: 5px 0; border-bottom: 1px solid #eee; text-align: right; font-weight: bold;">{{ number_format($tagihan->biaya_dokter, 0, ',', '.') }}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px 0; border-bottom: 1px solid #eee; color: #555;">Total Tindakan</td>
+                        <td style="padding: 5px 0; border-bottom: 1px solid #eee; text-align: right; font-weight: bold;">{{ number_format($tagihan->biaya_tindakan, 0, ',', '.') }}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px 0; border-bottom: 1px solid #eee; color: #555;">Total Obat</td>
+                        <td style="padding: 5px 0; border-bottom: 1px solid #eee; text-align: right; font-weight: bold;">{{ number_format($tagihan->biaya_obat, 0, ',', '.') }}</td>
+                    </tr>
+                    
+                    {{-- Grand Total Box --}}
+                    <tr>
+                        <td style="padding: 10px 0 0 0; vertical-align: middle;">
+                            <div style="font-size: 11px; font-weight: bold; color: #1e3a8a; text-transform: uppercase;">Total Bayar</div>
+                        </td>
+                        <td style="padding: 10px 0 0 0; text-align: right;">
+                            <div style="font-size: 16px; font-weight: bold; color: #1e3a8a;">Rp {{ number_format($tagihan->total_bayar ?? ($tagihan->biaya_dokter + $tagihan->biaya_tindakan + $tagihan->biaya_obat), 0, ',', '.') }}</div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+    {{-- Signature Section --}}
+    <table style="width: 100%; margin-top: 30px;">
+        <tr>
+            <td style="width: 60%;"></td>
+            <td style="width: 40%; text-align: center;">
+                <p style="margin-bottom: 5px; color: #555;">Jakarta, {{ now()->format('d F Y') }}</p>
+                <p style="margin-top: 0; color: #555; font-size: 10px;">Kasir / Bag. Keuangan,</p>
+                
+                <div style="height: 60px;"></div> {{-- Space for signature --}}
+                
+                <div style="border-bottom: 1px solid #333; width: 80%; margin: 0 auto;"></div>
+                <p style="margin-top: 5px; font-weight: bold; color: #333;">{{ auth()->user()->name ?? 'Petugas' }}</p>
+            </td>
+        </tr>
+    </table>
 
     <div class="footer">
         Bukti pembayaran ini sah dan diterbitkan otomatis oleh sistem.<br>

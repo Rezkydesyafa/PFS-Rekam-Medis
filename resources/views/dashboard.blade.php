@@ -133,6 +133,27 @@
                         <span class="material-symbols-outlined text-[28px] text-slate-400 mb-2 group-hover:text-blue-600 group-hover:scale-110 transition-all">medical_services</span>
                         <span class="text-xs font-bold text-slate-600 group-hover:text-blue-600">Data Dokter</span>
                     </a>
+                @elseif(auth()->user()->isApoteker())
+                     {{-- Quick Access Khusus Apoteker --}}
+                     <a href="{{ route('obat.index') }}" class="flex flex-col items-center justify-center p-4 rounded-lg bg-slate-50 border border-slate-100 hover:bg-blue-50 hover:border-blue-100 hover:text-blue-600 transition-all group">
+                        <span class="material-symbols-outlined text-[28px] text-slate-400 mb-2 group-hover:text-blue-600 group-hover:scale-110 transition-all">medication</span>
+                        <span class="text-xs font-bold text-slate-600 group-hover:text-blue-600">Stok Obat</span>
+                    </a>
+
+                    <a href="{{ route('obat.create') }}" class="flex flex-col items-center justify-center p-4 rounded-lg bg-slate-50 border border-slate-100 hover:bg-blue-50 hover:border-blue-100 hover:text-blue-600 transition-all group">
+                        <span class="material-symbols-outlined text-[28px] text-slate-400 mb-2 group-hover:text-blue-600 group-hover:scale-110 transition-all">add_circle</span>
+                        <span class="text-xs font-bold text-slate-600 group-hover:text-blue-600">Tambah Obat</span>
+                    </a>
+
+                    <a href="{{ route('rekam-medis.index') }}" class="flex flex-col items-center justify-center p-4 rounded-lg bg-slate-50 border border-slate-100 hover:bg-blue-50 hover:border-blue-100 hover:text-blue-600 transition-all group">
+                        <span class="material-symbols-outlined text-[28px] text-slate-400 mb-2 group-hover:text-blue-600 group-hover:scale-110 transition-all">folder_shared</span>
+                        <span class="text-xs font-bold text-slate-600 group-hover:text-blue-600">Rekam Medis</span>
+                    </a>
+
+                    <a href="{{ route('pasien.index') }}" class="flex flex-col items-center justify-center p-4 rounded-lg bg-slate-50 border border-slate-100 hover:bg-blue-50 hover:border-blue-100 hover:text-blue-600 transition-all group">
+                        <span class="material-symbols-outlined text-[28px] text-slate-400 mb-2 group-hover:text-blue-600 group-hover:scale-110 transition-all">group</span>
+                        <span class="text-xs font-bold text-slate-600 group-hover:text-blue-600">Data Pasien</span>
+                    </a>
                 @else
                     {{-- Quick Access User Lain (Dokter, Petugas, Kasir) --}}
                     @if(auth()->user()->role !== 'kasir')
@@ -143,9 +164,9 @@
                     @endif
                     
                     @if(auth()->user()->role !== 'kasir')
-                    <a href="{{ route('rekam-medis.create') }}" class="flex flex-col items-center justify-center p-4 rounded-lg bg-slate-50 border border-slate-100 hover:bg-blue-50 hover:border-blue-100 hover:text-blue-600 transition-all group">
-                        <span class="material-symbols-outlined text-[28px] text-slate-400 mb-2 group-hover:text-blue-600 group-hover:scale-110 transition-all">post_add</span>
-                        <span class="text-xs font-bold text-slate-600 group-hover:text-blue-600">Rekam Medis</span>
+                    <a href="{{ route('rekam-medis.index') }}" class="flex flex-col items-center justify-center p-4 rounded-lg bg-slate-50 border border-slate-100 hover:bg-blue-50 hover:border-blue-100 hover:text-blue-600 transition-all group">
+                        <span class="material-symbols-outlined text-[28px] text-slate-400 mb-2 group-hover:text-blue-600 group-hover:scale-110 transition-all">print</span>
+                        <span class="text-xs font-bold text-slate-600 group-hover:text-blue-600">Cetak RM</span>
                     </a>
                     @endif
 
